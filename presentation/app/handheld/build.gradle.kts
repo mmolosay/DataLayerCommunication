@@ -7,6 +7,7 @@ plugins {
 
 android {
     compileSdk = 33
+    namespace = "io.github.mmolosay.datalayercommunication.app.handheld"
 
     defaultConfig {
         // NOTE: This must be the same in the phone app and the wear app for the capabilities API
@@ -42,8 +43,8 @@ kapt {
 }
 
 dependencies {
-    implementation(project(":di:common"))
-    implementation(project(":di:mobile"))
+    implementation(project(":presentation:di:common"))
+    implementation(project(":presentation:di:mobile"))
 
     implementation(project(":domain:common"))
     implementation(project(":domain:communication"))
