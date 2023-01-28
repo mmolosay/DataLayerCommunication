@@ -4,12 +4,12 @@ import android.content.Context
 import io.github.mmolosay.datalayercommunication.data.communication.DataLayerCommunicationClient
 import io.github.mmolosay.datalayercommunication.data.communication.DataLayerNodeProvider
 import io.github.mmolosay.datalayercommunication.data.communication.RepositoryResponseServer
-import io.github.mmolosay.datalayercommunication.data.communication.convertion.CompressingDecorator
-import io.github.mmolosay.datalayercommunication.data.communication.convertion.SerializationRequestDecoder
-import io.github.mmolosay.datalayercommunication.data.communication.convertion.SerializationRequestEncoder
-import io.github.mmolosay.datalayercommunication.data.communication.convertion.SerializationResponseDecoder
-import io.github.mmolosay.datalayercommunication.data.communication.convertion.SerializationResponseEncoder
-import io.github.mmolosay.datalayercommunication.data.communication.convertion.UncompressingDecorator
+import io.github.mmolosay.datalayercommunication.data.communication.convertion.encode.CompressingDecorator
+import io.github.mmolosay.datalayercommunication.data.communication.convertion.decode.SerializationRequestDecoder
+import io.github.mmolosay.datalayercommunication.data.communication.convertion.encode.SerializationRequestEncoder
+import io.github.mmolosay.datalayercommunication.data.communication.convertion.decode.SerializationResponseDecoder
+import io.github.mmolosay.datalayercommunication.data.communication.convertion.encode.SerializationResponseEncoder
+import io.github.mmolosay.datalayercommunication.data.communication.convertion.decode.DecompressingDecorator
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
 import io.github.mmolosay.datalayercommunication.domain.communication.client.CommunicationClient
 import io.github.mmolosay.datalayercommunication.domain.communication.NodeProvider
@@ -48,12 +48,12 @@ class CommunicationModule {
     @Provides
     @Singleton
     fun provideRequestDecoder(): RequestDecoder =
-        UncompressingDecorator(SerializationRequestDecoder())
+        DecompressingDecorator(SerializationRequestDecoder())
 
     @Provides
     @Singleton
     fun provideResponseDecoder(): ResponseDecoder =
-        UncompressingDecorator(SerializationResponseDecoder())
+        DecompressingDecorator(SerializationResponseDecoder())
 
     @Provides
     @Singleton
