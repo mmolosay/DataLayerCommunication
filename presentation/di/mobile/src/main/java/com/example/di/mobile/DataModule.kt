@@ -1,7 +1,7 @@
 package com.example.di.mobile
 
-import com.example.data.mobile.AnimalsRepositoryImpl
-import com.example.domain.AnimalsRepository
+import io.github.mmolosay.datalayercommunication.data.handheld.AnimalsRepositoryImpl
+import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

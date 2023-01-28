@@ -6,8 +6,8 @@ plugins {
 }
 
 android {
-    namespace = "io.github.mmolosay.datalayercommunication.di.wear"
     compileSdk = 33
+    namespace = "io.github.mmolosay.datalayercommunication.di.wear"
 
     defaultConfig {
         minSdk = 24
@@ -38,9 +38,8 @@ dependencies {
 
     implementation(project(":domain:common"))
     implementation(project(":domain:communication"))
-    implementation(project(":domain:wear"))
-
-    implementation(project(":data:wear"))
+    implementation(project(":domain:wearable"))
+    implementation(project(":data:wearable"))
 
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")

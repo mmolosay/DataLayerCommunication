@@ -7,14 +7,14 @@ plugins {
 
 android {
     compileSdk = 33
-    namespace = "io.github.mmolosay.datalayercommunication.app.wearable"
+    namespace = "io.github.mmolosay.datalayercommunication"
 
     defaultConfig {
         // NOTE: This must be the same in the phone app and the wear app for the capabilities API
         applicationId = "io.github.mmolosay.datalayercommunication"
         versionCode = 1
         versionName = "1.0"
-        minSdk = 21
+        minSdk = 25
         targetSdk = 33
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -45,9 +45,10 @@ kapt {
 dependencies {
     implementation(project(":presentation:di:common"))
     implementation(project(":presentation:di:wear"))
+    implementation(project(":presentation:shared"))
 
     implementation(project(":domain:common"))
-    implementation(project(":domain:wear"))
+    implementation(project(":domain:wearable"))
 
     implementation(platform("androidx.compose:compose-bom:2022.12.00"))
     implementation("androidx.activity:activity-compose:1.5.1")

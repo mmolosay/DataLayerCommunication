@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
-        android:name=".AndroidApplication"
+        android:name=".DataLayerCommunicationApp"
         android:allowBackup="true"
         android:fullBackupOnly="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name">
 
         <meta-data
@@ -31,31 +31,6 @@
                     android:scheme="wear" />
             </intent-filter>
 
-            <intent-filter>
-                <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
-                <data
-                    android:host="*"
-                    android:pathPrefix="/message-client"
-                    android:scheme="wear" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
-                <data
-                    android:host="*"
-                    android:pathPrefix="/data-client"
-                    android:scheme="wear" />
-            </intent-filter>
-            <intent-filter>
-                <!--
-                    Intent filter for ChannelClient should be registered here as for other clients,
-                    but unfortunatelly I was not able to find proper <action> for it
-                -->
-                <action android:name="com.google.android.gms.wearable.CHANNEL_EVENT" />
-                <data
-                    android:host="*"
-                    android:pathPrefix="/channel-client"
-                    android:scheme="wear" />
-            </intent-filter>
         </service>
 
         <activity
