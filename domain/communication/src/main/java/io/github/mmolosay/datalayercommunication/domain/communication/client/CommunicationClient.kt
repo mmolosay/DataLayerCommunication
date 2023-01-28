@@ -1,7 +1,6 @@
 package io.github.mmolosay.datalayercommunication.domain.communication.client
 
 import io.github.mmolosay.datalayercommunication.domain.communication.model.Destination
-import io.github.mmolosay.datalayercommunication.domain.communication.model.Message
 import io.github.mmolosay.datalayercommunication.domain.communication.model.request.Request
 import io.github.mmolosay.datalayercommunication.domain.communication.model.response.Response
 

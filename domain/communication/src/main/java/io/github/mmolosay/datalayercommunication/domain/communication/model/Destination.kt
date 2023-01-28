@@ -1,7 +1,7 @@
 package io.github.mmolosay.datalayercommunication.domain.communication.model
 
 /**
- * Destination of a message to be sent to.
+ * Destination of a data to be sent to.
  */
 data class Destination(
     val nodeId: String,

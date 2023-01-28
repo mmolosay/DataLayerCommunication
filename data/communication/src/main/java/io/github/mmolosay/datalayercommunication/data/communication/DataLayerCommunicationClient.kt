@@ -5,7 +5,6 @@ import io.github.mmolosay.datalayercommunication.domain.communication.convertion
 import io.github.mmolosay.datalayercommunication.domain.communication.convertion.ResponseDecoder
 import io.github.mmolosay.datalayercommunication.domain.communication.model.Data
 import io.github.mmolosay.datalayercommunication.domain.communication.model.Destination
-import io.github.mmolosay.datalayercommunication.domain.communication.model.Message
 import io.github.mmolosay.datalayercommunication.domain.communication.model.request.Request
 import io.github.mmolosay.datalayercommunication.domain.communication.model.response.Response
 import com.google.android.gms.wearable.MessageClient
