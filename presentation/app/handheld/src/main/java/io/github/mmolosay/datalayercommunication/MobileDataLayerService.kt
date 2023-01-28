@@ -1,12 +1,11 @@
 package io.github.mmolosay.datalayercommunication
 
-import android.util.Log
-import io.github.mmolosay.datalayercommunication.domain.communication.model.Data
-import io.github.mmolosay.datalayercommunication.domain.communication.server.CommunicationServer
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.android.gms.wearable.WearableListenerService
 import dagger.hilt.android.AndroidEntryPoint
+import io.github.mmolosay.datalayercommunication.domain.communication.model.Data
+import io.github.mmolosay.datalayercommunication.domain.communication.server.CommunicationServer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -32,7 +31,6 @@ class MobileDataLayerService : WearableListenerService() {
     }
 
     override fun onRequest(p0: String, path: String, requestBytes: ByteArray): Task<ByteArray> {
-        Log.d("MobileDataLayerService", "p:$p0 path:$path data:${String(requestBytes)}")
         val taskCompletionSource = TaskCompletionSource<ByteArray>()
         coroutineScope.launch {
             val requestData = Data(requestBytes)
