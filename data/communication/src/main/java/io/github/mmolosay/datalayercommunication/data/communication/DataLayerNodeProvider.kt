@@ -6,7 +6,7 @@ import com.google.android.gms.wearable.CapabilityClient
 import kotlinx.coroutines.tasks.await
 
 /**
- * [NodeProvider], powered by Google's Data Layer API.
+ * Implementation of [NodeProvider], powered by Google's Data Layer API.
  */
 class DataLayerNodeProvider(
     private val capabilityClient: CapabilityClient,
@@ -14,7 +14,7 @@ class DataLayerNodeProvider(
     private val wearableCapability: String,
 ) : NodeProvider {
 
-    override suspend fun mobile(): Collection<Node> =
+    override suspend fun handheld(): Collection<Node> =
         getNodesWithCapability(mobileCapability)
 
     override suspend fun wearable(): Collection<Node> =
