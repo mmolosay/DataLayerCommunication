@@ -33,6 +33,6 @@ class DataLayerCommunicationClient(
                 )
                 .await()
                 .let { Data(it) }
-            decoder.decode(responseData) as R
+            decoder.decode(responseData) as R // caller's responsibility to provide correct type
         }
 }
