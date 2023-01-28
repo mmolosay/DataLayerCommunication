@@ -17,8 +17,8 @@ dependencyResolutionManagement {
     }
 }
 
-include(":app:mobile")
-include(":app:wear")
+include(":app:handeheld")
+include(":app:wearable")
 
 include(":data:common")
 include(":data:communication")
