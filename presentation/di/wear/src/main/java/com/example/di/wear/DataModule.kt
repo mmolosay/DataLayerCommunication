@@ -23,5 +23,7 @@ class DataModule {
         AnimalsRepositoryImpl(
             nodeProvider = nodeProvider,
             communicationClient = communicationClient,
+            getAllAnimalsPath = "/get-all-animals", // TODO: provide from outside
+            deleteAnimalByIdPath = "/delete-random-animal-by-id", // TODO: provide from outside
         )
 }

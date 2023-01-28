@@ -13,13 +13,15 @@ import io.github.mmolosay.datalayercommunication.domain.communication.model.toDe
 class AnimalsRepositoryImpl(
     private val nodeProvider: NodeProvider,
     private val communicationClient: CommunicationClient,
+    private val getAllAnimalsPath: String,
+    private val deleteAnimalByIdPath: String,
 ) : AnimalsRepository {
 
     override suspend fun getAllAnimals(): List<Animal> {
         val destination = nodeProvider
-            .mobile()
-            .firstOrNull()
-            ?.toDestination("/get-all-animals") // TODO: provide path?
+            .handheld()
+            .singleOrNull()
+            ?.toDestination(getAllAnimalsPath)
             ?: return emptyList() // TODO: error handling
         val request = GetAllAnimalsRequest
         return communicationClient
@@ -30,9 +32,9 @@ class AnimalsRepositoryImpl(
 
     override suspend fun deleteAnimalById(id: Long): Animal? {
         val destination = nodeProvider
-            .mobile()
-            .firstOrNull()
-            ?.toDestination("/delete-random-animal-by-id")
+            .handheld()
+            .singleOrNull()
+            ?.toDestination(deleteAnimalByIdPath)
             ?: return null
         val request = DeleteAnimalByIdRequest(animalId = id)
         return communicationClient
