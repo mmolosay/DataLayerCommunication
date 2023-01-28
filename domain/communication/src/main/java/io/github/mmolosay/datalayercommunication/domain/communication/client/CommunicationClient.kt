@@ -10,11 +10,9 @@ import io.github.mmolosay.datalayercommunication.domain.communication.model.resp
  */
 interface CommunicationClient {
 
-    suspend fun sendMessage(
-        destination: Destination,
-        message: Message,
-    ): Result<Unit>
-
+    /**
+     * Executes asynchronous request to [destination] with specified [request].
+     */
     suspend fun <R : Response> request(
         destination: Destination,
         request: Request,

@@ -20,14 +20,6 @@ class DataLayerCommunicationClient(
     private val messageClient: MessageClient,
 ) : CommunicationClient {
 
-    override suspend fun sendMessage(
-        destination: Destination,
-        message: Message,
-    ): Result<Unit> =
-        runCatching {
-            // TODO: send using MessageClient
-        }
-
     override suspend fun <R : Response> request(
         destination: Destination,
         request: Request,
