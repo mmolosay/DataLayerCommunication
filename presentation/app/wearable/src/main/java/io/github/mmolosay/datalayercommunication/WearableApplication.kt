@@ -131,7 +131,7 @@ private fun MessageButton(
 
 @Composable
 private fun Animal(animal: Animal) =
-    Card(onClick = { /*TODO*/ }) {
+    Card(onClick = {}) {
         Text(text = "ID: ${animal.id}")
         Text(text = "Species: ${animal.species}")
         Text(text = "Name: ${animal.name}")
