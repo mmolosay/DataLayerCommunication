@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="communication_path_get_all_animals">/get-all-animals</string>
-    <string name="communication_path_delete_random_animal_by_id">/delete-random-animal-by-id</string>
+    <string name="communication_path_get_all_animals" translatable="false">/get-all-animals</string>
+    <string name="communication_path_delete_random_animal_by_id" translatable="false">/delete-random-animal-by-id</string>
 
 </resources>

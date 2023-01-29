@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="communication_capabililty_handheld" translatable="false">handheld</string>
+    <string name="communication_capabililty_wearable" translatable="false">wearable</string>
+
+</resources>

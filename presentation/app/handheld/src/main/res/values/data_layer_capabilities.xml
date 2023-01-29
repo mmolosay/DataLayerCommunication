@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string-array name="android_wear_capabilities" tools:ignore="UnusedResources" translatable="false">
+
+    <string-array name="android_wear_capabilities" translatable="false" tools:ignore="UnusedResources">
         <!-- declaring the provided capabilities -->
-        <item>wear</item>
+        <item>@string/communication_capabililty_handheld</item>
     </string-array>
+
 </resources>

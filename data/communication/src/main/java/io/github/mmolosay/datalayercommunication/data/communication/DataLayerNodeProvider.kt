@@ -10,12 +10,12 @@ import kotlinx.coroutines.tasks.await
  */
 class DataLayerNodeProvider(
     private val capabilityClient: CapabilityClient,
-    private val mobileCapability: String,
+    private val handheldCapability: String,
     private val wearableCapability: String,
 ) : NodeProvider {
 
     override suspend fun handheld(): Collection<Node> =
-        getNodesWithCapability(mobileCapability)
+        getNodesWithCapability(handheldCapability)
 
     override suspend fun wearable(): Collection<Node> =
         getNodesWithCapability(wearableCapability)

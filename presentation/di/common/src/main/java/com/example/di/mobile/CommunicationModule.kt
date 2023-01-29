@@ -65,8 +65,8 @@ class CommunicationModule {
     ): NodeProvider =
         DataLayerNodeProvider(
             capabilityClient = Wearable.getCapabilityClient(context),
-            mobileCapability = "mobile", // TODO: try obtaining string from resources, placing .xml file in this module
-            wearableCapability = "wear", // TODO: try obtaining string from resources, placing .xml file in this module
+            handheldCapability = context.getString(R.string.communication_capabililty_handheld),
+            wearableCapability = context.getString(R.string.communication_capabililty_wearable),
         )
 
     @Provides

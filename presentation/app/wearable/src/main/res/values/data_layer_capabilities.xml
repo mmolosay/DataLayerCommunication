@@ -3,7 +3,7 @@
 
     <string-array name="android_wear_capabilities" translatable="false" tools:ignore="UnusedResources">
         <!-- declaring the provided capabilities -->
-        <item>mobile</item>
+        <item>@string/communication_capabililty_wearable</item>
     </string-array>
 
 </resources>
