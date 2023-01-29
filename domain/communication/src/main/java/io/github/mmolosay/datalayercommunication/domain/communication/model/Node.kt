@@ -11,8 +11,8 @@ data class Node(
 /**
  * Assembles new [Destination], using receiver [Node].
  */
-fun Node.toDestination(path: String): Destination =
+fun Node.toDestination(path: Path): Destination =
     Destination(
         nodeId = id,
-        path = Path(path),
+        path = path,
     )
