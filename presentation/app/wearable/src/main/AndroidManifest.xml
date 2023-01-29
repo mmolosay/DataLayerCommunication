@@ -4,7 +4,7 @@
     <uses-feature android:name="android.hardware.type.watch" />
 
     <application
-        android:name=".AndroidApplication"
+        android:name=".DataLayerCommunicationApp"
         android:allowBackup="true"
         android:fullBackupOnly="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,7 +20,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".WearableActivity"
+            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication
+package io.github.mmolosay.datalayercommunication.service
 
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.TaskCompletionSource
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MobileDataLayerService : WearableListenerService() {
+class DataLayerService : WearableListenerService() {
 
     @Inject
     lateinit var server: CommunicationServer

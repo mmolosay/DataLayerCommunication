@@ -13,7 +13,7 @@
             android:value="@integer/google_play_services_version" />
 
         <service
-            android:name=".MobileDataLayerService"
+            android:name=".service.DataLayerService"
             android:exported="true">
 
             <intent-filter>
@@ -34,7 +34,7 @@
         </service>
 
         <activity
-            android:name=".MobileActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:theme="@android:style/Theme.Material.Light.NoActionBar">
             <intent-filter>
