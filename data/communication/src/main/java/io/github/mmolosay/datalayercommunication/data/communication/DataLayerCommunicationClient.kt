@@ -28,7 +28,7 @@ class DataLayerCommunicationClient(
             val responseData = messageClient
                 .sendRequest(
                     destination.nodeId,
-                    destination.path,
+                    destination.path.string,
                     requestData.bytes,
                 )
                 .await()

@@ -14,5 +14,5 @@ data class Node(
 fun Node.toDestination(path: String): Destination =
     Destination(
         nodeId = id,
-        path = path,
+        path = Path(path),
     )

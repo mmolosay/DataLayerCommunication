@@ -5,5 +5,5 @@ package io.github.mmolosay.datalayercommunication.domain.communication.model
  */
 data class Destination(
     val nodeId: String,
-    val path: String,
+    val path: Path,
 )
