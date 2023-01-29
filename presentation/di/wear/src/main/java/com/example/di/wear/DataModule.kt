@@ -7,7 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import io.github.mmolosay.datalayercommunication.data.wearable.AnimalsRepositoryImpl
 import io.github.mmolosay.datalayercommunication.domain.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.domain.communication.client.CommunicationClient
-import io.github.mmolosay.datalayercommunication.domain.communication.model.CommunicationPaths
+import io.github.mmolosay.datalayercommunication.domain.communication.model.PathSet
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
 import javax.inject.Singleton
 
@@ -20,12 +20,12 @@ class DataModule {
     fun provideAnimalsRepository(
         nodeProvider: NodeProvider,
         communicationClient: CommunicationClient,
-        communicationPaths: CommunicationPaths,
+        paths: PathSet,
     ): AnimalsRepository =
         AnimalsRepositoryImpl(
             nodeProvider = nodeProvider,
             communicationClient = communicationClient,
-            getAllAnimalsPath = communicationPaths.getAllAnimals,
-            deleteAnimalByIdPath = communicationPaths.deleteRandomAnimalById,
+            getAllAnimalsPath = paths.getAllAnimals,
+            deleteAnimalByIdPath = paths.deleteRandomAnimalById,
         )
 }

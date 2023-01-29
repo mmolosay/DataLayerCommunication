@@ -1,8 +1,9 @@
 package io.github.mmolosay.datalayercommunication.data.communication
 
-import io.github.mmolosay.datalayercommunication.domain.communication.model.Node
-import io.github.mmolosay.datalayercommunication.domain.communication.NodeProvider
 import com.google.android.gms.wearable.CapabilityClient
+import io.github.mmolosay.datalayercommunication.domain.communication.NodeProvider
+import io.github.mmolosay.datalayercommunication.domain.communication.model.Capability
+import io.github.mmolosay.datalayercommunication.domain.communication.model.Node
 import kotlinx.coroutines.tasks.await
 
 /**
@@ -10,8 +11,8 @@ import kotlinx.coroutines.tasks.await
  */
 class DataLayerNodeProvider(
     private val capabilityClient: CapabilityClient,
-    private val handheldCapability: String,
-    private val wearableCapability: String,
+    private val handheldCapability: Capability,
+    private val wearableCapability: Capability,
 ) : NodeProvider {
 
     override suspend fun handheld(): Collection<Node> =
@@ -20,9 +21,9 @@ class DataLayerNodeProvider(
     override suspend fun wearable(): Collection<Node> =
         getNodesWithCapability(wearableCapability)
 
-    private suspend fun getNodesWithCapability(capability: String): Collection<Node> =
+    private suspend fun getNodesWithCapability(capability: Capability): Collection<Node> =
         capabilityClient
-            .getCapability(capability, CapabilityClient.FILTER_REACHABLE)
+            .getCapability(capability.value, CapabilityClient.FILTER_REACHABLE)
             .await()
             .nodes
             .map { Node(id = it.id, isNearby = it.isNearby) }

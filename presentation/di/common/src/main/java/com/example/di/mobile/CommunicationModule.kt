@@ -23,8 +23,10 @@ import io.github.mmolosay.datalayercommunication.domain.communication.convertion
 import io.github.mmolosay.datalayercommunication.domain.communication.convertion.RequestEncoder
 import io.github.mmolosay.datalayercommunication.domain.communication.convertion.ResponseDecoder
 import io.github.mmolosay.datalayercommunication.domain.communication.convertion.ResponseEncoder
-import io.github.mmolosay.datalayercommunication.domain.communication.model.CommunicationPaths
+import io.github.mmolosay.datalayercommunication.domain.communication.model.Capability
+import io.github.mmolosay.datalayercommunication.domain.communication.model.CapabilitySet
 import io.github.mmolosay.datalayercommunication.domain.communication.model.Path
+import io.github.mmolosay.datalayercommunication.domain.communication.model.PathSet
 import io.github.mmolosay.datalayercommunication.domain.communication.server.CommunicationServer
 import io.github.mmolosay.datalayercommunication.domain.communication.server.CommunicationServerImpl
 import io.github.mmolosay.datalayercommunication.domain.communication.server.ResponseServer
@@ -62,11 +64,12 @@ class CommunicationModule {
     @Singleton
     fun provideNodeProvider(
         @ApplicationContext context: Context,
+        capabilities: CapabilitySet,
     ): NodeProvider =
         DataLayerNodeProvider(
             capabilityClient = Wearable.getCapabilityClient(context),
-            handheldCapability = context.getString(R.string.communication_capabililty_handheld),
-            wearableCapability = context.getString(R.string.communication_capabililty_wearable),
+            handheldCapability = capabilities.handheld,
+            wearableCapability = capabilities.wearable,
         )
 
     @Provides
@@ -108,9 +111,19 @@ class CommunicationModule {
     @Singleton
     fun provideCommunicationPaths(
         @ApplicationContext context: Context,
-    ): CommunicationPaths =
-        CommunicationPaths(
+    ): PathSet =
+        PathSet(
             getAllAnimals = Path(context.getString(R.string.communication_path_get_all_animals)),
             deleteRandomAnimalById = Path(context.getString(R.string.communication_path_delete_random_animal_by_id)),
+        )
+
+    @Provides
+    @Singleton
+    fun provideCommunicationCapabilities(
+        @ApplicationContext context: Context,
+    ): CapabilitySet =
+        CapabilitySet(
+            handheld = Capability(context.getString(R.string.communication_capabililty_handheld)),
+            wearable = Capability(context.getString(R.string.communication_capabililty_wearable)),
         )
 }
