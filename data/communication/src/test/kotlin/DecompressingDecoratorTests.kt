@@ -1,6 +1,7 @@
 import io.github.mmolosay.datalayercommunication.data.communication.convertion.decode.DecompressingDecorator
 import io.github.mmolosay.datalayercommunication.domain.communication.convertion.Decoder
 import io.github.mmolosay.datalayercommunication.domain.communication.model.Data
+import io.github.mmolosay.datalayercommunication.domain.communication.model.asString
 import io.kotest.matchers.shouldBe
 import org.junit.Test
 
@@ -58,6 +59,6 @@ class DecompressingDecoratorTests {
 
     class FakeDecoder : Decoder<String> {
         override fun decode(data: Data): String =
-            String(data.bytes)
+            data.asString()
     }
 }

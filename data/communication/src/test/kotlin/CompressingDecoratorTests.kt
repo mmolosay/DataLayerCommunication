@@ -56,6 +56,6 @@ class CompressingDecoratorTests {
 
     class FakeEncoder : Encoder<String> {
         override fun encode(value: String): Data =
-            Data(bytes = value.toByteArray())
+            Data.from(value)
     }
 }
