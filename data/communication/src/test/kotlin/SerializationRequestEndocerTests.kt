@@ -1,264 +1,41 @@
+import io.github.mmolosay.datalayercommunication.data.communication.convertion.decode.SerializationRequestDecoder
+import io.github.mmolosay.datalayercommunication.data.communication.convertion.decode.SerializationResponseDecoder
 import io.github.mmolosay.datalayercommunication.data.communication.convertion.encode.SerializationRequestEncoder
-import io.github.mmolosay.datalayercommunication.domain.communication.model.request.DeleteAnimalByIdRequest
+import io.github.mmolosay.datalayercommunication.data.communication.convertion.encode.SerializationResponseEncoder
 import io.github.mmolosay.datalayercommunication.domain.communication.model.request.GetAllAnimalsRequest
+import io.github.mmolosay.datalayercommunication.domain.communication.model.response.DeleteAnimalByIdResponse
+import io.github.mmolosay.datalayercommunication.domain.model.Animal
+import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.beOfType
 import org.junit.Test
 
 class SerializationRequestEndocerTests {
 
     @Test
-    fun `encodes GetAllAnimalsRequest correctly`() {
+    fun `encodes and decodes GetAllAnimalsRequest correctly`() {
         val encoder = SerializationRequestEncoder()
+        val decoder = SerializationRequestDecoder()
         val request = GetAllAnimalsRequest
 
-        val result = encoder.encode(request)
+        val encoded = encoder.encode(request)
+        val decoded = decoder.decode(encoded)
 
-        // value classes do not support custom equals() as for now
-        result.bytes shouldBe byteArrayOf(
-            123,
-            34,
-            116,
-            121,
-            112,
-            101,
-            34,
-            58,
-            34,
-            105,
-            111,
-            46,
-            103,
-            105,
-            116,
-            104,
-            117,
-            98,
-            46,
-            109,
-            109,
-            111,
-            108,
-            111,
-            115,
-            97,
-            121,
-            46,
-            100,
-            97,
-            116,
-            97,
-            108,
-            97,
-            121,
-            101,
-            114,
-            99,
-            111,
-            109,
-            109,
-            117,
-            110,
-            105,
-            99,
-            97,
-            116,
-            105,
-            111,
-            110,
-            46,
-            100,
-            111,
-            109,
-            97,
-            105,
-            110,
-            46,
-            99,
-            111,
-            109,
-            109,
-            117,
-            110,
-            105,
-            99,
-            97,
-            116,
-            105,
-            111,
-            110,
-            46,
-            109,
-            111,
-            100,
-            101,
-            108,
-            46,
-            114,
-            101,
-            113,
-            117,
-            101,
-            115,
-            116,
-            46,
-            71,
-            101,
-            116,
-            65,
-            108,
-            108,
-            65,
-            110,
-            105,
-            109,
-            97,
-            108,
-            115,
-            82,
-            101,
-            113,
-            117,
-            101,
-            115,
-            116,
-            34,
-            125
-        )
+        decoded should beOfType<GetAllAnimalsRequest>()
+        decoded shouldBe request
     }
 
     @Test
-    fun `encodes DeleteAnimalByIdRequest correctly`() {
-        val encoder = SerializationRequestEncoder()
-        val request = DeleteAnimalByIdRequest(animalId = 7L)
+    fun `encodes and decodes DeleteAnimalByIdResponse correctly`() {
+        val encoder = SerializationResponseEncoder()
+        val decoder = SerializationResponseDecoder()
+        val animal = Animal(id = 1536L, species = Animal.Species.Owl, name = "Phoebe", age = 2)
+        val response = DeleteAnimalByIdResponse(animal)
 
-        val result = encoder.encode(request)
-        result.bytes.forEach { print("$it, ") }
+        val encoded = encoder.encode(response)
+        val decoded = decoder.decode(encoded)
 
-        result.bytes shouldBe byteArrayOf(
-            123,
-            34,
-            116,
-            121,
-            112,
-            101,
-            34,
-            58,
-            34,
-            105,
-            111,
-            46,
-            103,
-            105,
-            116,
-            104,
-            117,
-            98,
-            46,
-            109,
-            109,
-            111,
-            108,
-            111,
-            115,
-            97,
-            121,
-            46,
-            100,
-            97,
-            116,
-            97,
-            108,
-            97,
-            121,
-            101,
-            114,
-            99,
-            111,
-            109,
-            109,
-            117,
-            110,
-            105,
-            99,
-            97,
-            116,
-            105,
-            111,
-            110,
-            46,
-            100,
-            111,
-            109,
-            97,
-            105,
-            110,
-            46,
-            99,
-            111,
-            109,
-            109,
-            117,
-            110,
-            105,
-            99,
-            97,
-            116,
-            105,
-            111,
-            110,
-            46,
-            109,
-            111,
-            100,
-            101,
-            108,
-            46,
-            114,
-            101,
-            113,
-            117,
-            101,
-            115,
-            116,
-            46,
-            68,
-            101,
-            108,
-            101,
-            116,
-            101,
-            65,
-            110,
-            105,
-            109,
-            97,
-            108,
-            66,
-            121,
-            73,
-            100,
-            82,
-            101,
-            113,
-            117,
-            101,
-            115,
-            116,
-            34,
-            44,
-            34,
-            97,
-            110,
-            105,
-            109,
-            97,
-            108,
-            73,
-            100,
-            34,
-            58,
-            55,
-            125
-        )
+        decoded should beOfType<DeleteAnimalByIdResponse>()
+        decoded shouldBe response
     }
 }
