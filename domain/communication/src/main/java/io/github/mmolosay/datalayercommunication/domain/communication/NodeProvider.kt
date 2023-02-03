@@ -1,19 +1,19 @@
 package io.github.mmolosay.datalayercommunication.domain.communication
 
-import io.github.mmolosay.datalayercommunication.domain.communication.model.Node
+import io.github.mmolosay.datalayercommunication.domain.communication.model.node.NodeNetworkData
 
 /**
- * Exposes an API for obtaining [Node]s in current device network.
+ * Exposes an API for obtaining nodes in current device network.
  */
 interface NodeProvider {
 
     /**
-     * Collects all reachable `handheld` nodes.
+     * Collects data about all reachable `handheld` nodes in current device network.
      */
-    suspend fun handheld(): Collection<Node>
+    suspend fun handheld(): Collection<NodeNetworkData>
 
     /**
-     * Collects all reachable `wearable` nodes.
+     * Collects data about all reachable `wearable` nodes in current device network.
      */
-    suspend fun wearable(): Collection<Node>
+    suspend fun wearable(): Collection<NodeNetworkData>
 }
