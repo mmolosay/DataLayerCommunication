@@ -1,5 +1,6 @@
 package io.github.mmolosay.datalayercommunication.data.communication
 
+import com.google.android.gms.wearable.MessageClient
 import io.github.mmolosay.datalayercommunication.domain.communication.client.CommunicationClient
 import io.github.mmolosay.datalayercommunication.domain.communication.convertion.RequestEncoder
 import io.github.mmolosay.datalayercommunication.domain.communication.convertion.ResponseDecoder
@@ -7,7 +8,6 @@ import io.github.mmolosay.datalayercommunication.domain.communication.model.Data
 import io.github.mmolosay.datalayercommunication.domain.communication.model.Destination
 import io.github.mmolosay.datalayercommunication.domain.communication.model.request.Request
 import io.github.mmolosay.datalayercommunication.domain.communication.model.response.Response
-import com.google.android.gms.wearable.MessageClient
 import kotlinx.coroutines.tasks.await
 
 /**
