@@ -1,10 +1,8 @@
 import io.github.mmolosay.datalayercommunication.data.handheld.AnimalsRepositoryImpl
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
-import io.kotest.matchers.collections.beEmpty
 import io.kotest.matchers.nulls.beNull
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldHave
 import io.kotest.matchers.shouldNot
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
