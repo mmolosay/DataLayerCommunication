@@ -1,12 +1,12 @@
 package io.github.mmolosay.datalayercommunication.data.communication
 
 import com.google.android.gms.wearable.CapabilityClient
-import com.google.android.gms.wearable.Node as DataLayerNode
 import io.github.mmolosay.datalayercommunication.domain.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.domain.communication.model.Capability
 import io.github.mmolosay.datalayercommunication.domain.communication.model.node.Node
 import io.github.mmolosay.datalayercommunication.domain.communication.model.node.NodeNetworkData
 import kotlinx.coroutines.tasks.await
+import com.google.android.gms.wearable.Node as DataLayerNode
 
 /**
  * Implementation of [NodeProvider], powered by Google's Data Layer API.
@@ -32,7 +32,13 @@ class DataLayerNodeProvider(
 
     private fun DataLayerNode.toNodeNetworkData(): NodeNetworkData =
         NodeNetworkData(
-            node = Node(id = this.id),
+            node = this.toNode(),
             isPairedToThisNode = this.isNearby,
+        )
+
+    private fun DataLayerNode.toNode(): Node =
+        Node(
+            id = this.id,
+            name = this.displayName,
         )
 }

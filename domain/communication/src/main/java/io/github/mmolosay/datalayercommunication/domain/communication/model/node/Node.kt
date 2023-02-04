@@ -8,6 +8,7 @@ import io.github.mmolosay.datalayercommunication.domain.communication.model.Path
  */
 data class Node(
     val id: String,
+    val name: String,
 )
 
 /**
