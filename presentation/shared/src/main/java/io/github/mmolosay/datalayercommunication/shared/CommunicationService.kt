@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.service
+package io.github.mmolosay.datalayercommunication.shared
 
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.TaskCompletionSource
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DataLayerService : WearableListenerService() {
+class CommunicationService : WearableListenerService() {
 
     @Inject
     lateinit var server: CommunicationServer
@@ -25,8 +25,8 @@ class DataLayerService : WearableListenerService() {
         super.onDestroy()
         /*
          * After 'onRequest()' had returned, service will be destroyed.
-         * Unlike for UI, we don't want to cancel 'coroutineScope' once it happens, but rather
-         * to finish all requests and return responses.
+         * Unlike for UI destruction, we don't want to cancel 'coroutineScope' once it happens,
+         * but rather to finish all requests and return responses.
          */
     }
 

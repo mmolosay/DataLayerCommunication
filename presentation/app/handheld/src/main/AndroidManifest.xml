@@ -13,7 +13,7 @@
             android:value="@integer/google_play_services_version" />
 
         <service
-            android:name=".service.DataLayerService"
+            android:name=".shared.CommunicationService"
             android:exported="true">
 
             <intent-filter>
