@@ -10,7 +10,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.beOfType
 import org.junit.Test
 
-class SerializationRequestEndocerTests {
+class SerializationEncoderDecoderTests {
 
     @Test
     fun `encodes and decodes GetAllAnimalsRequest correctly`() {
@@ -35,7 +35,6 @@ class SerializationRequestEndocerTests {
         val encoded = encoder.encode(response)
         val decoded = decoder.decode(encoded)
 
-        decoded should beOfType<DeleteAnimalByIdResponse>()
         decoded shouldBe response
     }
 }
