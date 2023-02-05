@@ -28,7 +28,7 @@ import io.github.mmolosay.datalayercommunication.domain.communication.model.Capa
 import io.github.mmolosay.datalayercommunication.domain.communication.model.Path
 import io.github.mmolosay.datalayercommunication.domain.communication.model.PathSet
 import io.github.mmolosay.datalayercommunication.domain.communication.server.CommunicationServer
-import io.github.mmolosay.datalayercommunication.domain.communication.server.CommunicationServerImpl
+import io.github.mmolosay.datalayercommunication.domain.communication.server.ConvertingCommunicationServer
 import io.github.mmolosay.datalayercommunication.domain.communication.server.ResponseServer
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
 import javax.inject.Singleton
@@ -92,7 +92,7 @@ class CommunicationModule {
         encoder: ResponseEncoder,
         responseServer: ResponseServer,
     ): CommunicationServer =
-        CommunicationServerImpl(
+        ConvertingCommunicationServer(
             decoder = decoder,
             encoder = encoder,
             responseServer = responseServer,
