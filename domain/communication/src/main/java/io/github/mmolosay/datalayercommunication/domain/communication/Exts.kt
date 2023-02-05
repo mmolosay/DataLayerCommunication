@@ -5,5 +5,5 @@ import io.github.mmolosay.datalayercommunication.domain.communication.model.node
 /**
  * Returns a filtered collection with only nodes paired to current device.
  */
-fun Collection<NodeNetworkData>.filterPairedToThis(): Collection<NodeNetworkData> =
+fun Iterable<NodeNetworkData>.filterPairedToThis(): List<NodeNetworkData> =
     this.filter { it.isPairedToThisNode }
