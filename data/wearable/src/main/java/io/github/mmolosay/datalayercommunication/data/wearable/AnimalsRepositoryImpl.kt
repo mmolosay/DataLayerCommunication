@@ -8,7 +8,7 @@ import io.github.mmolosay.datalayercommunication.domain.communication.model.requ
 import io.github.mmolosay.datalayercommunication.domain.communication.model.request.GetAllAnimalsRequest
 import io.github.mmolosay.datalayercommunication.domain.communication.model.response.DeleteAnimalByIdResponse
 import io.github.mmolosay.datalayercommunication.domain.communication.model.response.GetAllAnimalsResponse
-import io.github.mmolosay.datalayercommunication.domain.communication.pairedToThis
+import io.github.mmolosay.datalayercommunication.domain.communication.filterPairedToThis
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
 
@@ -22,7 +22,7 @@ class AnimalsRepositoryImpl(
     override suspend fun getAllAnimals(): List<Animal> {
         val destination = nodeProvider
             .handheld()
-            .pairedToThis()
+            .filterPairedToThis()
             .singleOrNull()
             ?.node
             ?.toDestination(getAllAnimalsPath)
@@ -37,7 +37,7 @@ class AnimalsRepositoryImpl(
     override suspend fun deleteAnimalById(id: Long): Animal? {
         val destination = nodeProvider
             .handheld()
-            .pairedToThis()
+            .filterPairedToThis()
             .singleOrNull()
             ?.node
             ?.toDestination(deleteAnimalByIdPath)
