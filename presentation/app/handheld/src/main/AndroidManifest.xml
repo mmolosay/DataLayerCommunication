@@ -14,7 +14,7 @@
 
         <service
             android:name=".shared.CommunicationService"
-            android:exported="true"> <!-- TODO: try false? -->
+            android:exported="true"> <!-- won't work if if service is not exported -->
 
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.REQUEST_RECEIVED" />
