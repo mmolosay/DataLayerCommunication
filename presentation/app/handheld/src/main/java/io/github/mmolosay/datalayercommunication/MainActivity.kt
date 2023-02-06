@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.ui
+package io.github.mmolosay.datalayercommunication
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
-                DataLayerCommunicationApp()
+                Application()
             }
         }
     }
