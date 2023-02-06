@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.ui
+package io.github.mmolosay.datalayercommunication
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,7 +7,6 @@ import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
 import dagger.hilt.android.AndroidEntryPoint
-import io.github.mmolosay.datalayercommunication.WearableViewModel
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

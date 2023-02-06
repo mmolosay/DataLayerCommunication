@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.ui
+package io.github.mmolosay.datalayercommunication
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
