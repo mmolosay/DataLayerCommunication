@@ -29,7 +29,7 @@ class DataModule {
             id = 1L,
             species = Animal.Species.Cat,
             name = "Cassy",
-            age = 1,
+            age = 2,
         ),
         Animal(
             id = 2L,

@@ -9,10 +9,9 @@ class GetAnimalsUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(
-        amount: Int,
-        ageFrom: Int?,
-        ageTo: Int?,
-        onlyCats: Boolean,
+        ageFrom: Int? = null,
+        ageTo: Int? = null,
+        onlyCats: Boolean = false,
     ): List<Animal> =
         repository
             .getAllAnimals()
@@ -26,6 +25,5 @@ class GetAnimalsUseCase @Inject constructor(
             .run {
                 ageTo?.let { age -> filter { it.age <= age } } ?: this
             }
-            .take(amount)
             .toList()
 }

@@ -23,11 +23,22 @@ class WearableViewModel @Inject constructor(
         viewModelScope.launch {
             val animals: List<Animal>
             val elapsed = measureTimeMillis {
+                animals = getAnimalsUseCase()
+            }
+            uiState.value = uiState.value.copy(
+                elapsedTime = makeElapsedTime(elapsed),
+                animals = animals,
+            )
+        }
+    }
+
+    fun getCatsOlderThan1() {
+        viewModelScope.launch {
+            val animals: List<Animal>
+            val elapsed = measureTimeMillis {
                 animals = getAnimalsUseCase(
-                    amount = 5,
-                    ageFrom = 1,
-                    ageTo = null,
-                    onlyCats = false,
+                    ageFrom = 2,
+                    onlyCats = true,
                 )
             }
             uiState.value = uiState.value.copy(
