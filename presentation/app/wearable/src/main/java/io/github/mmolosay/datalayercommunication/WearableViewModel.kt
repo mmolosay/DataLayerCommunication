@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
+import io.github.mmolosay.datalayercommunication.domain.resource.Resource
+import io.github.mmolosay.datalayercommunication.domain.resource.map
+import io.github.mmolosay.datalayercommunication.domain.resource.success
 import io.github.mmolosay.datalayercommunication.domain.usecase.DeleteRandomAnimalUseCase
 import io.github.mmolosay.datalayercommunication.domain.usecase.GetAnimalsUseCase
 import kotlinx.coroutines.launch
@@ -21,29 +24,29 @@ class WearableViewModel @Inject constructor(
 
     fun getAllAnimals() {
         viewModelScope.launch {
-            val animals: List<Animal>
+            val resource: Resource<List<Animal>>
             val elapsed = measureTimeMillis {
-                animals = getAnimalsUseCase()
+                resource = getAnimalsUseCase()
             }
             uiState.value = uiState.value.copy(
                 elapsedTime = makeElapsedTime(elapsed),
-                animals = animals,
+                animals = resource,
             )
         }
     }
 
     fun getCatsOlderThan1() {
         viewModelScope.launch {
-            val animals: List<Animal>
+            val resource: Resource<List<Animal>>
             val elapsed = measureTimeMillis {
-                animals = getAnimalsUseCase(
+                resource = getAnimalsUseCase(
                     ageFrom = 2,
                     onlyCats = true,
                 )
             }
             uiState.value = uiState.value.copy(
                 elapsedTime = makeElapsedTime(elapsed),
-                animals = animals,
+                animals = resource,
             )
         }
     }
@@ -53,13 +56,13 @@ class WearableViewModel @Inject constructor(
         olderThan: Int? = null,
     ) {
         viewModelScope.launch {
-            val animal: Animal?
+            val resource: Resource<Animal?>
             val elapsed = measureTimeMillis {
-                animal = deleteRandomAnimalUseCase(ofSpecies, olderThan)
+                resource = deleteRandomAnimalUseCase(ofSpecies, olderThan)
             }
             uiState.value = uiState.value.copy(
                 elapsedTime = makeElapsedTime(elapsed),
-                animals = animal?.let { listOf(it) } ?: emptyList(),
+                animals = resource.map { animal -> animal?.let { listOf(it) } ?: emptyList() }
             )
         }
     }
@@ -71,7 +74,7 @@ class WearableViewModel @Inject constructor(
     private fun makeBlankUiState(): UiState =
         UiState(
             elapsedTime = "—",
-            animals = emptyList(),
+            animals = Resource.success(emptyList()),
         )
 
     private fun makeElapsedTime(ms: Long): String =
@@ -79,6 +82,6 @@ class WearableViewModel @Inject constructor(
 
     data class UiState(
         val elapsedTime: String,
-        val animals: List<Animal>
+        val animals: Resource<List<Animal>>,
     )
 }

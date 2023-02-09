@@ -1,5 +1,6 @@
 package io.github.mmolosay.datalayercommunication
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +17,7 @@ import androidx.wear.compose.material.Card
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.ScalingLazyColumn
+import androidx.wear.compose.material.ScalingLazyListScope
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.Vignette
@@ -23,7 +25,10 @@ import androidx.wear.compose.material.VignettePosition
 import androidx.wear.compose.material.items
 import androidx.wear.compose.material.rememberScalingLazyListState
 import io.github.mmolosay.datalayercommunication.WearableViewModel.UiState
+import io.github.mmolosay.datalayercommunication.domain.communication.CommunicationFailures.NoSuchNodeFailure
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
+import io.github.mmolosay.datalayercommunication.domain.resource.Resource
+import io.github.mmolosay.datalayercommunication.domain.resource.success
 
 // region Preivews
 
@@ -42,7 +47,7 @@ fun MainAppPreviewEvents() {
 private fun previewUiState(): UiState =
     UiState(
         elapsedTime = "3569 ms",
-        animals = emptyList(),
+        animals = Resource.success(emptyList()),
     )
 
 // endregion
@@ -93,9 +98,7 @@ fun Application(
                 Text(text = "Request elapsed time: ${uiState.elapsedTime}")
                 Spacer(modifier = Modifier.height(16.dp))
             }
-            items(uiState.animals) {
-                Animal(it)
-            }
+            AnimalsSection(uiState.animals)
             item {
                 Button(
                     onClick = onClearClick,
@@ -121,6 +124,31 @@ private fun MessageButton(
         modifier = Modifier.fillMaxWidth()
     ) {
         Text(text = text)
+    }
+
+private fun ScalingLazyListScope.AnimalsSection(resource: Resource<List<Animal>>) =
+    when (resource) {
+        is Resource.Success -> Animals(resource.value)
+        is Resource.Failure -> AnimalsFailure(resource)
+    }
+
+private fun ScalingLazyListScope.Animals(animals: List<Animal>) =
+    items(animals) {
+        Animal(it)
+    }
+
+private fun ScalingLazyListScope.AnimalsFailure(failure: Resource.Failure) =
+    item {
+        when (failure) {
+            is NoSuchNodeFailure -> AnimalsFailure("Couldn't find appropriate node to fetch data from")
+            else -> Unit
+        }
+    }
+
+@Composable
+private fun AnimalsFailure(message: String) =
+    Box(modifier = Modifier.fillMaxWidth()) {
+        Text(text = message)
     }
 
 @Composable

@@ -2,6 +2,9 @@ package io.github.mmolosay.datalayercommunication.domain.usecase
 
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
+import io.github.mmolosay.datalayercommunication.domain.resource.Resource
+import io.github.mmolosay.datalayercommunication.domain.resource.getOrElse
+import io.github.mmolosay.datalayercommunication.domain.resource.success
 import javax.inject.Inject
 
 class DeleteRandomAnimalUseCase @Inject constructor(
@@ -11,9 +14,10 @@ class DeleteRandomAnimalUseCase @Inject constructor(
     suspend operator fun invoke(
         ofSpecies: Animal.Species?,
         olderThan: Int?,
-    ): Animal? =
-        repository
+    ): Resource<Animal?> {
+        return repository
             .getAllAnimals()
+            .getOrElse { return it }
             .asSequence()
             .run {
                 ofSpecies?.let { filter { it.species == ofSpecies } } ?: this
@@ -23,7 +27,9 @@ class DeleteRandomAnimalUseCase @Inject constructor(
             }
             .toList()
             .randomOrNull()
-            ?.also { animal ->
-                repository.deleteAnimalById(animal.id)
+            ?.let { animalToDelete ->
+                repository.deleteAnimalById(animalToDelete.id)
             }
+            ?: Resource.success(null)
+    }
 }
