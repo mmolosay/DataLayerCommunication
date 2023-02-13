@@ -1,6 +1,5 @@
 package io.github.mmolosay.datalayercommunication.data.communication
 
-import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
 import io.github.mmolosay.datalayercommunication.domain.communication.model.request.DeleteAnimalByIdRequest
 import io.github.mmolosay.datalayercommunication.domain.communication.model.request.GetAllAnimalsRequest
 import io.github.mmolosay.datalayercommunication.domain.communication.model.request.Request
@@ -8,8 +7,8 @@ import io.github.mmolosay.datalayercommunication.domain.communication.model.resp
 import io.github.mmolosay.datalayercommunication.domain.communication.model.response.GetAllAnimalsResponse
 import io.github.mmolosay.datalayercommunication.domain.communication.model.response.Response
 import io.github.mmolosay.datalayercommunication.domain.communication.server.ResponseServer
+import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
 import io.github.mmolosay.datalayercommunication.domain.resource.Resource
-import io.github.mmolosay.datalayercommunication.domain.resource.getOrElse
 import io.github.mmolosay.datalayercommunication.domain.resource.getOrNull
 
 /**
@@ -19,7 +18,7 @@ class RepositoryResponseServer(
     private val animalsRepository: AnimalsRepository,
 ) : ResponseServer {
 
-    override suspend fun on(request: Request): Response =
+    override suspend fun reciprocate(request: Request): Response =
         when (request) {
             is GetAllAnimalsRequest -> on(request)
             is DeleteAnimalByIdRequest -> on(request)

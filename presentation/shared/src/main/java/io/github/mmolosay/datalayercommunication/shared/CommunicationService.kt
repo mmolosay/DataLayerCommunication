@@ -34,7 +34,7 @@ class CommunicationService : WearableListenerService() {
         val taskCompletionSource = TaskCompletionSource<ByteArray>()
         coroutineScope.launch {
             val requestData = Data(requestBytes)
-            val responseData = server.on(requestData)
+            val responseData = server.reciprocate(requestData)
             taskCompletionSource.setResult(responseData.bytes)
         }
         return taskCompletionSource.task

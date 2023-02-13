@@ -28,7 +28,7 @@ import io.github.mmolosay.datalayercommunication.domain.communication.model.Capa
 import io.github.mmolosay.datalayercommunication.domain.communication.model.Path
 import io.github.mmolosay.datalayercommunication.domain.communication.model.PathSet
 import io.github.mmolosay.datalayercommunication.domain.communication.server.CommunicationServer
-import io.github.mmolosay.datalayercommunication.domain.communication.server.ConvertingCommunicationServer
+import io.github.mmolosay.datalayercommunication.data.communication.ConvertingCommunicationServer
 import io.github.mmolosay.datalayercommunication.domain.communication.server.ResponseServer
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
 import javax.inject.Singleton
