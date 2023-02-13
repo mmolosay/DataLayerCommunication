@@ -5,6 +5,8 @@ import io.github.mmolosay.datalayercommunication.data.communication.convertion.e
 import io.github.mmolosay.datalayercommunication.domain.communication.model.request.GetAllAnimalsRequest
 import io.github.mmolosay.datalayercommunication.domain.communication.model.response.DeleteAnimalByIdResponse
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
+import io.github.mmolosay.datalayercommunication.domain.resource.Resource
+import io.github.mmolosay.datalayercommunication.domain.resource.success
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.beOfType
@@ -30,7 +32,8 @@ class SerializationEncoderDecoderTests {
         val encoder = SerializationResponseEncoder()
         val decoder = SerializationResponseDecoder()
         val animal = Animal(id = 1536L, species = Animal.Species.Owl, name = "Phoebe", age = 2)
-        val response = DeleteAnimalByIdResponse(animal)
+        val resource = Resource.success(animal)
+        val response = DeleteAnimalByIdResponse(resource)
 
         val encoded = encoder.encode(response)
         val decoded = decoder.decode(encoded)
