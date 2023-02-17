@@ -37,6 +37,7 @@ import io.github.mmolosay.datalayercommunication.domain.communication.server.Res
 import io.github.mmolosay.datalayercommunication.domain.model.ModelSerializersModuleFactory
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
 import io.github.mmolosay.datalayercommunication.domain.resource.ResourceSerialializersModuleFactory
+import kotlinx.serialization.StringFormat
 import javax.inject.Singleton
 
 /**
@@ -50,33 +51,35 @@ class CommunicationModule {
 
     @Provides
     @Singleton
-    fun provideRequestConverters(): RequestConverters {
-        // TODO: remove duplication
+    fun provideStringFormat(): StringFormat {
         val modelsModule = ModelSerializersModuleFactory.make()
         val resourceModule = ResourceSerialializersModuleFactory.make()
-        val format = StringFormatFactory.of(resourceModule, modelsModule)
-        return Converters(
+        return StringFormatFactory.of(resourceModule, modelsModule)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRequestConverters(
+        format: StringFormat,
+    ): RequestConverters =
+        Converters(
             encoder = SerializationRequestEncoder(format),
             decoder = SerializationRequestDecoder(format),
         ).add(
             Feature.Compression,
         )
-    }
 
     @Provides
     @Singleton
-    fun provideResponseConverters(): ResponseConverters {
-        // TODO: remove duplication
-        val modelsModule = ModelSerializersModuleFactory.make()
-        val resourceModule = ResourceSerialializersModuleFactory.make()
-        val format = StringFormatFactory.of(resourceModule, modelsModule)
-        return Converters(
+    fun provideResponseConverters(
+        format: StringFormat,
+    ): ResponseConverters =
+        Converters(
             encoder = SerializationResponseEncoder(format),
             decoder = SerializationResponseDecoder(format),
         ).add(
             Feature.Compression,
         )
-    }
 
     @Provides
     @Singleton
