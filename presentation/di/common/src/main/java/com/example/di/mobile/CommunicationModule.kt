@@ -7,13 +7,18 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import io.github.mmolosay.datalayercommunication.data.communication.ConvertingCommunicationServer
 import io.github.mmolosay.datalayercommunication.data.communication.DataLayerCommunicationClient
 import io.github.mmolosay.datalayercommunication.data.communication.DataLayerNodeProvider
 import io.github.mmolosay.datalayercommunication.data.communication.RepositoryResponseServer
-import io.github.mmolosay.datalayercommunication.data.communication.convertion.decode.DecompressingDecorator
+import io.github.mmolosay.datalayercommunication.data.communication.convertion.Converters
+import io.github.mmolosay.datalayercommunication.data.communication.convertion.ConvertersFactory.Feature
+import io.github.mmolosay.datalayercommunication.data.communication.convertion.ConvertersFactory.add
+import io.github.mmolosay.datalayercommunication.data.communication.convertion.RequestConverters
+import io.github.mmolosay.datalayercommunication.data.communication.convertion.ResponseConverters
+import io.github.mmolosay.datalayercommunication.data.communication.convertion.StringFormatFactory
 import io.github.mmolosay.datalayercommunication.data.communication.convertion.decode.SerializationRequestDecoder
 import io.github.mmolosay.datalayercommunication.data.communication.convertion.decode.SerializationResponseDecoder
-import io.github.mmolosay.datalayercommunication.data.communication.convertion.encode.CompressingDecorator
 import io.github.mmolosay.datalayercommunication.data.communication.convertion.encode.SerializationRequestEncoder
 import io.github.mmolosay.datalayercommunication.data.communication.convertion.encode.SerializationResponseEncoder
 import io.github.mmolosay.datalayercommunication.di.R
@@ -28,9 +33,10 @@ import io.github.mmolosay.datalayercommunication.domain.communication.model.Capa
 import io.github.mmolosay.datalayercommunication.domain.communication.model.Path
 import io.github.mmolosay.datalayercommunication.domain.communication.model.PathSet
 import io.github.mmolosay.datalayercommunication.domain.communication.server.CommunicationServer
-import io.github.mmolosay.datalayercommunication.data.communication.ConvertingCommunicationServer
 import io.github.mmolosay.datalayercommunication.domain.communication.server.ResponseServer
+import io.github.mmolosay.datalayercommunication.domain.model.ModelSerializersModuleFactory
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
+import io.github.mmolosay.datalayercommunication.domain.resource.ResourceSerialializersModuleFactory
 import javax.inject.Singleton
 
 /**
@@ -40,25 +46,69 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class CommunicationModule {
 
-    @Provides
-    @Singleton
-    fun provideRequestEncoder(): RequestEncoder =
-        CompressingDecorator(SerializationRequestEncoder())
+    // region Convertion
 
     @Provides
     @Singleton
-    fun provideResponseEncoder(): ResponseEncoder =
-        CompressingDecorator(SerializationResponseEncoder())
+    fun provideRequestConverters(): RequestConverters {
+        // TODO: remove duplication
+        val modelsModule = ModelSerializersModuleFactory.make()
+        val resourceModule = ResourceSerialializersModuleFactory.make()
+        val format = StringFormatFactory.of(resourceModule, modelsModule)
+        return Converters(
+            encoder = SerializationRequestEncoder(format),
+            decoder = SerializationRequestDecoder(format),
+        ).add(
+            Feature.Compression,
+        )
+    }
 
     @Provides
     @Singleton
-    fun provideRequestDecoder(): RequestDecoder =
-        DecompressingDecorator(SerializationRequestDecoder())
+    fun provideResponseConverters(): ResponseConverters {
+        // TODO: remove duplication
+        val modelsModule = ModelSerializersModuleFactory.make()
+        val resourceModule = ResourceSerialializersModuleFactory.make()
+        val format = StringFormatFactory.of(resourceModule, modelsModule)
+        return Converters(
+            encoder = SerializationResponseEncoder(format),
+            decoder = SerializationResponseDecoder(format),
+        ).add(
+            Feature.Compression,
+        )
+    }
 
     @Provides
     @Singleton
-    fun provideResponseDecoder(): ResponseDecoder =
-        DecompressingDecorator(SerializationResponseDecoder())
+    fun provideRequestEncoder(
+        converters: RequestConverters,
+    ): RequestEncoder =
+        converters.encoder
+
+    @Provides
+    @Singleton
+    fun provideResponseEncoder(
+        converters: ResponseConverters,
+    ): ResponseEncoder =
+        converters.encoder
+
+    @Provides
+    @Singleton
+    fun provideRequestDecoder(
+        converters: RequestConverters,
+    ): RequestDecoder =
+        converters.decoder
+
+    @Provides
+    @Singleton
+    fun provideResponseDecoder(
+        converters: ResponseConverters,
+    ): ResponseDecoder =
+        converters.decoder
+
+    // endregion
+
+    // region Components
 
     @Provides
     @Singleton
@@ -107,6 +157,10 @@ class CommunicationModule {
             animalsRepository = animalsRepository,
         )
 
+    // endregion
+
+    // region Utility sets
+
     @Provides
     @Singleton
     fun provideCommunicationPaths(
@@ -126,4 +180,6 @@ class CommunicationModule {
             handheld = Capability(context.getString(R.string.communication_capabililty_handheld)),
             wearable = Capability(context.getString(R.string.communication_capabililty_wearable)),
         )
+
+    // endregion
 }

@@ -5,16 +5,18 @@ import io.github.mmolosay.datalayercommunication.domain.communication.convertion
 import io.github.mmolosay.datalayercommunication.domain.communication.model.Data
 import io.github.mmolosay.datalayercommunication.domain.communication.model.request.Request
 import io.github.mmolosay.datalayercommunication.domain.communication.model.response.Response
+import kotlinx.serialization.StringFormat
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 /**
  * Implementation of [RequestEncoder], powered by [kotlinx.serialization].
  */
-class SerializationRequestEncoder : RequestEncoder {
+class SerializationRequestEncoder(
+    private val format: StringFormat,
+) : RequestEncoder {
 
     override fun encode(value: Request): Data {
-        val json = Json.encodeToString(value)
+        val json = format.encodeToString(value)
         return Data.from(json)
     }
 }
@@ -22,10 +24,12 @@ class SerializationRequestEncoder : RequestEncoder {
 /**
  * Implementation of [ResponseEncoder], powered by [kotlinx.serialization].
  */
-class SerializationResponseEncoder : ResponseEncoder {
+class SerializationResponseEncoder(
+    private val format: StringFormat,
+) : ResponseEncoder {
 
     override fun encode(value: Response): Data {
-        val json = Json.encodeToString(value)
+        val json = format.encodeToString(value)
         return Data.from(json)
     }
 }

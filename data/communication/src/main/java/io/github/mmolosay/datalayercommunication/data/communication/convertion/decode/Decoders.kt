@@ -6,27 +6,31 @@ import io.github.mmolosay.datalayercommunication.domain.communication.model.Data
 import io.github.mmolosay.datalayercommunication.domain.communication.model.asString
 import io.github.mmolosay.datalayercommunication.domain.communication.model.request.Request
 import io.github.mmolosay.datalayercommunication.domain.communication.model.response.Response
+import kotlinx.serialization.StringFormat
 import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 
 /**
  * Implementation of [RequestDecoder], powered by [kotlinx.serialization].
  */
-class SerializationRequestDecoder : RequestDecoder {
+class SerializationRequestDecoder(
+    private val format: StringFormat,
+) : RequestDecoder {
 
     override fun decode(data: Data): Request {
         val json = data.asString()
-        return Json.decodeFromString(json)
+        return format.decodeFromString(json)
     }
 }
 
 /**
  * Implementation of [ResponseDecoder], powered by [kotlinx.serialization].
  */
-class SerializationResponseDecoder : ResponseDecoder {
+class SerializationResponseDecoder(
+    private val format: StringFormat,
+) : ResponseDecoder {
 
     override fun decode(data: Data): Response {
         val json = data.asString()
-        return Json.decodeFromString(json)
+        return format.decodeFromString(json)
     }
 }
