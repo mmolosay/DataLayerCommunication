@@ -1,6 +1,5 @@
 package io.github.mmolosay.datalayercommunication.data.wearable
 
-import io.github.mmolosay.datalayercommunication.domain.communication.CommunicationFailures.CommunicatingFailure
 import io.github.mmolosay.datalayercommunication.domain.communication.CommunicationFailures.NoSuchNodeFailure
 import io.github.mmolosay.datalayercommunication.domain.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.domain.communication.client.CommunicationClient
@@ -15,6 +14,7 @@ import io.github.mmolosay.datalayercommunication.domain.model.Animal
 import io.github.mmolosay.datalayercommunication.domain.model.Animals
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
 import io.github.mmolosay.datalayercommunication.domain.resource.Resource
+import io.github.mmolosay.datalayercommunication.domain.resource.getOrElse
 
 class AnimalsRepositoryImpl(
     private val nodeProvider: NodeProvider,
@@ -31,7 +31,7 @@ class AnimalsRepositoryImpl(
         val request = GetAllAnimalsRequest
         return communicationClient
             .request<GetAllAnimalsResponse>(destination, request)
-            .getOrElse { return CommunicatingFailure }
+            .getOrElse { return it }
             .resource
     }
 
@@ -43,7 +43,7 @@ class AnimalsRepositoryImpl(
         val request = DeleteAnimalByIdRequest(animalId = id)
         return communicationClient
             .request<DeleteAnimalByIdResponse>(destination, request)
-            .getOrThrow()
+            .getOrElse { return it }
             .resource
     }
 }

@@ -1,6 +1,7 @@
 package io.github.mmolosay.datalayercommunication.data.communication
 
 import com.google.android.gms.wearable.MessageClient
+import io.github.mmolosay.datalayercommunication.domain.communication.CommunicationFailures.CommunicatingFailure
 import io.github.mmolosay.datalayercommunication.domain.communication.client.CommunicationClient
 import io.github.mmolosay.datalayercommunication.domain.communication.convertion.RequestEncoder
 import io.github.mmolosay.datalayercommunication.domain.communication.convertion.ResponseDecoder
@@ -8,6 +9,8 @@ import io.github.mmolosay.datalayercommunication.domain.communication.model.Data
 import io.github.mmolosay.datalayercommunication.domain.communication.model.Destination
 import io.github.mmolosay.datalayercommunication.domain.communication.model.request.Request
 import io.github.mmolosay.datalayercommunication.domain.communication.model.response.Response
+import io.github.mmolosay.datalayercommunication.domain.resource.Resource
+import io.github.mmolosay.datalayercommunication.domain.resource.success
 import kotlinx.coroutines.tasks.await
 
 /**
@@ -22,17 +25,23 @@ class DataLayerCommunicationClient(
     override suspend fun <R : Response> request(
         destination: Destination,
         request: Request,
-    ): Result<R> =
+    ): Resource<R> =
         runCatching {
             val requestData = encoder.encode(request)
-            val responseData = messageClient
-                .sendRequest(
-                    destination.nodeId,
-                    destination.path.value,
-                    requestData.bytes,
-                )
+            val responseBytes = messageClient
+                .sendRequest(destination.nodeId, destination.path.value, requestData.bytes)
                 .await()
-                .let { Data(it) }
+            val responseData = Data(responseBytes)
             decoder.decode(responseData) as R // caller's responsibility to provide correct type
-        }
+        }.toResource()
+
+    private fun <R : Response> Result<R>.toResource(): Resource<R> =
+        fold(
+            onSuccess = {
+                Resource.success(it)
+            },
+            onFailure = { // you can check type of exception here and return different failures
+                CommunicatingFailure
+            },
+        )
 }
