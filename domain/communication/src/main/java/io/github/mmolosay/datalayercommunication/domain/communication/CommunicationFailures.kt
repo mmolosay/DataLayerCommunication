@@ -10,4 +10,10 @@ object CommunicationFailures {
      */
     @Serializable
     object NoSuchNodeFailure : Resource.Failure
+
+    /**
+     * Describes situation, when communication between devices had failed.
+     */
+    @Serializable
+    object CommunicatingFailure : Resource.Failure
 }
