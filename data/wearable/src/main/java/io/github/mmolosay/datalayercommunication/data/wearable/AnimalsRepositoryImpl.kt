@@ -4,11 +4,11 @@ import io.github.mmolosay.datalayercommunication.domain.communication.NodeProvid
 import io.github.mmolosay.datalayercommunication.domain.communication.client.CommunicationClient
 import io.github.mmolosay.datalayercommunication.domain.communication.filterPairedToThis
 import io.github.mmolosay.datalayercommunication.domain.communication.model.Path
-import io.github.mmolosay.datalayercommunication.domain.communication.model.node.toDestination
 import io.github.mmolosay.datalayercommunication.domain.communication.model.request.DeleteAnimalByIdRequest
 import io.github.mmolosay.datalayercommunication.domain.communication.model.request.GetAllAnimalsRequest
 import io.github.mmolosay.datalayercommunication.domain.communication.model.response.DeleteAnimalByIdResponse
 import io.github.mmolosay.datalayercommunication.domain.communication.model.response.GetAllAnimalsResponse
+import io.github.mmolosay.datalayercommunication.domain.communication.model.toDestination
 import io.github.mmolosay.datalayercommunication.domain.communication.resourceSingle
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
 import io.github.mmolosay.datalayercommunication.domain.model.Animals
@@ -25,11 +25,10 @@ class AnimalsRepositoryImpl(
 
     override suspend fun getAllAnimals(): Resource<Animals> {
         val destination = nodeProvider
-            .handheld()
+            .handheld()// TODO: redesign NodeProvider to return Resource
             .filterPairedToThis()
             .resourceSingle()
             .getOrElse { return it }
-            .node
             .toDestination(getAllAnimalsPath)
         val request = GetAllAnimalsRequest
         return communicationClient
@@ -44,7 +43,6 @@ class AnimalsRepositoryImpl(
             .filterPairedToThis()
             .resourceSingle()
             .getOrElse { return it }
-            .node
             .toDestination(deleteAnimalByIdPath)
         val request = DeleteAnimalByIdRequest(animalId = id)
         return communicationClient
