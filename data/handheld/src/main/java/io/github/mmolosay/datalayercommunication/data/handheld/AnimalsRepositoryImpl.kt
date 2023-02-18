@@ -1,6 +1,7 @@
 package io.github.mmolosay.datalayercommunication.data.handheld
 
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
+import io.github.mmolosay.datalayercommunication.domain.model.Animals
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
 import io.github.mmolosay.datalayercommunication.domain.resource.Resource
 import io.github.mmolosay.datalayercommunication.domain.resource.success
@@ -11,8 +12,9 @@ class AnimalsRepositoryImpl(
 
     private val animals = animals.toMutableList()
 
-    override suspend fun getAllAnimals(): Resource<List<Animal>> =
-        Resource.success(animals)
+    override suspend fun getAllAnimals(): Resource<Animals> =
+        Animals(animals)
+            .let { Resource.success(it) }
 
     override suspend fun deleteAnimalById(id: Long): Resource<Animal?> {
         if (animals.isEmpty()) return Resource.success(null)

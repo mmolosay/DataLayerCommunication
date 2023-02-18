@@ -9,5 +9,6 @@ object ModelSerializersModuleFactory {
     fun make(): SerializersModule =
         SerializersModule {
             polymorphic(Any::class) { subclass(Animal::class) }
+            polymorphic(Any::class) { subclass(Animals::class) }
         }
 }

@@ -18,6 +18,7 @@ class DeleteRandomAnimalUseCase @Inject constructor(
         return repository
             .getAllAnimals()
             .getOrElse { return it }
+            .list
             .asSequence()
             .run {
                 ofSpecies?.let { filter { it.species == ofSpecies } } ?: this

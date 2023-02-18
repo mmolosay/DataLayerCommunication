@@ -11,10 +11,10 @@ import io.github.mmolosay.datalayercommunication.domain.communication.model.resp
 import io.github.mmolosay.datalayercommunication.domain.communication.model.response.GetAllAnimalsResponse
 import io.github.mmolosay.datalayercommunication.domain.communication.resourceSingle
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
+import io.github.mmolosay.datalayercommunication.domain.model.Animals
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
 import io.github.mmolosay.datalayercommunication.domain.resource.Resource
 import io.github.mmolosay.datalayercommunication.domain.resource.getOrElse
-import io.github.mmolosay.datalayercommunication.domain.resource.success
 
 class AnimalsRepositoryImpl(
     private val nodeProvider: NodeProvider,
@@ -23,7 +23,7 @@ class AnimalsRepositoryImpl(
     private val deleteAnimalByIdPath: Path,
 ) : AnimalsRepository {
 
-    override suspend fun getAllAnimals(): Resource<List<Animal>> {
+    override suspend fun getAllAnimals(): Resource<Animals> {
         val destination = nodeProvider
             .handheld()
             .filterPairedToThis()
@@ -35,9 +35,7 @@ class AnimalsRepositoryImpl(
         return communicationClient
             .request<GetAllAnimalsResponse>(destination, request)
             .getOrThrow()
-            .run {
-                data?.let { Resource.success(it) } ?: failure!!
-            }
+            .resource
     }
 
     override suspend fun deleteAnimalById(id: Long): Resource<Animal?> {

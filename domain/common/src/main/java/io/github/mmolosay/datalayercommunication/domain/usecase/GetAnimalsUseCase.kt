@@ -19,6 +19,7 @@ class GetAnimalsUseCase @Inject constructor(
         return repository
             .getAllAnimals()
             .getOrElse { return it }
+            .list
             .asSequence()
             .run {
                 if (onlyCats) filter { it.species == Animal.Species.Cat } else this

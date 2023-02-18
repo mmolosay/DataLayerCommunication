@@ -8,8 +8,6 @@ import io.github.mmolosay.datalayercommunication.domain.communication.model.resp
 import io.github.mmolosay.datalayercommunication.domain.communication.model.response.Response
 import io.github.mmolosay.datalayercommunication.domain.communication.server.ResponseServer
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
-import io.github.mmolosay.datalayercommunication.domain.resource.Resource
-import io.github.mmolosay.datalayercommunication.domain.resource.getOrNull
 
 /**
  * Implementation of [ResponseServer], that employs repositories to obtain requested data.
@@ -28,15 +26,10 @@ class RepositoryResponseServer(
     private suspend fun on(request: GetAllAnimalsRequest): GetAllAnimalsResponse =
         animalsRepository
             .getAllAnimals()
-            .run {
-                GetAllAnimalsResponse(
-                    data = getOrNull(),
-                    failure = this as? Resource.Failure,
-                )
-            }
+            .let { GetAllAnimalsResponse(it) }
 
     private suspend fun on(request: DeleteAnimalByIdRequest): DeleteAnimalByIdResponse =
-        DeleteAnimalByIdResponse(
-            resource = animalsRepository.deleteAnimalById(request.animalId),
-        )
+        animalsRepository
+            .deleteAnimalById(request.animalId)
+            .let { DeleteAnimalByIdResponse(it) }
 }
