@@ -19,14 +19,6 @@ object ConvertersFactory {
             compression = features.contains(Feature.Compression),
         )
 
-    fun makeSerializationRequestConverters(
-        format: StringFormat,
-    ): RequestConverters =
-        Converters(
-            encoder = SerializationRequestEncoder(format),
-            decoder = SerializationRequestDecoder(format),
-        )
-
     private fun <T> make(
         baseEncoder: Encoder<T>,
         baseDecoder: Decoder<T>,
