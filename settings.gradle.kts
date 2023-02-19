@@ -17,19 +17,20 @@ dependencyResolutionManagement {
     }
 }
 
-include(":presentation:app:handheld")
-include(":presentation:app:wearable")
-include(":presentation:di:common")
-include(":presentation:di:mobile")
-include(":presentation:di:wear")
+include(":app:handheld")
+include(":app:wearable")
+include(":di:common")
+include(":di:mobile")
+include(":di:wear")
 include(":presentation:shared")
 
+include(":communication")
+include(":communication:impl:data-layer")
+
 include(":data:common")
-include(":data:communication")
 include(":data:handheld")
 include(":data:wearable")
 
 include(":domain:common")
-include(":domain:communication")
 include(":domain:handheld")
 include(":domain:wearable")

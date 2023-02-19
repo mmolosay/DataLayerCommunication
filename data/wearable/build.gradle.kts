@@ -29,9 +29,8 @@ android {
 }
 
 dependencies {
-
+    implementation(project(":communication"))
     implementation(project(":domain:common"))
-    implementation(project(":domain:communication"))
     implementation(project(":domain:wearable"))
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")

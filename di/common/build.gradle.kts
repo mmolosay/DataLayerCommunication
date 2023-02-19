@@ -1,11 +1,13 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
-    namespace = "io.github.mmolosay.datalayercommunication.data.mobile"
     compileSdk = 33
+    namespace = "io.github.mmolosay.datalayercommunication.di"
 
     defaultConfig {
         minSdk = 24
@@ -28,14 +30,21 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
+
+    implementation(project(":communication"))
+    implementation(project(":communication:impl:data-layer"))
+    implementation(project(":data:common"))
     implementation(project(":domain:common"))
-    implementation(project(":domain:handheld"))
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation("com.google.android.gms:play-services-wearable:18.0.0")
 
-    testImplementation("io.kotest:kotest-assertions-core:5.1.0")
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+    implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
 }
