@@ -1,10 +1,10 @@
 package io.github.mmolosay.datalayercommunication.communication.impl
 
-import io.github.mmolosay.datalayercommunication.domain.communication.convertion.RequestDecoder
-import io.github.mmolosay.datalayercommunication.domain.communication.convertion.ResponseEncoder
-import io.github.mmolosay.datalayercommunication.domain.communication.model.Data
-import io.github.mmolosay.datalayercommunication.domain.communication.server.CommunicationServer
-import io.github.mmolosay.datalayercommunication.domain.communication.server.ResponseServer
+import io.github.mmolosay.datalayercommunication.communication.convertion.RequestDecoder
+import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseEncoder
+import io.github.mmolosay.datalayercommunication.communication.model.Data
+import io.github.mmolosay.datalayercommunication.communication.server.CommunicationServer
+import io.github.mmolosay.datalayercommunication.communication.server.ResponseServer
 
 /**
  * Implementation of [CommunicationServer], employing request decoding and response encoding.

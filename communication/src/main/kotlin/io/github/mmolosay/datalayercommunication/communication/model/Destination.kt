@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.domain.communication.model
+package io.github.mmolosay.datalayercommunication.communication.model
 
 /**
  * Destination of a data to be sent to.

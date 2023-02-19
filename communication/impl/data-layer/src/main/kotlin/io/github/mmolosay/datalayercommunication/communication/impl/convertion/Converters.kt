@@ -1,9 +1,9 @@
 package io.github.mmolosay.datalayercommunication.communication.impl.convertion
 
-import io.github.mmolosay.datalayercommunication.domain.communication.convertion.Decoder
-import io.github.mmolosay.datalayercommunication.domain.communication.convertion.Encoder
-import io.github.mmolosay.datalayercommunication.domain.communication.model.request.Request
-import io.github.mmolosay.datalayercommunication.domain.communication.model.response.Response
+import io.github.mmolosay.datalayercommunication.communication.convertion.Decoder
+import io.github.mmolosay.datalayercommunication.communication.convertion.Encoder
+import io.github.mmolosay.datalayercommunication.communication.model.request.Request
+import io.github.mmolosay.datalayercommunication.communication.model.response.Response
 
 /**
  * Pair of [encoder] and [decoder], that are assembled with same features

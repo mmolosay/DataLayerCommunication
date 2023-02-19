@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.domain.communication.model
+package io.github.mmolosay.datalayercommunication.communication.model
 
 /**
  * Represents a concrete device in current device network in respect of a node, on which

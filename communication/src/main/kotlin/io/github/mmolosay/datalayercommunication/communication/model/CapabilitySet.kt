@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.domain.communication.model
+package io.github.mmolosay.datalayercommunication.communication.model
 
 /**
  * Set of [Capability]s.

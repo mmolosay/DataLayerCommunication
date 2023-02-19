@@ -1,8 +1,8 @@
-package io.github.mmolosay.datalayercommunication.domain.communication.client
+package io.github.mmolosay.datalayercommunication.communication.client
 
-import io.github.mmolosay.datalayercommunication.domain.communication.model.Destination
-import io.github.mmolosay.datalayercommunication.domain.communication.model.request.Request
-import io.github.mmolosay.datalayercommunication.domain.communication.model.response.Response
+import io.github.mmolosay.datalayercommunication.communication.model.Destination
+import io.github.mmolosay.datalayercommunication.communication.model.request.Request
+import io.github.mmolosay.datalayercommunication.communication.model.response.Response
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 
 /**

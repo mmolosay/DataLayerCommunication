@@ -1,15 +1,15 @@
 package io.github.mmolosay.datalayercommunication.data.wearable
 
-import io.github.mmolosay.datalayercommunication.domain.communication.CommunicationFailures.NoSuchNodeFailure
-import io.github.mmolosay.datalayercommunication.domain.communication.NodeProvider
-import io.github.mmolosay.datalayercommunication.domain.communication.client.CommunicationClient
-import io.github.mmolosay.datalayercommunication.domain.communication.model.Path
-import io.github.mmolosay.datalayercommunication.domain.communication.model.request.DeleteAnimalByIdRequest
-import io.github.mmolosay.datalayercommunication.domain.communication.model.request.GetAllAnimalsRequest
-import io.github.mmolosay.datalayercommunication.domain.communication.model.response.DeleteAnimalByIdResponse
-import io.github.mmolosay.datalayercommunication.domain.communication.model.response.GetAllAnimalsResponse
-import io.github.mmolosay.datalayercommunication.domain.communication.model.toDestination
-import io.github.mmolosay.datalayercommunication.domain.communication.singlePairedHandheldNode
+import io.github.mmolosay.datalayercommunication.communication.CommunicationFailures.NoSuchNodeFailure
+import io.github.mmolosay.datalayercommunication.communication.NodeProvider
+import io.github.mmolosay.datalayercommunication.communication.client.CommunicationClient
+import io.github.mmolosay.datalayercommunication.communication.model.Path
+import io.github.mmolosay.datalayercommunication.communication.model.request.DeleteAnimalByIdRequest
+import io.github.mmolosay.datalayercommunication.communication.model.request.GetAllAnimalsRequest
+import io.github.mmolosay.datalayercommunication.communication.model.response.DeleteAnimalByIdResponse
+import io.github.mmolosay.datalayercommunication.communication.model.response.GetAllAnimalsResponse
+import io.github.mmolosay.datalayercommunication.communication.model.toDestination
+import io.github.mmolosay.datalayercommunication.communication.singlePairedHandheldNode
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
 import io.github.mmolosay.datalayercommunication.domain.model.Animals
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository

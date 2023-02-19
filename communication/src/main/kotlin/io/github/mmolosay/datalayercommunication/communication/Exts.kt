@@ -1,6 +1,6 @@
-package io.github.mmolosay.datalayercommunication.domain.communication
+package io.github.mmolosay.datalayercommunication.communication
 
-import io.github.mmolosay.datalayercommunication.domain.communication.model.Node
+import io.github.mmolosay.datalayercommunication.communication.model.Node
 
 /**
  * Returns a filtered collection with only nodes paired to current device.

@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.domain.communication
+package io.github.mmolosay.datalayercommunication.communication
 
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import kotlinx.serialization.Serializable

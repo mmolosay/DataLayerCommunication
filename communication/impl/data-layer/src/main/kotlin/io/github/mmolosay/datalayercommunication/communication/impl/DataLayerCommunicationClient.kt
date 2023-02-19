@@ -1,14 +1,14 @@
 package io.github.mmolosay.datalayercommunication.communication.impl
 
 import com.google.android.gms.wearable.MessageClient
-import io.github.mmolosay.datalayercommunication.domain.communication.CommunicationFailures.CommunicatingFailure
-import io.github.mmolosay.datalayercommunication.domain.communication.client.CommunicationClient
-import io.github.mmolosay.datalayercommunication.domain.communication.convertion.RequestEncoder
-import io.github.mmolosay.datalayercommunication.domain.communication.convertion.ResponseDecoder
-import io.github.mmolosay.datalayercommunication.domain.communication.model.Data
-import io.github.mmolosay.datalayercommunication.domain.communication.model.Destination
-import io.github.mmolosay.datalayercommunication.domain.communication.model.request.Request
-import io.github.mmolosay.datalayercommunication.domain.communication.model.response.Response
+import io.github.mmolosay.datalayercommunication.communication.CommunicationFailures.CommunicatingFailure
+import io.github.mmolosay.datalayercommunication.communication.client.CommunicationClient
+import io.github.mmolosay.datalayercommunication.communication.convertion.RequestEncoder
+import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseDecoder
+import io.github.mmolosay.datalayercommunication.communication.model.Data
+import io.github.mmolosay.datalayercommunication.communication.model.Destination
+import io.github.mmolosay.datalayercommunication.communication.model.request.Request
+import io.github.mmolosay.datalayercommunication.communication.model.response.Response
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.success
 import kotlinx.coroutines.tasks.await

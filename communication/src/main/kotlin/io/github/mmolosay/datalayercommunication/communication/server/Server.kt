@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.domain.communication.server
+package io.github.mmolosay.datalayercommunication.communication.server
 
 /**
  * Serves appropriate [Response] for specified [Request].

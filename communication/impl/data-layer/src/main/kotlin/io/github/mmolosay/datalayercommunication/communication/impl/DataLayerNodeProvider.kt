@@ -1,9 +1,9 @@
 package io.github.mmolosay.datalayercommunication.communication.impl
 
 import com.google.android.gms.wearable.CapabilityClient
-import io.github.mmolosay.datalayercommunication.domain.communication.NodeProvider
-import io.github.mmolosay.datalayercommunication.domain.communication.model.Capability
-import io.github.mmolosay.datalayercommunication.domain.communication.model.Node
+import io.github.mmolosay.datalayercommunication.communication.NodeProvider
+import io.github.mmolosay.datalayercommunication.communication.model.Capability
+import io.github.mmolosay.datalayercommunication.communication.model.Node
 import kotlinx.coroutines.tasks.await
 import com.google.android.gms.wearable.Node as DataLayerNode
 
