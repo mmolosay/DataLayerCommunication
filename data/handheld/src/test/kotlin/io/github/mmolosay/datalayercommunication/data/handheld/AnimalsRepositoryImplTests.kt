@@ -13,7 +13,39 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class AnimalsRepositoryImplTests {
 
-    private val animalId = 2L
+    // region getAllAnimals
+
+    @Test
+    fun `getAllAnimals returns passed animals`() = runTest {
+        val initialAnimals = makeAnimals()
+        val repository = AnimalsRepositoryImpl(initialAnimals)
+
+        val obtainedAnimals = repository
+            .getAllAnimals()
+            .getOrThrow()
+            .list
+
+        obtainedAnimals shouldBe initialAnimals
+    }
+
+    @Test
+    fun `getAllAnimals returns up to date animals`() = runTest {
+        val initialAnimals = makeAnimals()
+        val repository = AnimalsRepositoryImpl(initialAnimals)
+
+        val deletedAnimal = repository.deleteAnimalById(animalId).getOrThrow()
+        val obtainedAnimals = repository
+            .getAllAnimals()
+            .getOrThrow()
+            .list
+
+        val expectedAnimals = initialAnimals.apply { remove(deletedAnimal) }
+        obtainedAnimals shouldBe expectedAnimals
+    }
+
+    // endregion
+
+    // region deleteAnimalById
 
     @Test
     fun `deleteAnimalById returns null, when animals list is empty`() = runTest {
@@ -48,41 +80,19 @@ class AnimalsRepositoryImplTests {
     }
 
     @Test
-    fun `deleteAnimalById deletes animal with specified id`() = runTest {
+    fun `deleteAnimalById returns animal with specified id`() = runTest {
         val repository = AnimalsRepositoryImpl(makeAnimals())
 
-        val deletedAnimal = repository.deleteAnimalById(animalId)
-
-        deletedAnimal.getOrThrow()!!.id shouldBe animalId
-    }
-
-    @Test
-    fun `getAllAnimals returns passed animals`() = runTest {
-        val initialAnimals = makeAnimals()
-        val repository = AnimalsRepositoryImpl(initialAnimals)
-
-        val obtainedAnimals = repository
-            .getAllAnimals()
+        val deletedAnimal = repository
+            .deleteAnimalById(animalId)
             .getOrThrow()
-            .list
 
-        obtainedAnimals shouldBe initialAnimals
+        deletedAnimal!!.id shouldBe animalId
     }
 
-    @Test
-    fun `getAllAnimals returns up to date animals`() = runTest {
-        val initialAnimals = makeAnimals()
-        val repository = AnimalsRepositoryImpl(initialAnimals)
+    // endregion
 
-        val deletedAnimal = repository.deleteAnimalById(animalId).getOrThrow()
-        val obtainedAnimals = repository
-            .getAllAnimals()
-            .getOrThrow()
-            .list
-
-        val expectedAnimals = initialAnimals.apply { remove(deletedAnimal) }
-        obtainedAnimals shouldBe expectedAnimals
-    }
+    private val animalId = 2L
 
     private fun makeAnimals(): MutableList<Animal> =
         mutableListOf(
