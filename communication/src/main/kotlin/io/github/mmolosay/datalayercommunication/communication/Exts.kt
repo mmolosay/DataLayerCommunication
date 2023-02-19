@@ -8,6 +8,9 @@ import io.github.mmolosay.datalayercommunication.communication.model.Node
 fun Collection<Node>.filterPairedToThis(): Collection<Node> =
     this.filter { it.isPairedToThisNode }
 
+/**
+ * Returns [Result] with [single] `handheld` node, which is paired to current device.
+ */
 suspend fun NodeProvider.singlePairedHandheldNode(): Result<Node> =
     runCatching {
         this
