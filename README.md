@@ -1,5 +1,5 @@
 # DataLayerCommunication
-Communication between handheld and wearable devices with Google's [Data Layer API](https://developer.android.com/training/wearables/data/data-layer#send-and-sync-with-API).
+Communication between handheld and wearable devices with Google's [Data Layer API](https://developer.android.com/training/wearables/data/data-layer#send-and-sync-with-API), made in right way.
 
 ## Architecture
 This project employs [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) with separation by feature.
