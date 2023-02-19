@@ -19,6 +19,12 @@ fun <T> Resource<T>.getOrNull(): T? =
         else -> null
     }
 
+fun <T> Resource<T>.getOrThrow(): T =
+    when (this) {
+        is Resource.Success -> this.value
+        else -> throw IllegalStateException("Resource is a " + this::class::simpleName)
+    }
+
 inline fun <T, R> Resource<T>.map(transform: (value: T) -> R): Resource<R> =
     when (this) {
         is Resource.Success -> transform(this.value).let { Resource.success(it) }
