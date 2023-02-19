@@ -9,11 +9,16 @@ The idea behind implemented approach is to reuse as much of code as possible.
 
 From application side, there should be no details on the data source, either it's being a remote server, local database, or paired device, that utilizes any of these sources.
 
-Thus, we want to reuse use cases, but provide different implementations of Repositories to them. 
+Thus, we want to reuse business logic (use cases), but provide different data sources (Repositories) for handheld and wearable apps.
 When running on handheld device, Repositories will do *"real"* data fetching (like from remote server, but in this demo it's just a in-memory store).
 When running on wearable device, Repositories will request data from app on paired handheld device.
 
 As you can see, with correctly designed components and their responsibilities, cross-device communication effectively becomes a task of just providing device-specific Repositories to shared use cases.
+
+> **Note**
+> In the following diagram some components of actual implementation, like Encoders, Decoders, ResponseServer, etc. are omitted.
+
+![Untitled Diagram drawio (1)](https://user-images.githubusercontent.com/32337243/219979818-515e9078-011b-447f-ba69-16651814c48d.png)
 
 ## Modules
 
@@ -24,7 +29,7 @@ Android application for handheld devices, like mobile phones and tablets. Can re
 Android application for wearable devices, like watches. Requests data from handheld app.
 
 ### `:di`
-Dependency Injection, to be used in application modules.
+Dependency Injection to be used by application modules.
 
  - `common` DI of components, common for both applications. Communication components, in our case.
  - `handheld` DI for handheld-specific app, like components from [`:data:handheld`](#data).
