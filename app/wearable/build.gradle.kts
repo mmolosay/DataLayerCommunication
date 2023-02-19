@@ -45,7 +45,7 @@ kapt {
 dependencies {
     implementation(project(":communication"))
     implementation(project(":di:common"))
-    implementation(project(":di:wear"))
+    implementation(project(":di:wearable"))
     implementation(project(":domain:common"))
     implementation(project(":domain:wearable"))
     implementation(project(":presentation:shared"))

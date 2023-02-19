@@ -1,4 +1,4 @@
-package com.example.di.wear
+package io.github.mmolosay.datalayercommunication.di.wearable
 
 import dagger.Module
 import dagger.Provides

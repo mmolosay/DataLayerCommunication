@@ -1,4 +1,4 @@
-package com.example.di.mobile
+package io.github.mmolosay.datalayercommunication.di.handheld
 
 import dagger.Module
 import dagger.Provides
