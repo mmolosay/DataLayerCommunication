@@ -1,12 +1,10 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
-    id("com.google.dagger.hilt.android")
 }
 
 android {
-    namespace = "io.github.mmolosay.datalayercommunication.shared"
+    namespace = "io.github.mmolosay.datalayercommunication.presentation.shared"
     compileSdk = 33
 
     defaultConfig {
@@ -28,15 +26,4 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-}
-
-dependencies {
-    implementation(project(":communication"))
-    implementation(project(":domain:common"))
-    implementation(project(":domain:handheld"))
-
-    implementation("com.google.android.gms:play-services-wearable:18.0.0")
-
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-compiler:2.44")
 }
