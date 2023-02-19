@@ -1,6 +1,7 @@
 package io.github.mmolosay.datalayercommunication.data.handheld
 
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
+import io.github.mmolosay.datalayercommunication.utils.resource.getOrNull
 import io.kotest.matchers.nulls.beNull
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe

@@ -5,9 +5,10 @@ import io.github.mmolosay.datalayercommunication.communication.model.request.Get
 import io.github.mmolosay.datalayercommunication.communication.model.response.DeleteAnimalByIdResponse
 import io.github.mmolosay.datalayercommunication.communication.model.response.GetAllAnimalsResponse
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
+import io.github.mmolosay.datalayercommunication.domain.model.Animals
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
-import io.github.mmolosay.datalayercommunication.domain.resource.Resource
-import io.github.mmolosay.datalayercommunication.domain.resource.success
+import io.github.mmolosay.datalayercommunication.utils.resource.Resource
+import io.github.mmolosay.datalayercommunication.utils.resource.success
 import io.kotest.matchers.should
 import io.kotest.matchers.types.beOfType
 import io.mockk.coEvery
@@ -21,8 +22,9 @@ class RepositoryResponseServerTests {
 
     @Test
     fun `when GetAllAnimalsRequest returns GetAllAnimalsResponse`() = runTest {
+        val animals = Animals(emptyList())
         val animalsRepository = mockk<AnimalsRepository>()
-        coEvery { animalsRepository.getAllAnimals() } returns Resource.success(emptyList())
+        coEvery { animalsRepository.getAllAnimals() } returns Resource.success(animals)
         val server = RepositoryResponseServer(animalsRepository)
         val request = GetAllAnimalsRequest
 

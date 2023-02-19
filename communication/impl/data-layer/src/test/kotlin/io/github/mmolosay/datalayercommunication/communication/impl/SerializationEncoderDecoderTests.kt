@@ -7,19 +7,22 @@ import io.github.mmolosay.datalayercommunication.communication.impl.convertion.e
 import io.github.mmolosay.datalayercommunication.communication.model.request.GetAllAnimalsRequest
 import io.github.mmolosay.datalayercommunication.communication.model.response.DeleteAnimalByIdResponse
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
-import io.github.mmolosay.datalayercommunication.domain.resource.Resource
-import io.github.mmolosay.datalayercommunication.domain.resource.success
+import io.github.mmolosay.datalayercommunication.domain.model.ModelSerializersModuleFactory
+import io.github.mmolosay.datalayercommunication.utils.resource.Resource
+import io.github.mmolosay.datalayercommunication.utils.resource.success
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.beOfType
+import kotlinx.serialization.json.Json
 import org.junit.Test
 
 class SerializationEncoderDecoderTests {
 
     @Test
     fun `encodes and decodes GetAllAnimalsRequest correctly`() {
-        val encoder = SerializationRequestEncoder()
-        val decoder = SerializationRequestDecoder()
+        val format = Json { serializersModule = ModelSerializersModuleFactory.make() }
+        val encoder = SerializationRequestEncoder(format)
+        val decoder = SerializationRequestDecoder(format)
         val request = GetAllAnimalsRequest
 
         val encoded = encoder.encode(request)
@@ -31,8 +34,9 @@ class SerializationEncoderDecoderTests {
 
     @Test
     fun `encodes and decodes DeleteAnimalByIdResponse correctly`() {
-        val encoder = SerializationResponseEncoder()
-        val decoder = SerializationResponseDecoder()
+        val format = Json { serializersModule = ModelSerializersModuleFactory.make() }
+        val encoder = SerializationResponseEncoder(format)
+        val decoder = SerializationResponseDecoder(format)
         val animal = Animal(id = 1536L, species = Animal.Species.Owl, name = "Phoebe", age = 2)
         val resource = Resource.success(animal)
         val response = DeleteAnimalByIdResponse(resource)
