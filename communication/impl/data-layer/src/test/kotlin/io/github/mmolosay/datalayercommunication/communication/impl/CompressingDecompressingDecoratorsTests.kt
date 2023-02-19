@@ -1,9 +1,9 @@
 package io.github.mmolosay.datalayercommunication.communication.impl
 
-import io.github.mmolosay.datalayercommunication.communication.impl.fakes.FakeDecoder
-import io.github.mmolosay.datalayercommunication.communication.impl.fakes.FakeEncoder
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.decode.DecompressingDecorator
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.encode.CompressingDecorator
+import io.github.mmolosay.datalayercommunication.communication.impl.fakes.FakeDecoder
+import io.github.mmolosay.datalayercommunication.communication.impl.fakes.FakeEncoder
 import io.kotest.matchers.shouldBe
 import org.junit.Test
 
