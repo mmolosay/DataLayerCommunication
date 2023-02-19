@@ -43,7 +43,7 @@ kapt {
 }
 
 dependencies {
-    implementation(project(":communication"))
+    implementation(project(":communication:failures"))
     implementation(project(":di:common"))
     implementation(project(":di:wearable"))
     implementation(project(":domain:common"))

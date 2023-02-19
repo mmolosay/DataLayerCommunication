@@ -1,6 +1,6 @@
 package io.github.mmolosay.datalayercommunication.data.wearable
 
-import io.github.mmolosay.datalayercommunication.communication.CommunicationFailures.NoSuchNodeFailure
+import io.github.mmolosay.datalayercommunication.communication.failures.CommunicationFailures.NoSuchNodeFailure
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.communication.client.CommunicationClient
 import io.github.mmolosay.datalayercommunication.communication.model.Path

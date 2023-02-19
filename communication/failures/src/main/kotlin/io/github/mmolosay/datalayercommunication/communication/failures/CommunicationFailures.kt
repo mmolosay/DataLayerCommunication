@@ -1,8 +1,11 @@
-package io.github.mmolosay.datalayercommunication.communication
+package io.github.mmolosay.datalayercommunication.communication.failures
 
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import kotlinx.serialization.Serializable
 
+/**
+ * [Resource.Failure]s, related to cross-device communication.
+ */
 object CommunicationFailures {
 
     /**

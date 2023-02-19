@@ -25,7 +25,7 @@ import androidx.wear.compose.material.VignettePosition
 import androidx.wear.compose.material.items
 import androidx.wear.compose.material.rememberScalingLazyListState
 import io.github.mmolosay.datalayercommunication.WearableViewModel.UiState
-import io.github.mmolosay.datalayercommunication.communication.CommunicationFailures.NoSuchNodeFailure
+import io.github.mmolosay.datalayercommunication.communication.failures.CommunicationFailures.NoSuchNodeFailure
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.success

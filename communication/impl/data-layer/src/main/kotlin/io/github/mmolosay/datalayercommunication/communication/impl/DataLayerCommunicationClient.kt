@@ -1,7 +1,7 @@
 package io.github.mmolosay.datalayercommunication.communication.impl
 
 import com.google.android.gms.wearable.MessageClient
-import io.github.mmolosay.datalayercommunication.communication.CommunicationFailures.CommunicatingFailure
+import io.github.mmolosay.datalayercommunication.communication.failures.CommunicationFailures.CommunicatingFailure
 import io.github.mmolosay.datalayercommunication.communication.client.CommunicationClient
 import io.github.mmolosay.datalayercommunication.communication.convertion.RequestEncoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseDecoder
