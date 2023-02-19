@@ -4,6 +4,17 @@ Communication between handheld and wearable devices with Google's [Data Layer AP
 ## Architecture
 This project employs [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) with separation by feature.
 
+## Approach
+The idea behind implemented approach is to reuse as much of code as possible.
+
+From application side, there should be no details on the data source, either it's being a remote server, local database, or paired device, that utilizes any of these sources.
+
+Thus, we want to reuse use cases, but provide different implementations of Repositories to them. 
+When running on handheld device, Repositories will do *"real"* data fetching (like from remote server, but in this demo it's just a in-memory store).
+When running on wearable device, Repositories will request data from app on paired handheld device.
+
+As you can see, with correctly designed components and their responsibilities, cross-device communication effectively becomes a task of just providing device-specific Repositories to shared use cases.
+
 ## Modules
 
 ### `:app:handheld`
