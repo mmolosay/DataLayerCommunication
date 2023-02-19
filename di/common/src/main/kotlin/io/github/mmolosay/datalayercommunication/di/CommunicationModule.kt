@@ -7,6 +7,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import io.github.mmolosay.datalayercommunication.communication.NodeProvider
+import io.github.mmolosay.datalayercommunication.communication.client.CommunicationClient
+import io.github.mmolosay.datalayercommunication.communication.convertion.RequestDecoder
+import io.github.mmolosay.datalayercommunication.communication.convertion.RequestEncoder
+import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseDecoder
+import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseEncoder
 import io.github.mmolosay.datalayercommunication.communication.impl.ConvertingCommunicationServer
 import io.github.mmolosay.datalayercommunication.communication.impl.DataLayerCommunicationClient
 import io.github.mmolosay.datalayercommunication.communication.impl.DataLayerNodeProvider
@@ -16,17 +22,10 @@ import io.github.mmolosay.datalayercommunication.communication.impl.convertion.C
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.ConvertersFactory.add
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.RequestConverters
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.ResponseConverters
-import io.github.mmolosay.datalayercommunication.communication.impl.convertion.StringFormatFactory
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.decode.SerializationRequestDecoder
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.decode.SerializationResponseDecoder
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.encode.SerializationRequestEncoder
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.encode.SerializationResponseEncoder
-import io.github.mmolosay.datalayercommunication.communication.NodeProvider
-import io.github.mmolosay.datalayercommunication.communication.client.CommunicationClient
-import io.github.mmolosay.datalayercommunication.communication.convertion.RequestDecoder
-import io.github.mmolosay.datalayercommunication.communication.convertion.RequestEncoder
-import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseDecoder
-import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseEncoder
 import io.github.mmolosay.datalayercommunication.communication.model.Capability
 import io.github.mmolosay.datalayercommunication.communication.model.CapabilitySet
 import io.github.mmolosay.datalayercommunication.communication.model.Path
@@ -37,6 +36,8 @@ import io.github.mmolosay.datalayercommunication.domain.model.ModelSerializersMo
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
 import io.github.mmolosay.datalayercommunication.utils.resource.ResourceSerialializersModuleFactory
 import kotlinx.serialization.StringFormat
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.plus
 import javax.inject.Singleton
 
 /**
@@ -53,7 +54,7 @@ class CommunicationModule {
     fun provideStringFormat(): StringFormat {
         val modelsModule = ModelSerializersModuleFactory.make()
         val resourceModule = ResourceSerialializersModuleFactory.make()
-        return StringFormatFactory.of(resourceModule, modelsModule)
+        return Json { serializersModule = modelsModule + resourceModule }
     }
 
     @Provides
