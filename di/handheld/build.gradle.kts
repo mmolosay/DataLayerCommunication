@@ -7,7 +7,7 @@ plugins {
 
 android {
     compileSdk = 33
-    namespace = "io.github.mmolosay.datalayercommunication.di.mobile"
+    namespace = "io.github.mmolosay.datalayercommunication.di.handheld"
 
     defaultConfig {
         minSdk = 24

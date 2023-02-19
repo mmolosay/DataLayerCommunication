@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "io.github.mmolosay.datalayercommunication.data.wear"
+    namespace = "io.github.mmolosay.datalayercommunication.data.wearable"
     compileSdk = 33
 
     defaultConfig {
