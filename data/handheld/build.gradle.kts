@@ -31,6 +31,7 @@ android {
 dependencies {
     implementation(project(":domain:common"))
     implementation(project(":domain:handheld"))
+    implementation(project(":utils:resource"))
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")

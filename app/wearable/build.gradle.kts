@@ -49,6 +49,7 @@ dependencies {
     implementation(project(":domain:common"))
     implementation(project(":domain:wearable"))
     implementation(project(":presentation:shared"))
+    implementation(project(":utils:resource"))
 
     implementation(platform("androidx.compose:compose-bom:2022.12.00"))
     implementation("androidx.activity:activity-compose:1.5.1")

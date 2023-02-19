@@ -13,8 +13,8 @@ import io.github.mmolosay.datalayercommunication.domain.communication.singlePair
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
 import io.github.mmolosay.datalayercommunication.domain.model.Animals
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
-import io.github.mmolosay.datalayercommunication.domain.resource.Resource
-import io.github.mmolosay.datalayercommunication.domain.resource.getOrElse
+import io.github.mmolosay.datalayercommunication.utils.resource.Resource
+import io.github.mmolosay.datalayercommunication.utils.resource.getOrElse
 
 class AnimalsRepositoryImpl(
     private val nodeProvider: NodeProvider,

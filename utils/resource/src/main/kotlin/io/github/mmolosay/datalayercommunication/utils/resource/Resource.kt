@@ -1,7 +1,7 @@
-package io.github.mmolosay.datalayercommunication.domain.resource
+package io.github.mmolosay.datalayercommunication.utils.resource
 
-import io.github.mmolosay.datalayercommunication.domain.resource.Resource.Failure
-import io.github.mmolosay.datalayercommunication.domain.resource.Resource.Success
+import io.github.mmolosay.datalayercommunication.utils.resource.Resource.Failure
+import io.github.mmolosay.datalayercommunication.utils.resource.Resource.Success
 import kotlinx.serialization.Serializable
 
 /**

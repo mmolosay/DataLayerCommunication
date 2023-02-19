@@ -27,8 +27,8 @@ import androidx.wear.compose.material.rememberScalingLazyListState
 import io.github.mmolosay.datalayercommunication.WearableViewModel.UiState
 import io.github.mmolosay.datalayercommunication.domain.communication.CommunicationFailures.NoSuchNodeFailure
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
-import io.github.mmolosay.datalayercommunication.domain.resource.Resource
-import io.github.mmolosay.datalayercommunication.domain.resource.success
+import io.github.mmolosay.datalayercommunication.utils.resource.Resource
+import io.github.mmolosay.datalayercommunication.utils.resource.success
 
 // region Preivews
 

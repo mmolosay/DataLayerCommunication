@@ -21,7 +21,6 @@ import io.github.mmolosay.datalayercommunication.communication.impl.convertion.d
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.decode.SerializationResponseDecoder
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.encode.SerializationRequestEncoder
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.encode.SerializationResponseEncoder
-import io.github.mmolosay.datalayercommunication.di.R
 import io.github.mmolosay.datalayercommunication.domain.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.domain.communication.client.CommunicationClient
 import io.github.mmolosay.datalayercommunication.domain.communication.convertion.RequestDecoder
@@ -36,7 +35,7 @@ import io.github.mmolosay.datalayercommunication.domain.communication.server.Com
 import io.github.mmolosay.datalayercommunication.domain.communication.server.ResponseServer
 import io.github.mmolosay.datalayercommunication.domain.model.ModelSerializersModuleFactory
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
-import io.github.mmolosay.datalayercommunication.domain.resource.ResourceSerialializersModuleFactory
+import io.github.mmolosay.datalayercommunication.utils.resource.ResourceSerialializersModuleFactory
 import kotlinx.serialization.StringFormat
 import javax.inject.Singleton
 

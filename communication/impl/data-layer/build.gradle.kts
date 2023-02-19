@@ -32,6 +32,7 @@ android {
 dependencies {
     implementation(project(":communication"))
     implementation(project(":domain:common"))
+    implementation(project(":utils:resource"))
 
     implementation("com.google.android.gms:play-services-wearable:18.0.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")

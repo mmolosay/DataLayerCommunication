@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.domain.resource
+package io.github.mmolosay.datalayercommunication.utils.resource
 
 /*
  * Extension functions for Resource.

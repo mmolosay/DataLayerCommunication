@@ -3,7 +3,7 @@ package io.github.mmolosay.datalayercommunication.domain.communication.client
 import io.github.mmolosay.datalayercommunication.domain.communication.model.Destination
 import io.github.mmolosay.datalayercommunication.domain.communication.model.request.Request
 import io.github.mmolosay.datalayercommunication.domain.communication.model.response.Response
-import io.github.mmolosay.datalayercommunication.domain.resource.Resource
+import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 
 /**
  * Exposes an API for components to communicate with [Destination]s in different ways.

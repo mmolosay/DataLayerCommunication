@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.domain.resource
+package io.github.mmolosay.datalayercommunication.utils.resource
 
 import kotlinx.serialization.PolymorphicSerializer
 import kotlinx.serialization.modules.SerializersModule

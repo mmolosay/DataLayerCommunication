@@ -1,6 +1,6 @@
 package io.github.mmolosay.datalayercommunication.domain.communication
 
-import io.github.mmolosay.datalayercommunication.domain.resource.Resource
+import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import kotlinx.serialization.Serializable
 
 object CommunicationFailures {
