@@ -15,7 +15,7 @@ sealed interface Resource<out T> {
      * Successfully obtained [value].
      */
     @Serializable
-    class Success<T>(val value: T) : Resource<T>
+    data class Success<T>(val value: T) : Resource<T>
 
     /**
      * Failure, that should be delivered to user.
