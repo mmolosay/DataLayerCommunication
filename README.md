@@ -32,8 +32,8 @@ Android application for wearable devices, like watches. Requests data from handh
 Dependency Injection to be used by application modules.
 
  - `common` DI of components, common for both applications. Communication components, in our case.
- - `handheld` DI for handheld-specific app, like components from [`:data:handheld`](#data).
- - `wearable` DI for wearable-specific app, like components from [`:data:wearable`](#data).
+ - `handheld` DI for handheld-specific app, like components from `:data:handheld`.
+ - `wearable` DI for wearable-specific app, like components from `:data:wearable`.
  
 ### `:data`
 Data sources.
