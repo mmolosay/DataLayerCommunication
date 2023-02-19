@@ -22,6 +22,7 @@ include(":app:wearable")
 
 include(":communication")
 include(":communication:impl:data-layer")
+include(":communication:impl:data-layer:service")
 
 include(":data:common")
 include(":data:handheld")

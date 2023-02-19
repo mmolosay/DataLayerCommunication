@@ -1,11 +1,12 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.plugin.serialization")
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
-    namespace = "io.github.mmolosay.datalayercommunication.communication.impl.datalayer"
+    namespace = "io.github.mmolosay.datalayercommunication.communication.impl.datalayer.service"
     compileSdk = 33
 
     defaultConfig {
@@ -31,16 +32,11 @@ android {
 
 dependencies {
     implementation(project(":communication"))
-    implementation(project(":domain:common"))
 
     implementation("com.google.android.gms:play-services-wearable:18.0.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
 
-    testImplementation("io.kotest:kotest-assertions-core:5.1.0")
-    testImplementation("io.mockk:mockk:1.13.4")
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+    implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-compiler:2.44")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
 }

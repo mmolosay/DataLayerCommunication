@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.shared
+package io.github.mmolosay.datalayercommunication.communication.impl.datalayer.service
 
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.TaskCompletionSource

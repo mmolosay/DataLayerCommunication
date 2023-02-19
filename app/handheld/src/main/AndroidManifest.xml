@@ -14,7 +14,7 @@
             android:value="@integer/google_play_services_version" />
 
         <service
-            android:name=".shared.CommunicationService"
+            android:name=".communication.impl.datalayer.service.CommunicationService"
             android:exported="true"> <!-- won't work if if service is not exported -->
 
             <intent-filter>
