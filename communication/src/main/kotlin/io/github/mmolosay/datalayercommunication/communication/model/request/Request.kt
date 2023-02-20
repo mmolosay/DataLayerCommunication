@@ -3,8 +3,10 @@ package io.github.mmolosay.datalayercommunication.communication.model.request
 import kotlinx.serialization.Serializable
 
 /**
- * Request to be sent. Describes data that is inteded to be fetched.
+ * Request to be sent to another device.
+ * Should normally have a `Response` counterpart with retrieved data.
  */
-// request is parameter object. Parameters come from parameters of corresponding Repository method.
+// Request is parameter object: https://refactoring.guru/introduce-parameter-object
+// Fiels of concrete Request class come from parameters of corresponding Repository method.
 @Serializable
 sealed class Request
