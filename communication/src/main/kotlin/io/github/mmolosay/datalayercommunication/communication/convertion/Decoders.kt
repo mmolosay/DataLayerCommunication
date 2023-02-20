@@ -5,9 +5,9 @@ import io.github.mmolosay.datalayercommunication.communication.model.request.Req
 import io.github.mmolosay.datalayercommunication.communication.model.response.Response
 
 /**
- * Decodes byte array into JVM object.
+ * Decodes [Data] into JVM object.
  *
- * @param T most generic type of result JVM objects.
+ * @param T most generic type of output.
  */
 interface Decoder<T> {
     fun decode(data: Data): T

@@ -5,9 +5,9 @@ import io.github.mmolosay.datalayercommunication.communication.model.request.Req
 import io.github.mmolosay.datalayercommunication.communication.model.response.Response
 
 /**
- * Encodes JVM object into byte array.
+ * Encodes JVM object into [Data].
  *
- * @param T most generic type of result JVM objects.
+ * @param T most generic type of input.
  */
 interface Encoder<T> {
     fun encode(value: T): Data
