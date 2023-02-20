@@ -6,13 +6,13 @@ import kotlinx.serialization.Serializable
 
 /**
  * `Resource` is a [Serializable] utility component, that can be either a successful result,
- * a.k.a [Success], or [Failure].
+ * a.k.a [Success], or [Failure], which should be hoisted to presentation.
  */
 @Serializable
 sealed interface Resource<out T> {
 
     /**
-     * Successfully obtained [value].
+     * Successfully obtained encapsulated [value].
      */
     @Serializable
     data class Success<T>(val value: T) : Resource<T>
