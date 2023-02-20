@@ -53,6 +53,7 @@ Business models and application use cases.
 High-level, platform-independent abstractions of communication-related components.
 
 - `impl:data-layer` implementation of `:communication`, powered by Google's [Data Layer API](https://developer.android.com/training/wearables/data/data-layer#send-and-sync-with-API).
+    * `service` contains a `CommunicationService`, which should be used by app and registered in its manifest.
 - `failures` *Resource.Failure*s, related to communication process, that should be hoisted to presentation.
 
 ### `utils`
