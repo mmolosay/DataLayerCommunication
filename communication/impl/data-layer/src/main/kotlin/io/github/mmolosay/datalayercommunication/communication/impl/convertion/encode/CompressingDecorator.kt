@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets
 import java.util.zip.GZIPOutputStream
 
 /**
- * [Encoder] with data compressing functionality.
+ * [Encoder] with data compressing functionality, utilizing GZIP file format.
  */
 class CompressingDecorator<T>(
     encoder: Encoder<T>
