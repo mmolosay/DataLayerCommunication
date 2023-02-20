@@ -27,9 +27,9 @@ class DataLayerNodeProvider(
             .getCapability(capability.value, CapabilityClient.FILTER_REACHABLE)
             .await()
             .nodes
-            .map { it.toNodeNetworkData() }
+            .map { it.toNode() }
 
-    private fun DataLayerNode.toNodeNetworkData(): Node =
+    private fun DataLayerNode.toNode(): Node =
         Node(
             id = this.id,
             name = this.displayName,
