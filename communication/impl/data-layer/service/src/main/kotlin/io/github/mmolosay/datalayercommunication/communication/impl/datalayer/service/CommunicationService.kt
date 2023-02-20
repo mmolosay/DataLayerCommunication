@@ -12,6 +12,13 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * [WearableListenerService] from Google's Data Layer API, which employs [CommunicationServer]
+ * in order to decypher incoming requests and return appropriate responses.
+ *
+ * This service, as all other, should be registered in
+ * Android application module's `AndroidManifest.xml` file.
+ */
 @AndroidEntryPoint
 class CommunicationService : WearableListenerService() {
 
