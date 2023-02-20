@@ -28,6 +28,9 @@ Android application for handheld devices, like mobile phones and tablets. Can re
 ### `:app:wearable`
 Android application for wearable devices, like watches. Requests data from handheld app.
 
+### `:presentation:shared`
+UI-related components, common for both apps, like some string resources and launcher icon.
+
 ### `:di`
 Dependency Injection to be used by application modules.
 
