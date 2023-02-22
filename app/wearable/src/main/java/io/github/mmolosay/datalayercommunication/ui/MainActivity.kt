@@ -6,8 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
 import dagger.hilt.android.AndroidEntryPoint
-import io.github.mmolosay.datalayercommunication.viewmodel.WearableViewModel
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
+import io.github.mmolosay.datalayercommunication.viewmodel.WearableViewModel
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -24,6 +24,7 @@ class MainActivity : ComponentActivity() {
                 onGetCatsOlderThan1Click = ::onGetCatsOlderThan1Click,
                 onDeleteRandomCatClick = ::onDeleteRandomCatClick,
                 onClearClick = ::onClearClick,
+                onTryAgainClick = ::onTryAgainClick,
             )
         }
     }
@@ -42,5 +43,9 @@ class MainActivity : ComponentActivity() {
 
     private fun onClearClick() {
         viewModel.clearAnimals()
+    }
+
+    private fun onTryAgainClick() {
+        viewModel.launchConnectionCheck()
     }
 }

@@ -24,6 +24,7 @@ fun ApplicationPreview() {
         onGetCatsOlderThan1Click = {},
         onDeleteRandomCatClick = {},
         onClearClick = {},
+        onTryAgainClick = {},
     )
 }
 
@@ -43,6 +44,7 @@ fun Application(
     onGetCatsOlderThan1Click: () -> Unit,
     onDeleteRandomCatClick: () -> Unit,
     onClearClick: () -> Unit,
+    onTryAgainClick: () -> Unit,
 ) {
     val scalingLazyListState = rememberScalingLazyListState()
     Scaffold(
@@ -61,7 +63,9 @@ fun Application(
                     onClearClick = onClearClick,
                 )
             false ->
-                NotConnectedState()
+                NotConnectedState(
+                    onTryAgainClick = onTryAgainClick,
+                )
         }
     }
 }
