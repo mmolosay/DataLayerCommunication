@@ -3,18 +3,18 @@ package io.github.mmolosay.datalayercommunication.communication
 import io.github.mmolosay.datalayercommunication.communication.model.Node
 
 /**
- * Returns a filtered collection with only nodes paired to current device.
+ * Returns a filtered collection with only nodes connected to current device.
  */
-fun Collection<Node>.filterPairedToThis(): Collection<Node> =
+fun Collection<Node>.filterConnectedToCurrentDevice(): Collection<Node> =
     this.filter { it.isConnectedToCurrentDevice }
 
 /**
- * Returns [Result] with [single] `handheld` node, which is paired to current device.
+ * Returns [Result] with [single] `handheld` node, which is connected to current device.
  */
-suspend fun NodeProvider.singlePairedHandheldNode(): Result<Node> =
+suspend fun NodeProvider.singleConnectedHandheldNode(): Result<Node> =
     runCatching {
         this
             .handheld()
-            .filterPairedToThis()
+            .filterConnectedToCurrentDevice()
             .single()
     }
