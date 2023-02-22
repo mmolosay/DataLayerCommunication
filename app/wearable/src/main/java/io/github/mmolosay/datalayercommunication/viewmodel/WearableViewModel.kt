@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication
+package io.github.mmolosay.datalayercommunication.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -7,20 +7,29 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
 import io.github.mmolosay.datalayercommunication.domain.usecase.DeleteRandomAnimalUseCase
 import io.github.mmolosay.datalayercommunication.domain.usecase.GetAnimalsUseCase
+import io.github.mmolosay.datalayercommunication.domain.wearable.CheckIsConnectedToHandheldDeviceUseCase
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.map
 import io.github.mmolosay.datalayercommunication.utils.resource.success
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.system.measureTimeMillis
+import kotlin.time.Duration.Companion.seconds
 
 @HiltViewModel
 class WearableViewModel @Inject constructor(
     private val getAnimalsUseCase: GetAnimalsUseCase,
     private val deleteRandomAnimalUseCase: DeleteRandomAnimalUseCase,
+    private val isConnectedToHandheldDeviceUseCase: CheckIsConnectedToHandheldDeviceUseCase,
 ) : ViewModel() {
 
-    val uiState = mutableStateOf(makeBlankUiState())
+    val uiState = mutableStateOf(makeInitialUiState())
+
+    init {
+        launchRepeatingConnectionCheck()
+    }
 
     fun getAllAnimals() {
         viewModelScope.launch {
@@ -71,8 +80,26 @@ class WearableViewModel @Inject constructor(
         uiState.value = makeBlankUiState()
     }
 
+    private fun launchRepeatingConnectionCheck() =
+        viewModelScope.launch {
+            while (isActive) {
+                uiState.value = uiState.value.copy(
+                    isConnected = isConnectedToHandheldDeviceUseCase(),
+                )
+                delay(2.seconds)
+            }
+        }
+
+    private fun makeInitialUiState(): UiState =
+        UiState(
+            isConnected = false,
+            elapsedTime = "",
+            animals = Resource.success(emptyList()),
+        )
+
     private fun makeBlankUiState(): UiState =
         UiState(
+            isConnected = true,
             elapsedTime = "—",
             animals = Resource.success(emptyList()),
         )
@@ -81,6 +108,7 @@ class WearableViewModel @Inject constructor(
         "$ms ms"
 
     data class UiState(
+        val isConnected: Boolean,
         val elapsedTime: String,
         val animals: Resource<List<Animal>>,
     )
