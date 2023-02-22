@@ -7,7 +7,7 @@ package io.github.mmolosay.datalayercommunication.communication.model
 data class Node(
     val id: String,
     val name: String,
-    val isPairedToThisNode: Boolean,
+    val isConnectedToCurrentDevice: Boolean,
 )
 
 /**

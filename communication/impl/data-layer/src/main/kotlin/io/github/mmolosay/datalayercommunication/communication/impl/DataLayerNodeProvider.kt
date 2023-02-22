@@ -33,6 +33,6 @@ class DataLayerNodeProvider(
         Node(
             id = this.id,
             name = this.displayName,
-            isPairedToThisNode = this.isNearby,
+            isConnectedToCurrentDevice = this.isNearby,
         )
 }
