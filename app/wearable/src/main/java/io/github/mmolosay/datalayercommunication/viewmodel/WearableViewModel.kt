@@ -40,7 +40,7 @@ class WearableViewModel @Inject constructor(
                 resource = getAnimalsUseCase()
             }
             uiState.value = uiState.value.copy(
-                isConnected = resource.isConnectionFailure(),
+                isConnected = !resource.isConnectionFailure(),
                 elapsedTime = makeElapsedTime(elapsed),
                 animals = resource,
             )
@@ -57,7 +57,7 @@ class WearableViewModel @Inject constructor(
                 )
             }
             uiState.value = uiState.value.copy(
-                isConnected = resource.isConnectionFailure(),
+                isConnected = !resource.isConnectionFailure(),
                 elapsedTime = makeElapsedTime(elapsed),
                 animals = resource,
             )
@@ -74,7 +74,7 @@ class WearableViewModel @Inject constructor(
                 resource = deleteRandomAnimalUseCase(ofSpecies, olderThan)
             }
             uiState.value = uiState.value.copy(
-                isConnected = resource.isConnectionFailure(),
+                isConnected = !resource.isConnectionFailure(),
                 elapsedTime = makeElapsedTime(elapsed),
                 animals = resource.map { animal -> animal?.let { listOf(it) } ?: emptyList() }
             )
@@ -85,12 +85,17 @@ class WearableViewModel @Inject constructor(
         uiState.value = makeBlankUiState()
     }
 
+    fun launchConnectionCheck() =
+        viewModelScope.launch {
+            uiState.value = uiState.value.copy(
+                isConnected = isConnectedToHandheldDeviceUseCase(),
+            )
+        }
+
     private fun launchRepeatingConnectionCheck() =
         viewModelScope.launch {
             while (isActive) {
-                uiState.value = uiState.value.copy(
-                    isConnected = isConnectedToHandheldDeviceUseCase(),
-                )
+                launchConnectionCheck()
                 delay(2.seconds)
             }
         }
