@@ -9,11 +9,11 @@ import kotlinx.serialization.Serializable
 object CommunicationFailures {
 
     /**
-     * Describes situation, when there is no node meeting specified requirements.
-     * May also imply that paired device had disconnected from the current one.
+     * Describes situation, when there is no destination node, meeting specified requirements,
+     * or connected to requested node cannot be established.
      */
     @Serializable
-    object NoSuchNodeFailure : Resource.Failure
+    object ConnectionFailure : Resource.Failure
 
     /**
      * Describes situation, when communication between devices had failed.

@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.mmolosay.datalayercommunication.communication.failures.CommunicationFailures.NoSuchNodeFailure
+import io.github.mmolosay.datalayercommunication.communication.failures.CommunicationFailures.ConnectionFailure
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
 import io.github.mmolosay.datalayercommunication.domain.usecase.DeleteRandomAnimalUseCase
 import io.github.mmolosay.datalayercommunication.domain.usecase.GetAnimalsUseCase
@@ -40,7 +40,7 @@ class WearableViewModel @Inject constructor(
                 resource = getAnimalsUseCase()
             }
             uiState.value = uiState.value.copy(
-                isConnected = resource.isNoSuchNodeFailure(),
+                isConnected = resource.isConnectionFailure(),
                 elapsedTime = makeElapsedTime(elapsed),
                 animals = resource,
             )
@@ -57,7 +57,7 @@ class WearableViewModel @Inject constructor(
                 )
             }
             uiState.value = uiState.value.copy(
-                isConnected = resource.isNoSuchNodeFailure(),
+                isConnected = resource.isConnectionFailure(),
                 elapsedTime = makeElapsedTime(elapsed),
                 animals = resource,
             )
@@ -74,7 +74,7 @@ class WearableViewModel @Inject constructor(
                 resource = deleteRandomAnimalUseCase(ofSpecies, olderThan)
             }
             uiState.value = uiState.value.copy(
-                isConnected = resource.isNoSuchNodeFailure(),
+                isConnected = resource.isConnectionFailure(),
                 elapsedTime = makeElapsedTime(elapsed),
                 animals = resource.map { animal -> animal?.let { listOf(it) } ?: emptyList() }
             )
@@ -112,10 +112,10 @@ class WearableViewModel @Inject constructor(
     private fun makeElapsedTime(ms: Long): String =
         "$ms ms"
 
-    private fun Resource<*>.isNoSuchNodeFailure(): Boolean =
+    private fun Resource<*>.isConnectionFailure(): Boolean =
         fold(
             onSuccess = { false },
-            onFailure = { it is NoSuchNodeFailure },
+            onFailure = { it is ConnectionFailure },
         )
 
     data class UiState(

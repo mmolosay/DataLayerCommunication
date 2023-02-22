@@ -1,6 +1,6 @@
 package io.github.mmolosay.datalayercommunication.data.wearable
 
-import io.github.mmolosay.datalayercommunication.communication.failures.CommunicationFailures.NoSuchNodeFailure
+import io.github.mmolosay.datalayercommunication.communication.failures.CommunicationFailures.ConnectionFailure
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.communication.client.CommunicationClient
 import io.github.mmolosay.datalayercommunication.communication.model.Path
@@ -26,7 +26,7 @@ class AnimalsRepositoryImpl(
     override suspend fun getAllAnimals(): Resource<Animals> {
         val destination = nodeProvider
             .singleConnectedHandheldNode()
-            .getOrElse { return NoSuchNodeFailure }
+            .getOrElse { return ConnectionFailure }
             .toDestination(getAllAnimalsPath)
         val request = GetAllAnimalsRequest
         return communicationClient
@@ -38,7 +38,7 @@ class AnimalsRepositoryImpl(
     override suspend fun deleteAnimalById(id: Long): Resource<Animal?> {
         val destination = nodeProvider
             .singleConnectedHandheldNode()
-            .getOrElse { return NoSuchNodeFailure }
+            .getOrElse { return ConnectionFailure }
             .toDestination(deleteAnimalByIdPath)
         val request = DeleteAnimalByIdRequest(animalId = id)
         return communicationClient
