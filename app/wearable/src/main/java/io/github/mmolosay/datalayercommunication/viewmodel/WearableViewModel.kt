@@ -13,12 +13,13 @@ import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.fold
 import io.github.mmolosay.datalayercommunication.utils.resource.map
 import io.github.mmolosay.datalayercommunication.utils.resource.success
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import java.util.Date
 import javax.inject.Inject
 import kotlin.system.measureTimeMillis
-import kotlin.time.Duration.Companion.seconds
 
 @HiltViewModel
 class WearableViewModel @Inject constructor(
@@ -29,8 +30,15 @@ class WearableViewModel @Inject constructor(
 
     val uiState = mutableStateOf(makeInitialUiState())
 
+    private var connectionCheckJob: Job? = null
+
     init {
-        launchRepeatingConnectionCheck()
+        launchRepeatingConnectionCheck(2_000L)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        connectionCheckJob?.cancel()
     }
 
     fun getAllAnimals() {
@@ -85,18 +93,26 @@ class WearableViewModel @Inject constructor(
         uiState.value = makeBlankUiState()
     }
 
-    fun launchConnectionCheck() =
-        viewModelScope.launch {
+    fun launchConnectionCheck() {
+        connectionCheckJob?.cancel()
+        connectionCheckJob = viewModelScope.launch {
             uiState.value = uiState.value.copy(
                 isConnected = isConnectedToHandheldDeviceUseCase(),
             )
         }
+    }
 
-    private fun launchRepeatingConnectionCheck() =
+    private fun launchRepeatingConnectionCheck(intervalMillis: Long) =
         viewModelScope.launch {
+            var completionTime = Date().time
             while (isActive) {
                 launchConnectionCheck()
-                delay(2.seconds)
+                connectionCheckJob?.join()
+                completionTime = Date().time.also { now ->
+                    val elapsed = now - completionTime
+                    val left = intervalMillis - elapsed
+                    delay(left)
+                }
             }
         }
 
