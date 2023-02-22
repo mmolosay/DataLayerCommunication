@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
 import dagger.hilt.android.AndroidEntryPoint
-import io.github.mmolosay.datalayercommunication.Application
 import io.github.mmolosay.datalayercommunication.viewmodel.WearableViewModel
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
 

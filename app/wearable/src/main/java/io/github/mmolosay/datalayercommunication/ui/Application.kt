@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication
+package io.github.mmolosay.datalayercommunication.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Devices
