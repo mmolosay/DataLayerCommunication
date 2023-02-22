@@ -40,6 +40,12 @@ fun <T> Resource<T>.getOrThrow(): T =
         else -> throw IllegalStateException("Resource is a " + this::class::simpleName)
     }
 
+fun <T> Resource<*>.onFailure(onFailure: (Resource.Failure) -> T): T? =
+    when (this) {
+        is Resource.Failure -> onFailure(this)
+        else -> null
+    }
+
 /**
  * Returns the encapsulated result of the given [transform] function applied to the encapsulated value,
  * if receiver [Resource] is [Resource.Success], or the original [Resource.Failure].
