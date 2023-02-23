@@ -31,7 +31,7 @@ class WearableViewModel @Inject constructor(
     private var connectionCheckJob: Job? = null
 
     init {
-        launchRepeatingConnectionCheck(2_000L)
+        launchRepeatingConnectionCheck()
     }
 
     fun getAllAnimals() {
@@ -80,11 +80,11 @@ class WearableViewModel @Inject constructor(
         }
     }
 
-    private fun launchRepeatingConnectionCheck(intervalMillis: Long) =
+    private fun launchRepeatingConnectionCheck() =
         viewModelScope.launch {
             while (isActive) {
                 val elapsed = measureTimeMillis { launchConnectionCheck().join() }
-                val left = intervalMillis - elapsed
+                val left = CONNECTION_CHECK_INTERVAL_MILLIS - elapsed
                 delay(left)
             }
         }
@@ -110,4 +110,8 @@ class WearableViewModel @Inject constructor(
         val elapsedTime: String,
         val animals: List<Animal>,
     )
+
+    companion object {
+        private const val CONNECTION_CHECK_INTERVAL_MILLIS = 2_000L
+    }
 }
