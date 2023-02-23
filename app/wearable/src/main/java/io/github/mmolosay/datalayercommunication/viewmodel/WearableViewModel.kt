@@ -17,7 +17,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import java.util.Date
 import javax.inject.Inject
 import kotlin.system.measureTimeMillis
 
@@ -30,15 +29,8 @@ class WearableViewModel @Inject constructor(
 
     val uiState = mutableStateOf(makeInitialUiState())
 
-    private var connectionCheckJob: Job? = null
-
     init {
         launchRepeatingConnectionCheck(2_000L)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        connectionCheckJob?.cancel()
     }
 
     fun getAllAnimals() {
@@ -93,26 +85,19 @@ class WearableViewModel @Inject constructor(
         uiState.value = makeBlankUiState()
     }
 
-    fun launchConnectionCheck() {
-        connectionCheckJob?.cancel()
-        connectionCheckJob = viewModelScope.launch {
+    fun launchConnectionCheck(): Job =
+        viewModelScope.launch {
             uiState.value = uiState.value.copy(
                 isConnected = isConnectedToHandheldDeviceUseCase(),
             )
         }
-    }
 
     private fun launchRepeatingConnectionCheck(intervalMillis: Long) =
         viewModelScope.launch {
-            var completionTime = Date().time
             while (isActive) {
-                launchConnectionCheck()
-                connectionCheckJob?.join()
-                completionTime = Date().time.also { now ->
-                    val elapsed = now - completionTime
-                    val left = intervalMillis - elapsed
-                    delay(left)
-                }
+                val elapsed = measureTimeMillis { launchConnectionCheck().join() }
+                val left = intervalMillis - elapsed
+                delay(left)
             }
         }
 
