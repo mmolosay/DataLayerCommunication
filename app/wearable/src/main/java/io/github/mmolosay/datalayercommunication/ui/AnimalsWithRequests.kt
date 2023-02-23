@@ -61,7 +61,7 @@ fun AnimalsWithRequests(
         item {
             MessageButton(
                 onClick = onGetAllAnimalsClick,
-                text = "Get animals",
+                text = "Get all animals",
             )
             Spacer(modifier = Modifier.height(8.dp))
         }
