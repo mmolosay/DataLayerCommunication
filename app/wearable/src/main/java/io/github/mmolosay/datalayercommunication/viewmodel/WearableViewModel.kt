@@ -107,8 +107,8 @@ class WearableViewModel @Inject constructor(
             animals = Resource.success(emptyList()),
         )
 
-    private fun makeElapsedTime(ms: Long): String =
-        "$ms ms"
+    private fun makeElapsedTime(timeMillis: Long): String =
+        "$timeMillis ms"
 
     data class UiState(
         val showConnectionFailure: Boolean,
