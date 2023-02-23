@@ -19,7 +19,7 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.items
 import androidx.wear.compose.material.rememberScalingLazyListState
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
-import io.github.mmolosay.datalayercommunication.viewmodel.WearableViewModel.UiState
+import io.github.mmolosay.datalayercommunication.models.UiState
 
 // region Previews
 

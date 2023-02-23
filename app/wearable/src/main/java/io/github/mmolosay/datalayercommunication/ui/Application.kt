@@ -9,7 +9,7 @@ import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.Vignette
 import androidx.wear.compose.material.VignettePosition
 import androidx.wear.compose.material.rememberScalingLazyListState
-import io.github.mmolosay.datalayercommunication.viewmodel.WearableViewModel.UiState
+import io.github.mmolosay.datalayercommunication.models.UiState
 
 // region Preivews
 

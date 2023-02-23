@@ -9,6 +9,7 @@ import io.github.mmolosay.datalayercommunication.domain.model.Animal
 import io.github.mmolosay.datalayercommunication.domain.usecase.DeleteRandomAnimalUseCase
 import io.github.mmolosay.datalayercommunication.domain.usecase.GetAnimalsUseCase
 import io.github.mmolosay.datalayercommunication.domain.wearable.CheckIsConnectedToHandheldDeviceUseCase
+import io.github.mmolosay.datalayercommunication.models.UiState
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.getOrNull
 import io.github.mmolosay.datalayercommunication.utils.resource.isSuccess
@@ -104,12 +105,6 @@ class WearableViewModel @Inject constructor(
 
     private fun makeBlankElapsedTime(): String =
         "—"
-
-    data class UiState(
-        val showConnectionFailure: Boolean,
-        val elapsedTime: String,
-        val animals: List<Animal>,
-    )
 
     companion object {
         private const val CONNECTION_CHECK_INTERVAL_MILLIS = 2_000L
