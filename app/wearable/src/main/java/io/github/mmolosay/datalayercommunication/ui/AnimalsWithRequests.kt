@@ -21,11 +21,11 @@ import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.items
 import androidx.wear.compose.material.rememberScalingLazyListState
-import io.github.mmolosay.datalayercommunication.viewmodel.WearableViewModel.UiState
-import io.github.mmolosay.datalayercommunication.communication.failures.CommunicationFailures.CommunicatingFailure
+import io.github.mmolosay.datalayercommunication.communication.failures.CommunicationFailure
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.success
+import io.github.mmolosay.datalayercommunication.viewmodel.WearableViewModel.UiState
 
 // region Previews
 
@@ -132,7 +132,7 @@ private fun ScalingLazyListScope.Animals(animals: List<Animal>) =
 private fun ScalingLazyListScope.AnimalsFailure(failure: Resource.Failure) =
     item {
         when (failure) {
-            is CommunicatingFailure -> AnimalsFailure("There was an error in communication process.")
+            is CommunicationFailure -> AnimalsFailure("There was an error in communication process.")
             else -> Unit
         }
     }

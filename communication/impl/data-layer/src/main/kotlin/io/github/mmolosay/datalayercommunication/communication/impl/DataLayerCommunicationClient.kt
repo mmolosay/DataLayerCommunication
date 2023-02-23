@@ -1,7 +1,7 @@
 package io.github.mmolosay.datalayercommunication.communication.impl
 
 import com.google.android.gms.wearable.MessageClient
-import io.github.mmolosay.datalayercommunication.communication.failures.CommunicationFailures.CommunicatingFailure
+import io.github.mmolosay.datalayercommunication.communication.failures.CommunicationFailure
 import io.github.mmolosay.datalayercommunication.communication.client.CommunicationClient
 import io.github.mmolosay.datalayercommunication.communication.convertion.RequestEncoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseDecoder
@@ -41,7 +41,7 @@ class DataLayerCommunicationClient(
                 Resource.success(it)
             },
             onFailure = { // you can check type of exception here and return different failures
-                CommunicatingFailure
+                CommunicationFailure()
             },
         )
 }
