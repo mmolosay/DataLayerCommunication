@@ -10,7 +10,6 @@ import io.github.mmolosay.datalayercommunication.domain.usecase.DeleteRandomAnim
 import io.github.mmolosay.datalayercommunication.domain.usecase.GetAnimalsUseCase
 import io.github.mmolosay.datalayercommunication.domain.wearable.CheckIsConnectedToHandheldDeviceUseCase
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
-import io.github.mmolosay.datalayercommunication.utils.resource.fold
 import io.github.mmolosay.datalayercommunication.utils.resource.map
 import io.github.mmolosay.datalayercommunication.utils.resource.success
 import kotlinx.coroutines.Job
@@ -40,7 +39,7 @@ class WearableViewModel @Inject constructor(
                 resource = getAnimalsUseCase()
             }
             uiState.value = uiState.value.copy(
-                showConnectionFailure = resource.isConnectionFailure(),
+                showConnectionFailure = resource is ConnectionFailure,
                 elapsedTime = makeElapsedTime(elapsed),
                 animals = resource,
             )
@@ -57,7 +56,7 @@ class WearableViewModel @Inject constructor(
                 )
             }
             uiState.value = uiState.value.copy(
-                showConnectionFailure = resource.isConnectionFailure(),
+                showConnectionFailure = resource is ConnectionFailure,
                 elapsedTime = makeElapsedTime(elapsed),
                 animals = resource,
             )
@@ -74,7 +73,7 @@ class WearableViewModel @Inject constructor(
                 resource = deleteRandomAnimalUseCase(ofSpecies, olderThan)
             }
             uiState.value = uiState.value.copy(
-                showConnectionFailure = resource.isConnectionFailure(),
+                showConnectionFailure = resource is ConnectionFailure,
                 elapsedTime = makeElapsedTime(elapsed),
                 animals = resource.map { animal -> animal?.let { listOf(it) } ?: emptyList() }
             )
@@ -110,12 +109,6 @@ class WearableViewModel @Inject constructor(
 
     private fun makeElapsedTime(ms: Long): String =
         "$ms ms"
-
-    private fun Resource<*>.isConnectionFailure(): Boolean =
-        fold(
-            onSuccess = { false },
-            onFailure = { it is ConnectionFailure },
-        )
 
     data class UiState(
         val showConnectionFailure: Boolean,
