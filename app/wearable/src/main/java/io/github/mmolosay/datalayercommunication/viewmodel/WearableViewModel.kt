@@ -1,6 +1,8 @@
 package io.github.mmolosay.datalayercommunication.viewmodel
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,7 +29,8 @@ class WearableViewModel @Inject constructor(
     private val isConnectedToHandheldDeviceUseCase: CheckIsConnectedToHandheldDeviceUseCase,
 ) : ViewModel() {
 
-    val uiState = mutableStateOf(makeBlankUiState())
+    var uiState by mutableStateOf(makeInitialUiState())
+        private set
 
     private var connectionCheckJob: Job? = null
 
@@ -41,7 +44,7 @@ class WearableViewModel @Inject constructor(
             val elapsed = measureTimeMillis {
                 resource = getAnimalsUseCase()
             }.takeIf { resource.isSuccess }
-            uiState.value = uiState.value.copy(
+            uiState = uiState.copy(
                 showConnectionFailure = resource is ConnectionFailure,
                 elapsedTime = makeElapsedTimeOrBlank(elapsed),
                 animals = resource.getOrNull() ?: emptyList(),
@@ -58,7 +61,7 @@ class WearableViewModel @Inject constructor(
             val elapsed = measureTimeMillis {
                 resource = deleteRandomAnimalUseCase(ofSpecies, olderThan)
             }.takeIf { resource.isSuccess }
-            uiState.value = uiState.value.copy(
+            uiState = uiState.copy(
                 showConnectionFailure = resource is ConnectionFailure,
                 elapsedTime = makeElapsedTimeOrBlank(elapsed),
                 animals = resource.getOrNull()?.let { listOf(it) } ?: emptyList(),
@@ -66,14 +69,17 @@ class WearableViewModel @Inject constructor(
         }
     }
 
-    fun clearAnimals() {
-        uiState.value = makeBlankUiState()
+    fun clearOutput() {
+        uiState = uiState.copy(
+            elapsedTime = makeBlankElapsedTime(),
+            animals = emptyList(),
+        )
     }
 
     fun launchConnectionCheck(): Job {
         connectionCheckJob?.cancel()
         return viewModelScope.launch {
-            uiState.value = uiState.value.copy(
+            uiState = uiState.copy(
                 showConnectionFailure = !isConnectedToHandheldDeviceUseCase(),
             )
         }.also { job ->
@@ -90,7 +96,7 @@ class WearableViewModel @Inject constructor(
             }
         }
 
-    private fun makeBlankUiState(): UiState =
+    private fun makeInitialUiState(): UiState =
         UiState(
             showConnectionFailure = false,
             elapsedTime = makeBlankElapsedTime(),

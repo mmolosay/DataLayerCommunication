@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val uiState by viewModel.uiState
+            val uiState = viewModel.uiState
             Application(
                 uiState = uiState,
                 onGetAllAnimalsClick = ::onGetAnimalsClick,
@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun onClearClick() {
-        viewModel.clearAnimals()
+        viewModel.clearOutput()
     }
 
     private fun onConnectionFailureTryAgainClick() {
