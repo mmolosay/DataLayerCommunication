@@ -56,13 +56,14 @@ fun Application(
             ConnectionFailure(
                 onTryAgainClick = onConnectionFailureTryAgainClick,
             )
-        AnimalsWithRequests(
-            uiState = uiState,
-            scalingLazyListState = scalingLazyListState,
-            onGetAllAnimalsClick = onGetAllAnimalsClick,
-            onGetCatsOlderThan1Click = onGetCatsOlderThan1Click,
-            onDeleteRandomCatClick = onDeleteRandomCatClick,
-            onClearClick = onClearClick,
-        )
+        else
+            AnimalsWithRequests(
+                uiState = uiState,
+                scalingLazyListState = scalingLazyListState,
+                onGetAllAnimalsClick = onGetAllAnimalsClick,
+                onGetCatsOlderThan1Click = onGetCatsOlderThan1Click,
+                onDeleteRandomCatClick = onDeleteRandomCatClick,
+                onClearClick = onClearClick,
+            )
     }
 }
