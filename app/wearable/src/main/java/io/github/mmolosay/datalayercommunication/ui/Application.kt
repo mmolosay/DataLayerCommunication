@@ -19,7 +19,6 @@ fun ApplicationPreview() {
     Application(
         uiState = previewUiState(),
         onGetAllAnimalsClick = {},
-        onGetCatsOlderThan1Click = {},
         onDeleteRandomCatClick = {},
         onClearClick = {},
         onConnectionFailureTryAgainClick = {},
@@ -39,7 +38,6 @@ private fun previewUiState(): UiState =
 fun Application(
     uiState: UiState,
     onGetAllAnimalsClick: () -> Unit,
-    onGetCatsOlderThan1Click: () -> Unit,
     onDeleteRandomCatClick: () -> Unit,
     onClearClick: () -> Unit,
     onConnectionFailureTryAgainClick: () -> Unit,
@@ -59,7 +57,6 @@ fun Application(
                 uiState = uiState,
                 scalingLazyListState = scalingLazyListState,
                 onGetAllAnimalsClick = onGetAllAnimalsClick,
-                onGetCatsOlderThan1Click = onGetCatsOlderThan1Click,
                 onDeleteRandomCatClick = onDeleteRandomCatClick,
                 onClearClick = onClearClick,
             )

@@ -48,23 +48,6 @@ class WearableViewModel @Inject constructor(
         }
     }
 
-    fun getCatsOlderThan1() {
-        viewModelScope.launch {
-            val resource: Resource<List<Animal>>
-            val elapsed = measureTimeMillis {
-                resource = getAnimalsUseCase(
-                    ageFrom = 2,
-                    onlyCats = true,
-                )
-            }.takeIf { resource.isSuccess }
-            uiState.value = uiState.value.copy(
-                showConnectionFailure = resource is ConnectionFailure,
-                elapsedTime = makeElapsedTimeOrBlank(elapsed),
-                animals = resource.getOrNull() ?: emptyList(),
-            )
-        }
-    }
-
     fun deleteRandomAnimal(
         ofSpecies: Animal.Species? = null,
         olderThan: Int? = null,

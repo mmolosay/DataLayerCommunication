@@ -30,7 +30,6 @@ private fun ConnectedStatePreview() =
         uiState = previewUiState(),
         scalingLazyListState = rememberScalingLazyListState(),
         onGetAllAnimalsClick = {},
-        onGetCatsOlderThan1Click = {},
         onDeleteRandomCatClick = {},
         onClearClick = {},
     )
@@ -49,7 +48,6 @@ fun AnimalsWithRequests(
     uiState: UiState,
     scalingLazyListState: ScalingLazyListState,
     onGetAllAnimalsClick: () -> Unit,
-    onGetCatsOlderThan1Click: () -> Unit,
     onDeleteRandomCatClick: () -> Unit,
     onClearClick: () -> Unit,
 ) {
@@ -64,13 +62,6 @@ fun AnimalsWithRequests(
             MessageButton(
                 onClick = onGetAllAnimalsClick,
                 text = "Get animals",
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-        }
-        item {
-            MessageButton(
-                onClick = onGetCatsOlderThan1Click,
-                text = "Get cats older than 1 y.o.",
             )
             Spacer(modifier = Modifier.height(8.dp))
         }

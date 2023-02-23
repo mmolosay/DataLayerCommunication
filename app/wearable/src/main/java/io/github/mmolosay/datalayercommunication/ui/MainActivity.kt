@@ -21,7 +21,6 @@ class MainActivity : ComponentActivity() {
             Application(
                 uiState = uiState,
                 onGetAllAnimalsClick = ::onGetAnimalsClick,
-                onGetCatsOlderThan1Click = ::onGetCatsOlderThan1Click,
                 onDeleteRandomCatClick = ::onDeleteRandomCatClick,
                 onClearClick = ::onClearClick,
                 onConnectionFailureTryAgainClick = ::onConnectionFailureTryAgainClick,
@@ -31,10 +30,6 @@ class MainActivity : ComponentActivity() {
 
     private fun onGetAnimalsClick() {
         viewModel.getAllAnimals()
-    }
-
-    private fun onGetCatsOlderThan1Click() {
-        viewModel.getCatsOlderThan1()
     }
 
     private fun onDeleteRandomCatClick() {
