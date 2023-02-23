@@ -38,10 +38,10 @@ class WearableViewModel @Inject constructor(
             val resource: Resource<List<Animal>>
             val elapsed = measureTimeMillis {
                 resource = getAnimalsUseCase()
-            }
+            }.takeIf { resource is Resource.Success }
             uiState.value = uiState.value.copy(
                 showConnectionFailure = resource is ConnectionFailure,
-                elapsedTime = makeElapsedTime(elapsed),
+                elapsedTime = makeElapsedTimeOrBlank(elapsed),
                 animals = resource.getOrNull() ?: emptyList(),
             )
         }
@@ -55,10 +55,10 @@ class WearableViewModel @Inject constructor(
                     ageFrom = 2,
                     onlyCats = true,
                 )
-            }
+            }.takeIf { resource is Resource.Success }
             uiState.value = uiState.value.copy(
                 showConnectionFailure = resource is ConnectionFailure,
-                elapsedTime = makeElapsedTime(elapsed),
+                elapsedTime = makeElapsedTimeOrBlank(elapsed),
                 animals = resource.getOrNull() ?: emptyList(),
             )
         }
@@ -72,10 +72,10 @@ class WearableViewModel @Inject constructor(
             val resource: Resource<Animal?>
             val elapsed = measureTimeMillis {
                 resource = deleteRandomAnimalUseCase(ofSpecies, olderThan)
-            }
+            }.takeIf { resource is Resource.Success }
             uiState.value = uiState.value.copy(
                 showConnectionFailure = resource is ConnectionFailure,
-                elapsedTime = makeElapsedTime(elapsed),
+                elapsedTime = makeElapsedTimeOrBlank(elapsed),
                 animals = resource.getOrNull()?.let { listOf(it) } ?: emptyList(),
             )
         }
@@ -108,12 +108,18 @@ class WearableViewModel @Inject constructor(
     private fun makeBlankUiState(): UiState =
         UiState(
             showConnectionFailure = false,
-            elapsedTime = "—",
+            elapsedTime = makeBlankElapsedTime(),
             animals = emptyList(),
         )
 
-    private fun makeElapsedTime(timeMillis: Long): String =
-        "$timeMillis ms"
+    private fun makeElapsedTimeOrBlank(
+        elapsedMillis: Long?,
+    ): String =
+        if (elapsedMillis != null) "$elapsedMillis ms"
+        else makeBlankElapsedTime()
+
+    private fun makeBlankElapsedTime(): String =
+        "—"
 
     data class UiState(
         val showConnectionFailure: Boolean,
