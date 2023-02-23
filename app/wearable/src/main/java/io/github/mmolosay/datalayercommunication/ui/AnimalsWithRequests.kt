@@ -68,7 +68,7 @@ fun AnimalsWithRequests(
         item {
             MessageButton(
                 onClick = onDeleteRandomCatClick,
-                text = "Delete ranom cat",
+                text = "Delete random cat",
             )
             Spacer(modifier = Modifier.height(8.dp))
         }
