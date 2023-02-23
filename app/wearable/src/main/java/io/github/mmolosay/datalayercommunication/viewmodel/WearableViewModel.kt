@@ -11,6 +11,7 @@ import io.github.mmolosay.datalayercommunication.domain.usecase.GetAnimalsUseCas
 import io.github.mmolosay.datalayercommunication.domain.wearable.CheckIsConnectedToHandheldDeviceUseCase
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.getOrNull
+import io.github.mmolosay.datalayercommunication.utils.resource.isSuccess
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -38,7 +39,7 @@ class WearableViewModel @Inject constructor(
             val resource: Resource<List<Animal>>
             val elapsed = measureTimeMillis {
                 resource = getAnimalsUseCase()
-            }.takeIf { resource is Resource.Success }
+            }.takeIf { resource.isSuccess }
             uiState.value = uiState.value.copy(
                 showConnectionFailure = resource is ConnectionFailure,
                 elapsedTime = makeElapsedTimeOrBlank(elapsed),
@@ -55,7 +56,7 @@ class WearableViewModel @Inject constructor(
                     ageFrom = 2,
                     onlyCats = true,
                 )
-            }.takeIf { resource is Resource.Success }
+            }.takeIf { resource.isSuccess }
             uiState.value = uiState.value.copy(
                 showConnectionFailure = resource is ConnectionFailure,
                 elapsedTime = makeElapsedTimeOrBlank(elapsed),
@@ -72,7 +73,7 @@ class WearableViewModel @Inject constructor(
             val resource: Resource<Animal?>
             val elapsed = measureTimeMillis {
                 resource = deleteRandomAnimalUseCase(ofSpecies, olderThan)
-            }.takeIf { resource is Resource.Success }
+            }.takeIf { resource.isSuccess }
             uiState.value = uiState.value.copy(
                 showConnectionFailure = resource is ConnectionFailure,
                 elapsedTime = makeElapsedTimeOrBlank(elapsed),

@@ -11,6 +11,18 @@ fun <T> Resource.Companion.success(value: T): Resource<T> =
     Resource.Success(value)
 
 /**
+ * Determines, whether receiver [Resource] is an instance of [Resource.Success].
+ */
+val Resource<*>.isSuccess: Boolean
+    get() = this is Resource.Success
+
+/**
+ * Determines, whether receiver [Resource] is an instance of [Resource.Failure].
+ */
+val Resource<*>.isFailure: Boolean
+    get() = this is Resource.Failure
+
+/**
  * Returns the encapsulated value, if receiver [Resource] is [Resource.Success],
  * or the result of [onFailure] function, if it is a [Resource.Failure].
  */

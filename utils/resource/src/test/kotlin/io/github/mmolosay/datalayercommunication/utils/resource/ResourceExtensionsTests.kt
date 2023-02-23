@@ -23,6 +23,42 @@ class ResourceExtensionsTests {
     }
 
     @Test
+    fun `Resource_isSuccess returns true, if Resource is Success`() {
+        val resource = Resource.success("my value")
+
+        val isSuccess = resource.isSuccess
+
+        isSuccess shouldBe true
+    }
+
+    @Test
+    fun `Resource_isSuccess returns false, if Resource is not Success`() {
+        val resource: Resource<*> = TestFailure
+
+        val isSuccess = resource.isSuccess
+
+        isSuccess shouldBe false
+    }
+
+    @Test
+    fun `Resource_isFailure returns true, if Resource is Failure`() {
+        val resource: Resource<*> = TestFailure
+
+        val isFailure = resource.isFailure
+
+        isFailure shouldBe true
+    }
+
+    @Test
+    fun `Resource_isFailure returns false, if Resource is not Failure`() {
+        val resource = Resource.success("my value")
+
+        val isFailure = resource.isFailure
+
+        isFailure shouldBe false
+    }
+
+    @Test
     fun `Resource_getOrElse() returns initial value, if Resource is Success`() {
         val initialValue = "my value"
         val resource = Resource.success(initialValue)
