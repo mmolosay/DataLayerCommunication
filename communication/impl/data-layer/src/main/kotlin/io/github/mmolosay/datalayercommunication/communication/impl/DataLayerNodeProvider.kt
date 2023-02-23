@@ -4,8 +4,10 @@ import com.google.android.gms.wearable.CapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.communication.model.Capability
 import io.github.mmolosay.datalayercommunication.communication.model.Node
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 import kotlin.time.Duration.Companion.seconds
 import com.google.android.gms.wearable.Node as DataLayerNode
@@ -17,6 +19,7 @@ class DataLayerNodeProvider(
     private val capabilityClient: CapabilityClient,
     private val handheldCapability: Capability,
     private val wearableCapability: Capability,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : NodeProvider {
 
     override suspend fun handheld(): Collection<Node> =
@@ -25,17 +28,18 @@ class DataLayerNodeProvider(
     override suspend fun wearable(): Collection<Node> =
         getNodesWithCapability(wearableCapability)
 
-    private suspend fun getNodesWithCapability(capability: Capability): Collection<Node> {
-        val capabilityInfo = withTimeoutOrNull(3.seconds) {
-            capabilityClient
-                .getCapability(capability.value, CapabilityClient.FILTER_REACHABLE)
-                .await()
+    private suspend fun getNodesWithCapability(capability: Capability): Collection<Node> =
+        withContext(dispatcher) {
+            val capabilityInfo = withTimeoutOrNull(3.seconds) {
+                capabilityClient
+                    .getCapability(capability.value, CapabilityClient.FILTER_REACHABLE)
+                    .await()
+            }
+            capabilityInfo
+                ?.nodes
+                ?.map { it.toNode() }
+                ?: emptyList()
         }
-        return capabilityInfo
-            ?.nodes
-            ?.map { it.toNode() }
-            ?: return emptyList()
-    }
 
     private fun DataLayerNode.toNode(): Node =
         Node(
