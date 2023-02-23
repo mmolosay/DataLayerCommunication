@@ -1,15 +1,12 @@
 package io.github.mmolosay.datalayercommunication.ui
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Button
@@ -21,10 +18,7 @@ import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.items
 import androidx.wear.compose.material.rememberScalingLazyListState
-import io.github.mmolosay.datalayercommunication.communication.failures.CommunicationFailure
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
-import io.github.mmolosay.datalayercommunication.utils.resource.Resource
-import io.github.mmolosay.datalayercommunication.utils.resource.success
 import io.github.mmolosay.datalayercommunication.viewmodel.WearableViewModel.UiState
 
 // region Previews
@@ -45,7 +39,7 @@ private fun previewUiState(): UiState =
     UiState(
         showConnectionFailure = true,
         elapsedTime = "3569 ms",
-        animals = Resource.success(emptyList()),
+        animals = emptyList(),
     )
 
 // endregion
@@ -118,35 +112,9 @@ private fun MessageButton(
         Text(text = text)
     }
 
-private fun ScalingLazyListScope.AnimalsSection(resource: Resource<List<Animal>>) =
-    when (resource) {
-        is Resource.Success -> Animals(resource.value)
-        is Resource.Failure -> AnimalsFailure(resource)
-    }
-
-private fun ScalingLazyListScope.Animals(animals: List<Animal>) =
+private fun ScalingLazyListScope.AnimalsSection(animals: List<Animal>) =
     items(animals) {
         Animal(it)
-    }
-
-private fun ScalingLazyListScope.AnimalsFailure(failure: Resource.Failure) =
-    item {
-        when (failure) {
-            is CommunicationFailure -> AnimalsFailure("There was an error in communication process.")
-            else -> Unit
-        }
-    }
-
-@Composable
-private fun AnimalsFailure(message: String) =
-    Box(
-        modifier = Modifier.fillMaxWidth(),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = message,
-            textAlign = TextAlign.Center,
-        )
     }
 
 @Composable

@@ -9,8 +9,6 @@ import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.Vignette
 import androidx.wear.compose.material.VignettePosition
 import androidx.wear.compose.material.rememberScalingLazyListState
-import io.github.mmolosay.datalayercommunication.utils.resource.Resource
-import io.github.mmolosay.datalayercommunication.utils.resource.success
 import io.github.mmolosay.datalayercommunication.viewmodel.WearableViewModel.UiState
 
 // region Preivews
@@ -32,7 +30,7 @@ private fun previewUiState(): UiState =
     UiState(
         showConnectionFailure = false,
         elapsedTime = "3569 ms",
-        animals = Resource.success(emptyList()),
+        animals = emptyList(),
     )
 
 // endregion

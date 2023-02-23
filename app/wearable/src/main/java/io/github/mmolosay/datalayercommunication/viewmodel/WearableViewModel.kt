@@ -10,8 +10,7 @@ import io.github.mmolosay.datalayercommunication.domain.usecase.DeleteRandomAnim
 import io.github.mmolosay.datalayercommunication.domain.usecase.GetAnimalsUseCase
 import io.github.mmolosay.datalayercommunication.domain.wearable.CheckIsConnectedToHandheldDeviceUseCase
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
-import io.github.mmolosay.datalayercommunication.utils.resource.map
-import io.github.mmolosay.datalayercommunication.utils.resource.success
+import io.github.mmolosay.datalayercommunication.utils.resource.getOrNull
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -43,7 +42,7 @@ class WearableViewModel @Inject constructor(
             uiState.value = uiState.value.copy(
                 showConnectionFailure = resource is ConnectionFailure,
                 elapsedTime = makeElapsedTime(elapsed),
-                animals = resource,
+                animals = resource.getOrNull() ?: emptyList(),
             )
         }
     }
@@ -60,7 +59,7 @@ class WearableViewModel @Inject constructor(
             uiState.value = uiState.value.copy(
                 showConnectionFailure = resource is ConnectionFailure,
                 elapsedTime = makeElapsedTime(elapsed),
-                animals = resource,
+                animals = resource.getOrNull() ?: emptyList(),
             )
         }
     }
@@ -77,7 +76,7 @@ class WearableViewModel @Inject constructor(
             uiState.value = uiState.value.copy(
                 showConnectionFailure = resource is ConnectionFailure,
                 elapsedTime = makeElapsedTime(elapsed),
-                animals = resource.map { animal -> animal?.let { listOf(it) } ?: emptyList() }
+                animals = resource.getOrNull()?.let { listOf(it) } ?: emptyList(),
             )
         }
     }
@@ -110,7 +109,7 @@ class WearableViewModel @Inject constructor(
         UiState(
             showConnectionFailure = false,
             elapsedTime = "—",
-            animals = Resource.success(emptyList()),
+            animals = emptyList(),
         )
 
     private fun makeElapsedTime(timeMillis: Long): String =
@@ -119,6 +118,6 @@ class WearableViewModel @Inject constructor(
     data class UiState(
         val showConnectionFailure: Boolean,
         val elapsedTime: String,
-        val animals: Resource<List<Animal>>,
+        val animals: List<Animal>,
     )
 }
