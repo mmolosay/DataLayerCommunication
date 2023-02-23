@@ -27,7 +27,7 @@ class WearableViewModel @Inject constructor(
     private val isConnectedToHandheldDeviceUseCase: CheckIsConnectedToHandheldDeviceUseCase,
 ) : ViewModel() {
 
-    val uiState = mutableStateOf(makeInitialUiState())
+    val uiState = mutableStateOf(makeBlankUiState())
 
     init {
         launchRepeatingConnectionCheck(2_000L)
@@ -40,7 +40,7 @@ class WearableViewModel @Inject constructor(
                 resource = getAnimalsUseCase()
             }
             uiState.value = uiState.value.copy(
-                isConnected = !resource.isConnectionFailure(),
+                showConnectionFailure = resource.isConnectionFailure(),
                 elapsedTime = makeElapsedTime(elapsed),
                 animals = resource,
             )
@@ -57,7 +57,7 @@ class WearableViewModel @Inject constructor(
                 )
             }
             uiState.value = uiState.value.copy(
-                isConnected = !resource.isConnectionFailure(),
+                showConnectionFailure = resource.isConnectionFailure(),
                 elapsedTime = makeElapsedTime(elapsed),
                 animals = resource,
             )
@@ -74,7 +74,7 @@ class WearableViewModel @Inject constructor(
                 resource = deleteRandomAnimalUseCase(ofSpecies, olderThan)
             }
             uiState.value = uiState.value.copy(
-                isConnected = !resource.isConnectionFailure(),
+                showConnectionFailure = resource.isConnectionFailure(),
                 elapsedTime = makeElapsedTime(elapsed),
                 animals = resource.map { animal -> animal?.let { listOf(it) } ?: emptyList() }
             )
@@ -88,7 +88,7 @@ class WearableViewModel @Inject constructor(
     fun launchConnectionCheck(): Job =
         viewModelScope.launch {
             uiState.value = uiState.value.copy(
-                isConnected = isConnectedToHandheldDeviceUseCase(),
+                showConnectionFailure = !isConnectedToHandheldDeviceUseCase(),
             )
         }
 
@@ -101,16 +101,9 @@ class WearableViewModel @Inject constructor(
             }
         }
 
-    private fun makeInitialUiState(): UiState =
-        UiState(
-            isConnected = false,
-            elapsedTime = "",
-            animals = Resource.success(emptyList()),
-        )
-
     private fun makeBlankUiState(): UiState =
         UiState(
-            isConnected = true,
+            showConnectionFailure = false,
             elapsedTime = "—",
             animals = Resource.success(emptyList()),
         )
@@ -125,7 +118,7 @@ class WearableViewModel @Inject constructor(
         )
 
     data class UiState(
-        val isConnected: Boolean,
+        val showConnectionFailure: Boolean,
         val elapsedTime: String,
         val animals: Resource<List<Animal>>,
     )

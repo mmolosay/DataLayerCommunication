@@ -9,9 +9,9 @@ import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.Vignette
 import androidx.wear.compose.material.VignettePosition
 import androidx.wear.compose.material.rememberScalingLazyListState
-import io.github.mmolosay.datalayercommunication.viewmodel.WearableViewModel.UiState
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.success
+import io.github.mmolosay.datalayercommunication.viewmodel.WearableViewModel.UiState
 
 // region Preivews
 
@@ -24,13 +24,13 @@ fun ApplicationPreview() {
         onGetCatsOlderThan1Click = {},
         onDeleteRandomCatClick = {},
         onClearClick = {},
-        onTryAgainClick = {},
+        onConnectionFailureTryAgainClick = {},
     )
 }
 
 private fun previewUiState(): UiState =
     UiState(
-        isConnected = true,
+        showConnectionFailure = false,
         elapsedTime = "3569 ms",
         animals = Resource.success(emptyList()),
     )
@@ -44,7 +44,7 @@ fun Application(
     onGetCatsOlderThan1Click: () -> Unit,
     onDeleteRandomCatClick: () -> Unit,
     onClearClick: () -> Unit,
-    onTryAgainClick: () -> Unit,
+    onConnectionFailureTryAgainClick: () -> Unit,
 ) {
     val scalingLazyListState = rememberScalingLazyListState()
     Scaffold(
@@ -52,20 +52,17 @@ fun Application(
         positionIndicator = { PositionIndicator(scalingLazyListState = scalingLazyListState) },
         timeText = { TimeText() }
     ) {
-        when (uiState.isConnected) {
-            true ->
-                ConnectedState(
-                    uiState = uiState,
-                    scalingLazyListState = scalingLazyListState,
-                    onGetAllAnimalsClick = onGetAllAnimalsClick,
-                    onGetCatsOlderThan1Click = onGetCatsOlderThan1Click,
-                    onDeleteRandomCatClick = onDeleteRandomCatClick,
-                    onClearClick = onClearClick,
-                )
-            false ->
-                NotConnectedState(
-                    onTryAgainClick = onTryAgainClick,
-                )
-        }
+        if (uiState.showConnectionFailure)
+            ConnectionFailure(
+                onTryAgainClick = onConnectionFailureTryAgainClick,
+            )
+        AnimalsWithRequests(
+            uiState = uiState,
+            scalingLazyListState = scalingLazyListState,
+            onGetAllAnimalsClick = onGetAllAnimalsClick,
+            onGetCatsOlderThan1Click = onGetCatsOlderThan1Click,
+            onDeleteRandomCatClick = onDeleteRandomCatClick,
+            onClearClick = onClearClick,
+        )
     }
 }

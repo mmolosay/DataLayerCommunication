@@ -32,7 +32,7 @@ import io.github.mmolosay.datalayercommunication.utils.resource.success
 @Preview
 @Composable
 private fun ConnectedStatePreview() =
-    ConnectedState(
+    AnimalsWithRequests(
         uiState = previewUiState(),
         scalingLazyListState = rememberScalingLazyListState(),
         onGetAllAnimalsClick = {},
@@ -43,7 +43,7 @@ private fun ConnectedStatePreview() =
 
 private fun previewUiState(): UiState =
     UiState(
-        isConnected = true,
+        showConnectionFailure = true,
         elapsedTime = "3569 ms",
         animals = Resource.success(emptyList()),
     )
@@ -51,7 +51,7 @@ private fun previewUiState(): UiState =
 // endregion
 
 @Composable
-fun ConnectedState(
+fun AnimalsWithRequests(
     uiState: UiState,
     scalingLazyListState: ScalingLazyListState,
     onGetAllAnimalsClick: () -> Unit,

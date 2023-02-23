@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
                 onGetCatsOlderThan1Click = ::onGetCatsOlderThan1Click,
                 onDeleteRandomCatClick = ::onDeleteRandomCatClick,
                 onClearClick = ::onClearClick,
-                onTryAgainClick = ::onTryAgainClick,
+                onConnectionFailureTryAgainClick = ::onConnectionFailureTryAgainClick,
             )
         }
     }
@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
         viewModel.clearAnimals()
     }
 
-    private fun onTryAgainClick() {
+    private fun onConnectionFailureTryAgainClick() {
         viewModel.launchConnectionCheck()
     }
 }

@@ -20,15 +20,15 @@ import androidx.wear.compose.material.Text
 
 @Preview
 @Composable
-private fun NotConnectedStatePreview() =
-    NotConnectedState(
+private fun ConnectionFailurePreview() =
+    ConnectionFailure(
         onTryAgainClick = {},
     )
 
 // endregion
 
 @Composable
-fun NotConnectedState(
+fun ConnectionFailure(
     onTryAgainClick: () -> Unit,
 ) =
     Column(
@@ -40,9 +40,9 @@ fun NotConnectedState(
             text = "Watch is not connected to handheld device.",
             textAlign = TextAlign.Center,
         )
-        
+
         Spacer(modifier = Modifier.height(8.dp))
-        
+
         Button(
             onClick = onTryAgainClick,
             colors = ButtonDefaults.secondaryButtonColors(),
