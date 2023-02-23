@@ -28,6 +28,8 @@ class WearableViewModel @Inject constructor(
 
     val uiState = mutableStateOf(makeBlankUiState())
 
+    private var connectionCheckJob: Job? = null
+
     init {
         launchRepeatingConnectionCheck(2_000L)
     }
@@ -84,12 +86,16 @@ class WearableViewModel @Inject constructor(
         uiState.value = makeBlankUiState()
     }
 
-    fun launchConnectionCheck(): Job =
-        viewModelScope.launch {
+    fun launchConnectionCheck(): Job {
+        connectionCheckJob?.cancel()
+        return viewModelScope.launch {
             uiState.value = uiState.value.copy(
                 showConnectionFailure = !isConnectedToHandheldDeviceUseCase(),
             )
+        }.also { job ->
+            connectionCheckJob = job
         }
+    }
 
     private fun launchRepeatingConnectionCheck(intervalMillis: Long) =
         viewModelScope.launch {
