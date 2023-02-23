@@ -24,9 +24,9 @@ import kotlin.system.measureTimeMillis
 
 @HiltViewModel
 class WearableViewModel @Inject constructor(
-    private val getAnimalsUseCase: GetAnimalsUseCase,
-    private val deleteRandomAnimalUseCase: DeleteRandomAnimalUseCase,
-    private val isConnectedToHandheldDeviceUseCase: CheckIsConnectedToHandheldDeviceUseCase,
+    private val getAnimals: GetAnimalsUseCase,
+    private val deleteRandomAnimal: DeleteRandomAnimalUseCase,
+    private val isConnectedToHandheldDevice: CheckIsConnectedToHandheldDeviceUseCase,
 ) : ViewModel() {
 
     var uiState by mutableStateOf(makeInitialUiState())
@@ -38,11 +38,11 @@ class WearableViewModel @Inject constructor(
         launchRepeatingConnectionCheck()
     }
 
-    fun getAllAnimals() {
+    fun executeGetAllAnimals() {
         viewModelScope.launch {
             val resource: Resource<List<Animal>>
             val elapsed = measureTimeMillis {
-                resource = getAnimalsUseCase()
+                resource = getAnimals()
             }.takeIf { resource.isSuccess }
             uiState = uiState.copy(
                 showConnectionFailure = resource is ConnectionFailure,
@@ -52,14 +52,14 @@ class WearableViewModel @Inject constructor(
         }
     }
 
-    fun deleteRandomAnimal(
+    fun executeDeleteRandomAnimal(
         ofSpecies: Animal.Species? = null,
         olderThan: Int? = null,
     ) {
         viewModelScope.launch {
             val resource: Resource<Animal?>
             val elapsed = measureTimeMillis {
-                resource = deleteRandomAnimalUseCase(ofSpecies, olderThan)
+                resource = deleteRandomAnimal(ofSpecies, olderThan)
             }.takeIf { resource.isSuccess }
             uiState = uiState.copy(
                 showConnectionFailure = resource is ConnectionFailure,
@@ -80,7 +80,7 @@ class WearableViewModel @Inject constructor(
         connectionCheckJob?.cancel()
         return viewModelScope.launch {
             uiState = uiState.copy(
-                showConnectionFailure = !isConnectedToHandheldDeviceUseCase(),
+                showConnectionFailure = !isConnectedToHandheldDevice(),
             )
         }.also { job ->
             connectionCheckJob = job
