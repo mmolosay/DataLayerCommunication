@@ -20,7 +20,7 @@ fun ApplicationPreview() {
         uiState = previewUiState(),
         onGetAllAnimalsClick = {},
         onDeleteRandomCatClick = {},
-        onClearClick = {},
+        onClearOutputClick = {},
         onConnectionFailureTryAgainClick = {},
     )
 }
@@ -39,7 +39,7 @@ fun Application(
     uiState: UiState,
     onGetAllAnimalsClick: () -> Unit,
     onDeleteRandomCatClick: () -> Unit,
-    onClearClick: () -> Unit,
+    onClearOutputClick: () -> Unit,
     onConnectionFailureTryAgainClick: () -> Unit,
 ) {
     val scalingLazyListState = rememberScalingLazyListState()
@@ -58,7 +58,7 @@ fun Application(
                 scalingLazyListState = scalingLazyListState,
                 onGetAllAnimalsClick = onGetAllAnimalsClick,
                 onDeleteRandomCatClick = onDeleteRandomCatClick,
-                onClearClick = onClearClick,
+                onClearOutputClick = onClearOutputClick,
             )
     }
 }

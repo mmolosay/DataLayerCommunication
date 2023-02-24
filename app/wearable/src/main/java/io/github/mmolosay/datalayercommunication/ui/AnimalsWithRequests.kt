@@ -31,7 +31,7 @@ private fun ConnectedStatePreview() =
         scalingLazyListState = rememberScalingLazyListState(),
         onGetAllAnimalsClick = {},
         onDeleteRandomCatClick = {},
-        onClearClick = {},
+        onClearOutputClick = {},
     )
 
 private fun previewUiState(): UiState =
@@ -49,7 +49,7 @@ fun AnimalsWithRequests(
     scalingLazyListState: ScalingLazyListState,
     onGetAllAnimalsClick: () -> Unit,
     onDeleteRandomCatClick: () -> Unit,
-    onClearClick: () -> Unit,
+    onClearOutputClick: () -> Unit,
 ) {
     ScalingLazyColumn(
         state = scalingLazyListState,
@@ -79,7 +79,7 @@ fun AnimalsWithRequests(
         AnimalsSection(uiState.animals)
         item {
             Button(
-                onClick = onClearClick,
+                onClick = onClearOutputClick,
                 colors = ButtonDefaults.secondaryButtonColors(),
             ) {
                 Text(

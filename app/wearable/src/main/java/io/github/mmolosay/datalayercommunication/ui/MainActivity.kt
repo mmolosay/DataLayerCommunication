@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
                 uiState = uiState,
                 onGetAllAnimalsClick = ::onGetAnimalsClick,
                 onDeleteRandomCatClick = ::onDeleteRandomCatClick,
-                onClearClick = ::onClearClick,
+                onClearOutputClick = ::onClearOutputClick,
                 onConnectionFailureTryAgainClick = ::onConnectionFailureTryAgainClick,
             )
         }
@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
         viewModel.executeDeleteRandomAnimal(ofSpecies = Animal.Species.Cat)
     }
 
-    private fun onClearClick() {
+    private fun onClearOutputClick() {
         viewModel.clearOutput()
     }
 
