@@ -13,7 +13,7 @@ import io.github.mmolosay.datalayercommunication.models.UiState
 
 // region Preivews
 
-@Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
+@Preview
 @Composable
 fun ApplicationPreview() {
     Application(
