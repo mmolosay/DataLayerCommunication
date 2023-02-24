@@ -55,44 +55,98 @@ fun AnimalsWithRequests(
         state = scalingLazyListState,
         contentPadding = PaddingValues(
             horizontal = 8.dp,
-            vertical = 32.dp
-        )
+            vertical = 32.dp,
+        ),
     ) {
-        item {
-            MessageButton(
-                onClick = onGetAllAnimalsClick,
-                text = "Get all animals",
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-        }
-        item {
-            MessageButton(
-                onClick = onDeleteRandomCatClick,
-                text = "Delete random cat",
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-        }
-        item {
-            Text(text = "Request elapsed time: ${uiState.elapsedTime}")
-            Spacer(modifier = Modifier.height(16.dp))
-        }
-        AnimalsSection(uiState.animals)
-        item {
-            Button(
-                onClick = onClearOutputClick,
-                colors = ButtonDefaults.secondaryButtonColors(),
-            ) {
-                Text(
-                    text = "Clear output",
-                    modifier = Modifier.padding(horizontal = 8.dp),
-                )
-            }
-        }
+        RequestButtonsItems(
+            onGetAllAnimalsClick = onGetAllAnimalsClick,
+            onDeleteRandomCatClick = onDeleteRandomCatClick,
+        )
+        ElapsedTimeItem(
+            elapsedTime = uiState.elapsedTime,
+        )
+        AnimalsItem(
+            animals = uiState.animals,
+        )
+        ClearOutputItem(
+            onClick = onClearOutputClick,
+        )
     }
 }
 
+// region Items
+
+private fun ScalingLazyListScope.RequestButtonsItems(
+    onGetAllAnimalsClick: () -> Unit,
+    onDeleteRandomCatClick: () -> Unit,
+) {
+    item {
+        GetAllAnimalsButton(
+            onClick = onGetAllAnimalsClick,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+    }
+    item {
+        DeleteRandomCatButton(
+            onClick = onDeleteRandomCatClick,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+    }
+}
+
+private fun ScalingLazyListScope.ElapsedTimeItem(
+    elapsedTime: String,
+) =
+    item {
+        Text(text = "Request elapsed time: $elapsedTime")
+        Spacer(modifier = Modifier.height(16.dp))
+    }
+
+private fun ScalingLazyListScope.AnimalsItem(animals: List<Animal>) =
+    items(animals) {
+        Animal(it)
+    }
+
+private fun ScalingLazyListScope.ClearOutputItem(
+    onClick: () -> Unit,
+) =
+    item {
+        Button(
+            onClick = onClick,
+            colors = ButtonDefaults.secondaryButtonColors(),
+        ) {
+            Text(
+                text = "Clear output",
+                modifier = Modifier.padding(horizontal = 8.dp),
+            )
+        }
+    }
+
+// endregion
+
+// region Request buttons
+
 @Composable
-private fun MessageButton(
+private fun GetAllAnimalsButton(
+    // TODO: try passing modifier with bottom padding instead of Spacer
+    onClick: () -> Unit,
+) =
+    RequestButton(
+        onClick = onClick,
+        text = "Get all animals",
+    )
+
+@Composable
+private fun DeleteRandomCatButton(
+    onClick: () -> Unit,
+) =
+    RequestButton(
+        onClick = onClick,
+        text = "Delete random cat",
+    )
+
+@Composable
+private fun RequestButton(
     onClick: () -> Unit,
     text: String,
 ) =
@@ -103,10 +157,9 @@ private fun MessageButton(
         Text(text = text)
     }
 
-private fun ScalingLazyListScope.AnimalsSection(animals: List<Animal>) =
-    items(animals) {
-        Animal(it)
-    }
+// endregion
+
+// region Animals
 
 @Composable
 private fun Animal(animal: Animal) =
@@ -116,3 +169,5 @@ private fun Animal(animal: Animal) =
         Text(text = "Name: ${animal.name}")
         Text(text = "Age: ${animal.age}")
     }
+
+// endregion
