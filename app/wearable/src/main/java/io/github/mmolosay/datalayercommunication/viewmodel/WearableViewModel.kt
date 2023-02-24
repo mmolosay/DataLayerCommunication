@@ -1,8 +1,5 @@
 package io.github.mmolosay.datalayercommunication.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +14,9 @@ import io.github.mmolosay.datalayercommunication.utils.resource.getOrNull
 import io.github.mmolosay.datalayercommunication.utils.resource.isSuccess
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,8 +29,8 @@ class WearableViewModel @Inject constructor(
     private val isConnectedToHandheldDevice: CheckIsConnectedToHandheldDeviceUseCase,
 ) : ViewModel() {
 
-    var uiState by mutableStateOf(makeInitialUiState())
-        private set
+    private val _uiState = MutableStateFlow(makeInitialUiState())
+    val uiState = _uiState.asStateFlow()
 
     private var connectionCheckJob: Job? = null
 
@@ -44,11 +44,13 @@ class WearableViewModel @Inject constructor(
             val elapsed = measureTimeMillis {
                 resource = getAnimals()
             }.takeIf { resource.isSuccess }
-            uiState = uiState.copy(
-                showConnectionFailure = resource is ConnectionFailure,
-                elapsedTime = makeElapsedTimeOrBlank(elapsed),
-                animals = resource.getOrNull() ?: emptyList(),
-            )
+            _uiState.update {
+                it.copy(
+                    showConnectionFailure = resource is ConnectionFailure,
+                    elapsedTime = makeElapsedTimeOrBlank(elapsed),
+                    animals = resource.getOrNull() ?: emptyList(),
+                )
+            }
         }
     }
 
@@ -61,27 +63,33 @@ class WearableViewModel @Inject constructor(
             val elapsed = measureTimeMillis {
                 resource = deleteRandomAnimal(ofSpecies, olderThan)
             }.takeIf { resource.isSuccess }
-            uiState = uiState.copy(
-                showConnectionFailure = resource is ConnectionFailure,
-                elapsedTime = makeElapsedTimeOrBlank(elapsed),
-                animals = resource.getOrNull()?.let { listOf(it) } ?: emptyList(),
-            )
+            _uiState.update {
+                it.copy(
+                    showConnectionFailure = resource is ConnectionFailure,
+                    elapsedTime = makeElapsedTimeOrBlank(elapsed),
+                    animals = resource.getOrNull()?.let { listOf(it) } ?: emptyList(),
+                )
+            }
         }
     }
 
     fun clearOutput() {
-        uiState = uiState.copy(
-            elapsedTime = makeBlankElapsedTime(),
-            animals = emptyList(),
-        )
+        _uiState.update {
+            it.copy(
+                elapsedTime = makeBlankElapsedTime(),
+                animals = emptyList(),
+            )
+        }
     }
 
     fun launchConnectionCheck(): Job {
         connectionCheckJob?.cancel()
         return viewModelScope.launch {
-            uiState = uiState.copy(
-                showConnectionFailure = !isConnectedToHandheldDevice(),
-            )
+            _uiState.update {
+                it.copy(
+                    showConnectionFailure = !isConnectedToHandheldDevice(),
+                )
+            }
         }.also { job ->
             connectionCheckJob = job
         }
