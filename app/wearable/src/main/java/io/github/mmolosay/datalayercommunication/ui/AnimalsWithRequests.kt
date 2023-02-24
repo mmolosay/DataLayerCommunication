@@ -27,7 +27,7 @@ import io.github.mmolosay.datalayercommunication.models.UiState
 
 @Preview
 @Composable
-private fun ConnectedStatePreview() =
+private fun AnimalsWithRequestsPreview() =
     AnimalsWithRequests(
         uiState = previewUiState(),
         scalingLazyListState = rememberScalingLazyListState(),
