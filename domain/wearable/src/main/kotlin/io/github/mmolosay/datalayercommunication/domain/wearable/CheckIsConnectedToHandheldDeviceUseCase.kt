@@ -10,9 +10,9 @@ class CheckIsConnectedToHandheldDeviceUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(): Boolean =
-        (getConnectedNode() != null)
+        (getConnectedHandheldNode() != null)
 
-    private suspend fun getConnectedNode(): Node? =
+    private suspend fun getConnectedHandheldNode(): Node? =
         nodeProvider
             .singleConnectedHandheldNode()
             .getOrNull()
