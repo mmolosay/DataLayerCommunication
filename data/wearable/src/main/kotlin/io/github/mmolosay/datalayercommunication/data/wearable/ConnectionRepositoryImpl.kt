@@ -1,15 +1,15 @@
-package io.github.mmolosay.datalayercommunication.domain.wearable
+package io.github.mmolosay.datalayercommunication.data.wearable
 
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.communication.model.Node
 import io.github.mmolosay.datalayercommunication.communication.singleConnectedHandheldNode
-import javax.inject.Inject
+import io.github.mmolosay.datalayercommunication.domain.wearable.repository.ConnectionRepository
 
-class CheckIsConnectedToHandheldDeviceUseCase @Inject constructor(
+class ConnectionRepositoryImpl(
     private val nodeProvider: NodeProvider,
-) {
+) : ConnectionRepository {
 
-    suspend operator fun invoke(): Boolean =
+    override suspend fun isConnectedToHandheldDevice(): Boolean =
         (getConnectedHandheldNode() != null)
 
     private suspend fun getConnectedHandheldNode(): Node? =

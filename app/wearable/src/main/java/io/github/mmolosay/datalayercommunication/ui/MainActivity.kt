@@ -42,6 +42,6 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun onConnectionFailureTryAgainClick() {
-        viewModel.launchConnectionCheck()
+        viewModel.restartHandheldConnectionCheck()
     }
 }
