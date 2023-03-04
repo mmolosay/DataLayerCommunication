@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -57,7 +58,7 @@ fun AnimalsWithRequests(
         state = scalingLazyListState,
         contentPadding = PaddingValues(
             horizontal = 8.dp,
-            vertical = 32.dp,
+            vertical = 24.dp,
         ),
     ) {
         RequestButtonsItems(
@@ -103,7 +104,8 @@ private fun ScalingLazyListScope.ElapsedTimeItem(
         Text(
             text = "Request elapsed time: $elapsedTime",
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.caption1,
+            fontWeight = FontWeight.Light,
+            style = MaterialTheme.typography.caption3,
         )
         Spacer(modifier = Modifier.height(16.dp))
     }
