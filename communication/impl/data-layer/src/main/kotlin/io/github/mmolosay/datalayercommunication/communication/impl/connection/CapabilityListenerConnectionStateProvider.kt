@@ -23,7 +23,7 @@ class CapabilityListenerConnectionStateProvider(
     override val connectionStateFlow: Flow<Boolean> =
         callbackFlow {
             val listener = createAndRegisterListener()
-            val initialState = connectionCheckExecutor.checkConnectionState()
+            val initialState = connectionCheckExecutor.areDevicesConnected()
             send(initialState)
             awaitClose {
                 unregisterListener(listener)
