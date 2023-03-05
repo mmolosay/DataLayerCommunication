@@ -12,6 +12,7 @@ import io.github.mmolosay.datalayercommunication.models.UiState
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.getOrNull
 import io.github.mmolosay.datalayercommunication.utils.resource.isSuccess
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -21,6 +22,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.system.measureTimeMillis
+import kotlin.time.Duration.Companion.milliseconds
 
 @HiltViewModel
 class WearableViewModel @Inject constructor(
@@ -86,6 +88,14 @@ class WearableViewModel @Inject constructor(
         viewModelScope.launch {
             handheldConnectionStateProvider.connectionStateFlow.collect { isConnected ->
                 fullUiState.update {
+                    // we want to show loading for minimum some noticable time to prevent it blinking
+                    if (it.showLoading) {
+                        val now = System.currentTimeMillis()
+                        val elapsed = (now - it.loadingStarted).milliseconds
+                        val minimumScreenTime = 1_000.milliseconds
+                        val screenTimeLeft = minimumScreenTime - elapsed
+                        delay(screenTimeLeft) // skipped if <= 0
+                    }
                     it.copy(
                         showLoading = false, // dismiss loading, when first connection state arrives
                         showHandheldNotConnected = !isConnected,
@@ -97,6 +107,7 @@ class WearableViewModel @Inject constructor(
 
     private fun makeInitialUiState(): FullUiState =
         FullUiState(
+            loadingStarted = System.currentTimeMillis(),
             showLoading = true,
             showHandheldNotConnected = false,
             elapsedTime = makeBlankElapsedTime(),
@@ -120,6 +131,7 @@ class WearableViewModel @Inject constructor(
      * propagated to flow, and thus not accessible anymore.
      */
     private data class FullUiState(
+        val loadingStarted: Long,
         val showLoading: Boolean,
         val showHandheldNotConnected: Boolean,
         val elapsedTime: String,
