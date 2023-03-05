@@ -8,12 +8,14 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
+import io.github.mmolosay.datalayercommunication.communication.client.CapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.client.CommunicationClient
 import io.github.mmolosay.datalayercommunication.communication.convertion.RequestDecoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.RequestEncoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseDecoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseEncoder
 import io.github.mmolosay.datalayercommunication.communication.impl.ConvertingCommunicationServer
+import io.github.mmolosay.datalayercommunication.communication.impl.DataLayerCapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.impl.DataLayerCommunicationClient
 import io.github.mmolosay.datalayercommunication.communication.impl.DataLayerNodeProvider
 import io.github.mmolosay.datalayercommunication.communication.impl.RepositoryResponseServer
@@ -39,6 +41,7 @@ import kotlinx.serialization.StringFormat
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.plus
 import javax.inject.Singleton
+import com.google.android.gms.wearable.CapabilityClient as GmsCapabilityClient
 
 /**
  * Dagger [Module], that provides communication associated dependencies.
@@ -46,6 +49,17 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class CommunicationModule {
+
+    // region Data Layer Components
+
+    @Provides
+    @Singleton
+    fun provideGmsCapabilityClient(
+        @ApplicationContext context: Context,
+    ): GmsCapabilityClient =
+        Wearable.getCapabilityClient(context)
+
+    // endregion
 
     // region Convertion
 
@@ -116,11 +130,11 @@ class CommunicationModule {
     @Provides
     @Singleton
     fun provideNodeProvider(
-        @ApplicationContext context: Context,
+        gmsCapabilityClient: GmsCapabilityClient,
         capabilities: CapabilitySet,
     ): NodeProvider =
         DataLayerNodeProvider(
-            capabilityClient = Wearable.getCapabilityClient(context),
+            gmsCapabilityClient = gmsCapabilityClient,
             handheldCapability = capabilities.handheld,
             wearableCapability = capabilities.wearable,
         )
@@ -158,6 +172,15 @@ class CommunicationModule {
     ): ResponseServer =
         RepositoryResponseServer(
             animalsRepository = animalsRepository,
+        )
+
+    @Provides
+    @Singleton
+    fun provideCapabilityClient(
+        gmsCapabilityClient: GmsCapabilityClient,
+    ): CapabilityClient =
+        DataLayerCapabilityClient(
+            gmsCapabilityClient = gmsCapabilityClient,
         )
 
     // endregion

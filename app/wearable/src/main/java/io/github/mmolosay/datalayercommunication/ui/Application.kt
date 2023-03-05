@@ -1,7 +1,6 @@
 package io.github.mmolosay.datalayercommunication.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Scaffold
@@ -21,12 +20,12 @@ fun ApplicationPreview() {
         onGetAllAnimalsClick = {},
         onDeleteRandomCatClick = {},
         onClearOutputClick = {},
-        onConnectionFailureTryAgainClick = {},
     )
 }
 
 private fun previewUiState(): UiState =
     UiState(
+        showLoading = false,
         showConnectionFailure = false,
         elapsedTime = "3569 ms",
         animals = emptyList(),
@@ -40,7 +39,6 @@ fun Application(
     onGetAllAnimalsClick: () -> Unit,
     onDeleteRandomCatClick: () -> Unit,
     onClearOutputClick: () -> Unit,
-    onConnectionFailureTryAgainClick: () -> Unit,
 ) {
     val scalingLazyListState = rememberScalingLazyListState()
     Scaffold(
@@ -48,17 +46,16 @@ fun Application(
         positionIndicator = { PositionIndicator(scalingLazyListState = scalingLazyListState) },
         timeText = { TimeText() }
     ) {
-        if (uiState.showConnectionFailure)
-            ConnectionFailure(
-                onTryAgainClick = onConnectionFailureTryAgainClick,
-            )
-        else
-            AnimalsWithRequests(
+        when {
+            uiState.showLoading -> Loading()
+            uiState.showConnectionFailure -> ConnectionFailure()
+            else -> AnimalsWithRequests(
                 uiState = uiState,
                 scalingLazyListState = scalingLazyListState,
                 onGetAllAnimalsClick = onGetAllAnimalsClick,
                 onDeleteRandomCatClick = onDeleteRandomCatClick,
                 onClearOutputClick = onClearOutputClick,
             )
+        }
     }
 }

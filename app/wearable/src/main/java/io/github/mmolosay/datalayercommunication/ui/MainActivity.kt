@@ -24,7 +24,6 @@ class MainActivity : ComponentActivity() {
                 onGetAllAnimalsClick = ::onGetAnimalsClick,
                 onDeleteRandomCatClick = ::onDeleteRandomCatClick,
                 onClearOutputClick = ::onClearOutputClick,
-                onConnectionFailureTryAgainClick = ::onConnectionFailureTryAgainClick,
             )
         }
     }
@@ -39,9 +38,5 @@ class MainActivity : ComponentActivity() {
 
     private fun onClearOutputClick() {
         viewModel.clearOutput()
-    }
-
-    private fun onConnectionFailureTryAgainClick() {
-        viewModel.restartHandheldConnectionCheck()
     }
 }

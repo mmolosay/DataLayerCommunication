@@ -4,9 +4,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import io.github.com.mmolosay.datalayercommunication.communication.connection.impl.ConnectionCheckExecutor
-import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionCheckExecutor
-import io.github.mmolosay.datalayercommunication.domain.wearable.repository.ConnectionRepository
+import io.github.com.mmolosay.datalayercommunication.communication.connection.impl.ListenerConnectionStateProvider
+import io.github.mmolosay.datalayercommunication.communication.client.CapabilityClient
+import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionStateProvider
+import io.github.mmolosay.datalayercommunication.communication.model.CapabilitySet
 import javax.inject.Singleton
 
 @Module
@@ -15,10 +16,12 @@ class CommunicationModule {
 
     @Provides
     @Singleton
-    fun provideHandheldConnectionCheckExecutor(
-        connectionRepository: ConnectionRepository,
-    ): ConnectionCheckExecutor =
-        ConnectionCheckExecutor {
-            connectionRepository.isConnectedToHandheldDevice()
-        }
+    fun provideHandheldConnectionStateProvider(
+        capabilityClient: CapabilityClient,
+        capabilities: CapabilitySet,
+    ): ConnectionStateProvider =
+        ListenerConnectionStateProvider(
+            capabilityClient = capabilityClient,
+            nodeCapability = capabilities.handheld,
+        )
 }

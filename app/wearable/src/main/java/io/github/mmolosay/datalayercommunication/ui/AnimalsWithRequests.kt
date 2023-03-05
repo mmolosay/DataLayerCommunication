@@ -39,6 +39,7 @@ private fun AnimalsWithRequestsPreview() =
 
 private fun previewUiState(): UiState =
     UiState(
+        showLoading = true,
         showConnectionFailure = true,
         elapsedTime = "3569 ms",
         animals = emptyList(),

@@ -3,7 +3,7 @@ package io.github.mmolosay.datalayercommunication.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionCheckExecutor
+import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionStateProvider
 import io.github.mmolosay.datalayercommunication.communication.failures.ConnectionFailure
 import io.github.mmolosay.datalayercommunication.domain.model.Animal
 import io.github.mmolosay.datalayercommunication.domain.usecase.DeleteRandomAnimalUseCase
@@ -18,13 +18,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.system.measureTimeMillis
-import kotlin.time.Duration.Companion.seconds
 
 @HiltViewModel
 class WearableViewModel @Inject constructor(
     private val getAnimals: GetAnimalsUseCase,
     private val deleteRandomAnimal: DeleteRandomAnimalUseCase,
-    private val handheldConnectionCheckExecutor: ConnectionCheckExecutor,
+    private val handheldConnectionStateProvider: ConnectionStateProvider,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(makeInitialUiState())
@@ -79,24 +78,21 @@ class WearableViewModel @Inject constructor(
         }
     }
 
-    fun restartHandheldConnectionCheck() {
-        handheldConnectionCheckExecutor.restartRepeatingConnectionCheck(
-            coroutineScope = viewModelScope,
-        )
+    override fun onCleared() {
+        super.onCleared()
+        handheldConnectionStateProvider.stop()
     }
 
     private fun launchRepeatingHandheldConnectionCheck() {
-        handheldConnectionCheckExecutor.launchRepeatingConnectionCheck(
-            coroutineScope = viewModelScope,
-            connectionCheckInterval = 2.seconds,
-        )
+        handheldConnectionStateProvider.start(viewModelScope)
     }
 
     private fun observeHandheldConnectionState() {
         viewModelScope.launch {
-            handheldConnectionCheckExecutor.connectionStateFlow.collect { isConnected ->
+            handheldConnectionStateProvider.connectionStateFlow.collect { isConnected ->
                 _uiState.update {
                     it.copy(
+                        showLoading = false, // dismiss loading, when first connection state arrives
                         showConnectionFailure = !isConnected,
                     )
                 }
@@ -106,6 +102,7 @@ class WearableViewModel @Inject constructor(
 
     private fun makeInitialUiState(): UiState =
         UiState(
+            showLoading = true,
             showConnectionFailure = false,
             elapsedTime = makeBlankElapsedTime(),
             animals = emptyList(),
