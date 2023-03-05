@@ -36,6 +36,7 @@ kapt {
 
 dependencies {
     implementation(project(":communication"))
+    implementation(project(":communication:connection"))
     implementation(project(":communication:impl:data-layer"))
     implementation(project(":data:common"))
     implementation(project(":domain:common"))

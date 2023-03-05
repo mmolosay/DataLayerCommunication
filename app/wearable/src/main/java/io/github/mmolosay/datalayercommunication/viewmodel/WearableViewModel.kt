@@ -84,7 +84,7 @@ class WearableViewModel @Inject constructor(
     }
 
     private fun launchRepeatingHandheldConnectionCheck() {
-        handheldConnectionStateProvider.start(viewModelScope)
+        handheldConnectionStateProvider.start()
     }
 
     private fun observeHandheldConnectionState() {

@@ -1,22 +1,20 @@
 package io.github.mmolosay.datalayercommunication.communication.impl
 
-import io.github.mmolosay.datalayercommunication.communication.client.CapabilityClient
-import io.github.mmolosay.datalayercommunication.communication.client.CapabilityClient.OnCapabilityChangedListener
+import com.google.android.gms.wearable.CapabilityClient.OnCapabilityChangedListener
 import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionStateProvider
+import io.github.mmolosay.datalayercommunication.communication.impl.mappers.toNode
 import io.github.mmolosay.datalayercommunication.communication.model.Capability
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.launch
+import com.google.android.gms.wearable.CapabilityClient as GmsCapabilityClient
 
 /**
  * Implementation of [ConnectionStateProvider], powered by Data Layer API and
  * based upon listening for capability changes in current device network.
  */
 class CapabilityListenerConnectionStateProvider(
-    private val capabilityClient: CapabilityClient,
+    private val gmsCapabilityClient: GmsCapabilityClient,
     private val nodeCapability: Capability,
 ) : ConnectionStateProvider {
 
@@ -26,29 +24,27 @@ class CapabilityListenerConnectionStateProvider(
     override val connectionStateFlow: Flow<Boolean> =
         mutableFlow
 
-    private var job: Job? = null
     private var listener: OnCapabilityChangedListener? = null
 
-    override fun start(coroutineScope: CoroutineScope): Job {
-        job?.let { if (it.isActive) return it }
-        return coroutineScope.launch(context = Job()) {
-            val listener = makeOnCapabilityChangedListener().also { listener = it }
-            capabilityClient.addListener(coroutineScope, listener, nodeCapability)
-        }.also { job = it }
+    override fun start() {
+        if (listener != null) return
+        val listener = makeOnCapabilityChangedListener().also { listener = it }
+        gmsCapabilityClient.addListener(listener, nodeCapability.value)
     }
 
     override fun stop() {
-        job?.cancel()
-        capabilityClient.removeListener(requireNotNull(listener))
-        this.job = null
+        if (listener == null) return
+        gmsCapabilityClient.removeListener(requireNotNull(listener))
         this.listener = null
     }
 
-    private fun makeOnCapabilityChangedListener() =
-        OnCapabilityChangedListener l@{ capability, nodes ->
-            if (capability != nodeCapability) return@l
-            val node = nodes.find { it.isConnectedToCurrentDevice } // first connected node
+    private fun makeOnCapabilityChangedListener(): OnCapabilityChangedListener =
+        OnCapabilityChangedListener { info ->
+            if (info.name != nodeCapability.value) return@OnCapabilityChangedListener
+            val node = info.nodes
+                .map { it.toNode() }
+                .find { it.isConnectedToCurrentDevice } // first connected node
             val hasCapableNode = (node != null)
-            mutableFlow.emit(hasCapableNode)
+            mutableFlow.tryEmit(hasCapableNode) // should always be successful due to BufferOverflow.DROP_OLDEST
         }
 }

@@ -8,14 +8,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
-import io.github.mmolosay.datalayercommunication.communication.client.CapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.client.CommunicationClient
+import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionStateProviderFactory
 import io.github.mmolosay.datalayercommunication.communication.convertion.RequestDecoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.RequestEncoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseDecoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseEncoder
 import io.github.mmolosay.datalayercommunication.communication.impl.ConvertingCommunicationServer
-import io.github.mmolosay.datalayercommunication.communication.impl.DataLayerCapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.impl.DataLayerCommunicationClient
 import io.github.mmolosay.datalayercommunication.communication.impl.DataLayerNodeProvider
 import io.github.mmolosay.datalayercommunication.communication.impl.RepositoryResponseServer
@@ -28,6 +27,7 @@ import io.github.mmolosay.datalayercommunication.communication.impl.convertion.d
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.decode.SerializationResponseDecoder
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.encode.SerializationRequestEncoder
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.encode.SerializationResponseEncoder
+import io.github.mmolosay.datalayercommunication.communication.impl.factories.ConnectionStateProviderFactoryImpl
 import io.github.mmolosay.datalayercommunication.communication.model.Capability
 import io.github.mmolosay.datalayercommunication.communication.model.CapabilitySet
 import io.github.mmolosay.datalayercommunication.communication.model.Path
@@ -149,7 +149,7 @@ class CommunicationModule {
         DataLayerCommunicationClient(
             encoder = encoder,
             decoder = decoder,
-            messageClient = Wearable.getMessageClient(context),
+            gmsMessageClient = Wearable.getMessageClient(context),
         )
 
     @Provides
@@ -174,13 +174,20 @@ class CommunicationModule {
             animalsRepository = animalsRepository,
         )
 
+    // endregion
+
+    // region Factories
+
     @Provides
     @Singleton
-    fun provideCapabilityClient(
+    fun provideConnectionStateProviderFactory(
         gmsCapabilityClient: GmsCapabilityClient,
-    ): CapabilityClient =
-        DataLayerCapabilityClient(
+        capabilities: CapabilitySet,
+    ): ConnectionStateProviderFactory =
+        ConnectionStateProviderFactoryImpl(
             gmsCapabilityClient = gmsCapabilityClient,
+            handheldCapability = capabilities.handheld,
+            wearableCapability = capabilities.wearable,
         )
 
     // endregion

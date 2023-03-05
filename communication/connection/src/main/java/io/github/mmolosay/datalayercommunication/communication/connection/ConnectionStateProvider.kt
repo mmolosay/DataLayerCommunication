@@ -1,7 +1,5 @@
 package io.github.mmolosay.datalayercommunication.communication.connection
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -15,15 +13,6 @@ interface ConnectionStateProvider {
      */
     val connectionStateFlow: Flow<Boolean>
 
-    /**
-     * Starts executing connection checks in some interval, or observing its changes, using observer
-     * pattern.
-     *
-     * This method will launch coroutine in new [Job] and return it.
-     *
-     * @return [Job] of launched coroutine.
-     */
-    fun start(coroutineScope: CoroutineScope): Job
-
+    fun start()
     fun stop()
 }

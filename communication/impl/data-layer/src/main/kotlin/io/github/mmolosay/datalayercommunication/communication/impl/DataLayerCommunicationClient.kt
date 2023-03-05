@@ -1,10 +1,9 @@
 package io.github.mmolosay.datalayercommunication.communication.impl
 
-import com.google.android.gms.wearable.MessageClient
-import io.github.mmolosay.datalayercommunication.communication.failures.CommunicationFailure
 import io.github.mmolosay.datalayercommunication.communication.client.CommunicationClient
 import io.github.mmolosay.datalayercommunication.communication.convertion.RequestEncoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseDecoder
+import io.github.mmolosay.datalayercommunication.communication.failures.CommunicationFailure
 import io.github.mmolosay.datalayercommunication.communication.model.Data
 import io.github.mmolosay.datalayercommunication.communication.model.Destination
 import io.github.mmolosay.datalayercommunication.communication.model.request.Request
@@ -12,6 +11,7 @@ import io.github.mmolosay.datalayercommunication.communication.model.response.Re
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.success
 import kotlinx.coroutines.tasks.await
+import com.google.android.gms.wearable.MessageClient as GmsMessageClient
 
 /**
  * Implementation of [CommunicationClient], powered by Google's Data Layer API.
@@ -19,7 +19,7 @@ import kotlinx.coroutines.tasks.await
 class DataLayerCommunicationClient(
     private val encoder: RequestEncoder,
     private val decoder: ResponseDecoder,
-    private val messageClient: MessageClient,
+    private val gmsMessageClient: GmsMessageClient,
 ) : CommunicationClient {
 
     override suspend fun <R : Response> request(
@@ -28,7 +28,7 @@ class DataLayerCommunicationClient(
     ): Resource<R> =
         runCatching {
             val requestData = encoder.encode(request)
-            val responseBytes = messageClient
+            val responseBytes = gmsMessageClient
                 .sendRequest(destination.nodeId, destination.path.value, requestData.bytes)
                 .await()
             val responseData = Data(responseBytes)

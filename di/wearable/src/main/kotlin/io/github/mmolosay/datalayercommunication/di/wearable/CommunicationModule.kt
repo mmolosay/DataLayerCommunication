@@ -4,10 +4,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import io.github.mmolosay.datalayercommunication.communication.client.CapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionStateProvider
-import io.github.mmolosay.datalayercommunication.communication.impl.CapabilityListenerConnectionStateProvider
-import io.github.mmolosay.datalayercommunication.communication.model.CapabilitySet
+import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionStateProviderFactory
 import javax.inject.Singleton
 
 @Module
@@ -17,11 +15,7 @@ class CommunicationModule {
     @Provides
     @Singleton
     fun provideHandheldConnectionStateProvider(
-        capabilityClient: CapabilityClient,
-        capabilities: CapabilitySet,
+        factory: ConnectionStateProviderFactory,
     ): ConnectionStateProvider =
-        CapabilityListenerConnectionStateProvider(
-            capabilityClient = capabilityClient,
-            nodeCapability = capabilities.handheld,
-        )
+        factory.createForHandheld()
 }
