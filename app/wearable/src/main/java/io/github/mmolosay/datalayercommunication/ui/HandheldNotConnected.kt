@@ -14,13 +14,13 @@ import androidx.wear.compose.material.Text
 
 @Preview
 @Composable
-private fun ConnectionFailurePreview() =
-    ConnectionFailure()
+private fun HandheldNotConnectedPreview() =
+    HandheldNotConnected()
 
 // endregion
 
 @Composable
-fun ConnectionFailure() =
+fun HandheldNotConnected() =
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,

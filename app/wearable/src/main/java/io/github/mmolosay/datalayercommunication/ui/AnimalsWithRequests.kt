@@ -37,10 +37,8 @@ private fun AnimalsWithRequestsPreview() =
         onClearOutputClick = {},
     )
 
-private fun previewUiState(): UiState =
-    UiState(
-        showLoading = true,
-        showConnectionFailure = true,
+private fun previewUiState(): UiState.Content =
+    UiState.Content(
         elapsedTime = "3569 ms",
         animals = emptyList(),
     )
@@ -49,7 +47,7 @@ private fun previewUiState(): UiState =
 
 @Composable
 fun AnimalsWithRequests(
-    uiState: UiState,
+    uiState: UiState.Content,
     scalingLazyListState: ScalingLazyListState,
     onGetAllAnimalsClick: () -> Unit,
     onDeleteRandomCatClick: () -> Unit,

@@ -24,9 +24,7 @@ fun ApplicationPreview() {
 }
 
 private fun previewUiState(): UiState =
-    UiState(
-        showLoading = false,
-        showConnectionFailure = false,
+    UiState.Content(
         elapsedTime = "3569 ms",
         animals = emptyList(),
     )
@@ -46,10 +44,10 @@ fun Application(
         positionIndicator = { PositionIndicator(scalingLazyListState = scalingLazyListState) },
         timeText = { TimeText() }
     ) {
-        when {
-            uiState.showLoading -> Loading()
-            uiState.showConnectionFailure -> ConnectionFailure()
-            else -> AnimalsWithRequests(
+        when (uiState) {
+            is UiState.Loading -> Loading()
+            is UiState.HandheldNotConnected -> HandheldNotConnected()
+            is UiState.Content -> AnimalsWithRequests(
                 uiState = uiState,
                 scalingLazyListState = scalingLazyListState,
                 onGetAllAnimalsClick = onGetAllAnimalsClick,

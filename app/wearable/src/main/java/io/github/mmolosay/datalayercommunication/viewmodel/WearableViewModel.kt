@@ -13,7 +13,10 @@ import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.getOrNull
 import io.github.mmolosay.datalayercommunication.utils.resource.isSuccess
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,15 +29,13 @@ class WearableViewModel @Inject constructor(
     private val handheldConnectionStateProvider: ConnectionStateProvider,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(makeInitialUiState())
-    val uiState = _uiState.asStateFlow()
+    private val fullUiState = MutableStateFlow(makeInitialUiState())
+    val uiState: StateFlow<UiState> = fullUiState
+        .map { it.toUiState() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), fullUiState.value.toUiState())
 
     init {
         observeHandheldConnectionState()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
     }
 
     fun executeGetAllAnimals() {
@@ -43,9 +44,9 @@ class WearableViewModel @Inject constructor(
             val elapsed = measureTimeMillis {
                 resource = getAnimals()
             }.takeIf { resource.isSuccess }
-            _uiState.update {
+            fullUiState.update {
                 it.copy(
-                    showConnectionFailure = resource is ConnectionFailure,
+                    showHandheldNotConnected = resource is ConnectionFailure,
                     elapsedTime = makeElapsedTimeOrBlank(elapsed),
                     animals = resource.getOrNull() ?: emptyList(),
                 )
@@ -62,9 +63,9 @@ class WearableViewModel @Inject constructor(
             val elapsed = measureTimeMillis {
                 resource = deleteRandomAnimal(ofSpecies, olderThan)
             }.takeIf { resource.isSuccess }
-            _uiState.update {
+            fullUiState.update {
                 it.copy(
-                    showConnectionFailure = resource is ConnectionFailure,
+                    showHandheldNotConnected = resource is ConnectionFailure,
                     elapsedTime = makeElapsedTimeOrBlank(elapsed),
                     animals = resource.getOrNull()?.let { listOf(it) } ?: emptyList(),
                 )
@@ -73,7 +74,7 @@ class WearableViewModel @Inject constructor(
     }
 
     fun clearOutput() {
-        _uiState.update {
+        fullUiState.update {
             it.copy(
                 elapsedTime = makeBlankElapsedTime(),
                 animals = emptyList(),
@@ -84,20 +85,20 @@ class WearableViewModel @Inject constructor(
     private fun observeHandheldConnectionState() {
         viewModelScope.launch {
             handheldConnectionStateProvider.connectionStateFlow.collect { isConnected ->
-                _uiState.update {
+                fullUiState.update {
                     it.copy(
                         showLoading = false, // dismiss loading, when first connection state arrives
-                        showConnectionFailure = !isConnected,
+                        showHandheldNotConnected = !isConnected,
                     )
                 }
             }
         }
     }
 
-    private fun makeInitialUiState(): UiState =
-        UiState(
+    private fun makeInitialUiState(): FullUiState =
+        FullUiState(
             showLoading = true,
-            showConnectionFailure = false,
+            showHandheldNotConnected = false,
             elapsedTime = makeBlankElapsedTime(),
             animals = emptyList(),
         )
@@ -110,4 +111,28 @@ class WearableViewModel @Inject constructor(
 
     private fun makeBlankElapsedTime(): String =
         "—"
+
+    /**
+     * Used to remember values, when type of [UiState] changes.
+     *
+     * For example, when we go from [UiState.Content] to [UiState.HandheldNotConnected],
+     * and then back to [UiState.Content], we can't use its previous values, because was
+     * propagated to flow, and thus not accessible anymore.
+     */
+    private data class FullUiState(
+        val showLoading: Boolean,
+        val showHandheldNotConnected: Boolean,
+        val elapsedTime: String,
+        val animals: List<Animal>,
+    )
+
+    private fun FullUiState.toUiState(): UiState =
+        when {
+            showLoading -> UiState.Loading
+            showHandheldNotConnected -> UiState.HandheldNotConnected
+            else -> UiState.Content(
+                elapsedTime = elapsedTime,
+                animals = animals,
+            )
+        }
 }
