@@ -22,7 +22,6 @@ include(":app:wearable")
 
 include(":communication")
 include(":communication:connection")
-include(":communication:connection:impl")
 include(":communication:failures")
 include(":communication:impl:data-layer")
 include(":communication:impl:data-layer:service")

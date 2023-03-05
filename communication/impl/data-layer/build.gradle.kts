@@ -31,6 +31,7 @@ android {
 
 dependencies {
     implementation(project(":communication"))
+    implementation(project(":communication:connection"))
     implementation(project(":communication:failures"))
     implementation(project(":domain:common"))
     implementation(project(":utils:resource"))

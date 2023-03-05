@@ -4,9 +4,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import io.github.com.mmolosay.datalayercommunication.communication.connection.impl.ListenerConnectionStateProvider
 import io.github.mmolosay.datalayercommunication.communication.client.CapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionStateProvider
+import io.github.mmolosay.datalayercommunication.communication.impl.CapabilityListenerConnectionStateProvider
 import io.github.mmolosay.datalayercommunication.communication.model.CapabilitySet
 import javax.inject.Singleton
 
@@ -20,7 +20,7 @@ class CommunicationModule {
         capabilityClient: CapabilityClient,
         capabilities: CapabilitySet,
     ): ConnectionStateProvider =
-        ListenerConnectionStateProvider(
+        CapabilityListenerConnectionStateProvider(
             capabilityClient = capabilityClient,
             nodeCapability = capabilities.handheld,
         )

@@ -1,4 +1,4 @@
-package io.github.com.mmolosay.datalayercommunication.communication.connection.impl
+package io.github.mmolosay.datalayercommunication.communication.impl
 
 import io.github.mmolosay.datalayercommunication.communication.client.CapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.client.CapabilityClient.OnCapabilityChangedListener
@@ -11,7 +11,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
-class ListenerConnectionStateProvider(
+/**
+ * Implementation of [ConnectionStateProvider], powered by Data Layer API and
+ * based upon listening for capability changes in current device network.
+ */
+class CapabilityListenerConnectionStateProvider(
     private val capabilityClient: CapabilityClient,
     private val nodeCapability: Capability,
 ) : ConnectionStateProvider {
