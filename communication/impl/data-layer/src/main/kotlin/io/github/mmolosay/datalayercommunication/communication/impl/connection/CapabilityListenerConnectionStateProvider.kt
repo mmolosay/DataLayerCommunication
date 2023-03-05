@@ -1,12 +1,13 @@
-package io.github.mmolosay.datalayercommunication.communication.impl
+package io.github.mmolosay.datalayercommunication.communication.impl.connection
 
 import com.google.android.gms.wearable.CapabilityClient.OnCapabilityChangedListener
 import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionStateProvider
 import io.github.mmolosay.datalayercommunication.communication.impl.mappers.toNode
 import io.github.mmolosay.datalayercommunication.communication.model.Capability
-import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.channels.ProducerScope
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.callbackFlow
 import com.google.android.gms.wearable.CapabilityClient as GmsCapabilityClient
 
 /**
@@ -16,35 +17,36 @@ import com.google.android.gms.wearable.CapabilityClient as GmsCapabilityClient
 class CapabilityListenerConnectionStateProvider(
     private val gmsCapabilityClient: GmsCapabilityClient,
     private val nodeCapability: Capability,
+    private val connectionCheckExecutor: ConnectionCheckExecutor,
 ) : ConnectionStateProvider {
 
-    private val mutableFlow =
-        MutableSharedFlow<Boolean>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
-
     override val connectionStateFlow: Flow<Boolean> =
-        mutableFlow
+        callbackFlow {
+            val listener = createAndRegisterListener()
+            val initialState = connectionCheckExecutor.checkConnectionState()
+            send(initialState)
+            awaitClose {
+                unregisterListener(listener)
+            }
+        }
 
-    private var listener: OnCapabilityChangedListener? = null
+    private fun ProducerScope<Boolean>.createAndRegisterListener(): OnCapabilityChangedListener =
+        makeOnCapabilityChangedListener()
+            .also {
+                gmsCapabilityClient.addListener(it, nodeCapability.value)
+            }
 
-    override fun start() {
-        if (listener != null) return
-        val listener = makeOnCapabilityChangedListener().also { listener = it }
-        gmsCapabilityClient.addListener(listener, nodeCapability.value)
+    private fun unregisterListener(listener: OnCapabilityChangedListener) {
+        gmsCapabilityClient.removeListener(listener)
     }
 
-    override fun stop() {
-        if (listener == null) return
-        gmsCapabilityClient.removeListener(requireNotNull(listener))
-        this.listener = null
-    }
-
-    private fun makeOnCapabilityChangedListener(): OnCapabilityChangedListener =
+    private fun ProducerScope<Boolean>.makeOnCapabilityChangedListener(): OnCapabilityChangedListener =
         OnCapabilityChangedListener { info ->
             if (info.name != nodeCapability.value) return@OnCapabilityChangedListener
             val node = info.nodes
                 .map { it.toNode() }
                 .find { it.isConnectedToCurrentDevice } // first connected node
             val hasCapableNode = (node != null)
-            mutableFlow.tryEmit(hasCapableNode) // should always be successful due to BufferOverflow.DROP_OLDEST
+            trySend(hasCapableNode)
         }
 }

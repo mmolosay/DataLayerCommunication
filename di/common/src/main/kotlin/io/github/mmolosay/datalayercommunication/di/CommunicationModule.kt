@@ -18,6 +18,7 @@ import io.github.mmolosay.datalayercommunication.communication.impl.ConvertingCo
 import io.github.mmolosay.datalayercommunication.communication.impl.DataLayerCommunicationClient
 import io.github.mmolosay.datalayercommunication.communication.impl.DataLayerNodeProvider
 import io.github.mmolosay.datalayercommunication.communication.impl.RepositoryResponseServer
+import io.github.mmolosay.datalayercommunication.communication.impl.connection.ConnectionStateProviderFactoryImpl
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.Converters
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.ConvertersFactory.Feature
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.ConvertersFactory.add
@@ -27,7 +28,6 @@ import io.github.mmolosay.datalayercommunication.communication.impl.convertion.d
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.decode.SerializationResponseDecoder
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.encode.SerializationRequestEncoder
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.encode.SerializationResponseEncoder
-import io.github.mmolosay.datalayercommunication.communication.impl.factories.ConnectionStateProviderFactoryImpl
 import io.github.mmolosay.datalayercommunication.communication.model.Capability
 import io.github.mmolosay.datalayercommunication.communication.model.CapabilitySet
 import io.github.mmolosay.datalayercommunication.communication.model.Path
@@ -182,12 +182,13 @@ class CommunicationModule {
     @Singleton
     fun provideConnectionStateProviderFactory(
         gmsCapabilityClient: GmsCapabilityClient,
+        nodeProvider: NodeProvider,
         capabilities: CapabilitySet,
     ): ConnectionStateProviderFactory =
         ConnectionStateProviderFactoryImpl(
             gmsCapabilityClient = gmsCapabilityClient,
+            nodeProvider = nodeProvider,
             handheldCapability = capabilities.handheld,
-            wearableCapability = capabilities.wearable,
         )
 
     // endregion

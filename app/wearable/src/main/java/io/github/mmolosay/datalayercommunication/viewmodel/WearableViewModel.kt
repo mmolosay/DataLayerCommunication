@@ -30,8 +30,11 @@ class WearableViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        launchRepeatingHandheldConnectionCheck()
         observeHandheldConnectionState()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
     }
 
     fun executeGetAllAnimals() {
@@ -76,15 +79,6 @@ class WearableViewModel @Inject constructor(
                 animals = emptyList(),
             )
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        handheldConnectionStateProvider.stop()
-    }
-
-    private fun launchRepeatingHandheldConnectionCheck() {
-        handheldConnectionStateProvider.start()
     }
 
     private fun observeHandheldConnectionState() {
