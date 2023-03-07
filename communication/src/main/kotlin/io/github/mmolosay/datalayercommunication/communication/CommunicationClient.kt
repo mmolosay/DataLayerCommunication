@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.communication.client
+package io.github.mmolosay.datalayercommunication.communication
 
 import io.github.mmolosay.datalayercommunication.communication.model.Destination
 import io.github.mmolosay.datalayercommunication.communication.models.request.Request

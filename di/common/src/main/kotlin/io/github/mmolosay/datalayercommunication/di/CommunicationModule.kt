@@ -9,7 +9,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.github.mmolosay.datalayercommunication.communication.CapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
-import io.github.mmolosay.datalayercommunication.communication.client.CommunicationClient
+import io.github.mmolosay.datalayercommunication.communication.CommunicationClient
 import io.github.mmolosay.datalayercommunication.communication.convertion.RequestDecoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.RequestEncoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseDecoder

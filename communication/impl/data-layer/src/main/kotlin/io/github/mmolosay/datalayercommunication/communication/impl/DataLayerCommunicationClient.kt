@@ -1,13 +1,11 @@
 package io.github.mmolosay.datalayercommunication.communication.impl
 
-import io.github.mmolosay.datalayercommunication.communication.client.CommunicationClient
+import io.github.mmolosay.datalayercommunication.communication.CommunicationClient
 import io.github.mmolosay.datalayercommunication.communication.convertion.RequestEncoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseDecoder
 import io.github.mmolosay.datalayercommunication.communication.failures.CommunicationFailure
 import io.github.mmolosay.datalayercommunication.communication.model.Data
 import io.github.mmolosay.datalayercommunication.communication.model.Destination
-import io.github.mmolosay.datalayercommunication.communication.models.request.Request
-import io.github.mmolosay.datalayercommunication.communication.models.response.Response
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.success
 import kotlinx.coroutines.tasks.await
