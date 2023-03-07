@@ -43,4 +43,3 @@ include(":domain:wearable")
 include(":presentation:shared")
 
 include(":utils:resource")
-

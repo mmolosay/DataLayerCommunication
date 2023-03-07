@@ -9,12 +9,12 @@ fun Collection<Node>.filterConnectedToCurrentDevice(): Collection<Node> =
     this.filter { it.isConnectedToCurrentDevice }
 
 /**
- * Returns [Result] with [single] `handheld` node, which is connected to current device.
+ * Returns [Result] with [first] `handheld` node, which is connected to current device.
  */
-suspend fun NodeProvider.singleConnectedHandheldNode(): Result<Node> =
+suspend fun NodeProvider.connectedHandheldNode(): Result<Node> = // TODO: return resource
     runCatching {
         this
             .handheld()
             .filterConnectedToCurrentDevice()
-            .single()
+            .first()
     }

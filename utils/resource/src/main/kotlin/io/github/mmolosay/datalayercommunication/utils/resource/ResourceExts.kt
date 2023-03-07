@@ -10,6 +10,9 @@ package io.github.mmolosay.datalayercommunication.utils.resource
 fun <T> Resource.Companion.success(value: T): Resource<T> =
     Resource.Success(value)
 
+fun Resource.Companion.success(): Resource<Unit> =
+    Resource.Success(Unit)
+
 /**
  * Determines, whether receiver [Resource] is an instance of [Resource.Success].
  */

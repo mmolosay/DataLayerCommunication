@@ -11,6 +11,8 @@ java {
 
 dependencies {
     implementation(project(":domain:common"))
+    implementation(project(":communication")) // TODO: remove?
+    implementation(project(":utils:resource"))
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")

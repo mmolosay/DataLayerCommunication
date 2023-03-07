@@ -9,7 +9,7 @@ import io.github.mmolosay.datalayercommunication.communication.models.request.De
 import io.github.mmolosay.datalayercommunication.communication.models.request.GetAllAnimalsRequest
 import io.github.mmolosay.datalayercommunication.communication.models.response.DeleteAnimalByIdResponse
 import io.github.mmolosay.datalayercommunication.communication.models.response.GetAllAnimalsResponse
-import io.github.mmolosay.datalayercommunication.communication.singleConnectedHandheldNode
+import io.github.mmolosay.datalayercommunication.communication.connectedHandheldNode
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
 import io.github.mmolosay.datalayercommunication.domain.models.Animals
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
@@ -30,7 +30,7 @@ class AnimalsRepositoryImpl(
     override suspend fun getAllAnimals(): Resource<Animals> =
         withContext(dispatcher) block@{
             val destination = nodeProvider
-                .singleConnectedHandheldNode()
+                .connectedHandheldNode()
                 .getOrElse { return@block ConnectionFailure }
                 .toDestination(getAllAnimalsPath)
             val request = GetAllAnimalsRequest
@@ -43,7 +43,7 @@ class AnimalsRepositoryImpl(
     override suspend fun deleteAnimalById(id: Long): Resource<Animal?> =
         withContext(dispatcher) block@{
             val destination = nodeProvider
-                .singleConnectedHandheldNode()
+                .connectedHandheldNode()
                 .getOrElse { return@block ConnectionFailure }
                 .toDestination(deleteAnimalByIdPath)
             val request = DeleteAnimalByIdRequest(animalId = id)

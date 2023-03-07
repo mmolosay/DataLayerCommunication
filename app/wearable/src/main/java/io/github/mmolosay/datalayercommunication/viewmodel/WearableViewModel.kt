@@ -8,6 +8,7 @@ import io.github.mmolosay.datalayercommunication.communication.failures.Connecti
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
 import io.github.mmolosay.datalayercommunication.domain.usecase.DeleteRandomAnimalUseCase
 import io.github.mmolosay.datalayercommunication.domain.usecase.GetAnimalsUseCase
+import io.github.mmolosay.datalayercommunication.domain.wearable.usecase.ConfigureApplicationUseCase
 import io.github.mmolosay.datalayercommunication.models.UiState
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.getOrNull
@@ -26,6 +27,7 @@ import kotlin.time.Duration.Companion.milliseconds
 
 @HiltViewModel
 class WearableViewModel @Inject constructor(
+    private val configureApplication: ConfigureApplicationUseCase,
     private val getAnimals: GetAnimalsUseCase,
     private val deleteRandomAnimal: DeleteRandomAnimalUseCase,
     private val handheldConnectionStateProvider: ConnectionStateProvider,
@@ -37,6 +39,7 @@ class WearableViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), fullUiState.value.toUiState())
 
     init {
+        launchConfigureApplication()
         observeHandheldConnectionState()
     }
 
@@ -84,6 +87,12 @@ class WearableViewModel @Inject constructor(
         }
     }
 
+    private fun launchConfigureApplication() {
+        viewModelScope.launch {
+            configureApplication()
+        }
+    }
+
     private fun observeHandheldConnectionState() {
         viewModelScope.launch {
             handheldConnectionStateProvider.connectionStateFlow.collect { isConnected ->
@@ -91,7 +100,7 @@ class WearableViewModel @Inject constructor(
                     // we want to show loading for minimum some noticable time to prevent it blinking
                     if (it.showLoading) {
                         val now = System.currentTimeMillis()
-                        val elapsed = (now - it.loadingStarted).milliseconds
+                        val elapsed = (now - it.loadingStartedTime).milliseconds
                         val minimumScreenTime = 1_000.milliseconds
                         val screenTimeLeft = minimumScreenTime - elapsed
                         delay(screenTimeLeft) // skipped if <= 0
@@ -107,7 +116,7 @@ class WearableViewModel @Inject constructor(
 
     private fun makeInitialUiState(): FullUiState =
         FullUiState(
-            loadingStarted = System.currentTimeMillis(),
+            loadingStartedTime = System.currentTimeMillis(),
             showLoading = true,
             showHandheldNotConnected = false,
             elapsedTime = makeBlankElapsedTime(),
@@ -131,7 +140,7 @@ class WearableViewModel @Inject constructor(
      * propagated to flow, and thus not accessible anymore.
      */
     private data class FullUiState(
-        val loadingStarted: Long,
+        val loadingStartedTime: Long,
         val showLoading: Boolean,
         val showHandheldNotConnected: Boolean,
         val elapsedTime: String,
