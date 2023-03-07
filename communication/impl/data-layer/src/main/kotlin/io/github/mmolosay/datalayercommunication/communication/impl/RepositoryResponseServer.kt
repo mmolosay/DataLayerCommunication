@@ -1,11 +1,11 @@
 package io.github.mmolosay.datalayercommunication.communication.impl
 
-import io.github.mmolosay.datalayercommunication.communication.model.request.DeleteAnimalByIdRequest
-import io.github.mmolosay.datalayercommunication.communication.model.request.GetAllAnimalsRequest
-import io.github.mmolosay.datalayercommunication.communication.model.request.Request
-import io.github.mmolosay.datalayercommunication.communication.model.response.DeleteAnimalByIdResponse
-import io.github.mmolosay.datalayercommunication.communication.model.response.GetAllAnimalsResponse
-import io.github.mmolosay.datalayercommunication.communication.model.response.Response
+import io.github.mmolosay.datalayercommunication.communication.models.request.DeleteAnimalByIdRequest
+import io.github.mmolosay.datalayercommunication.communication.models.request.GetAllAnimalsRequest
+import io.github.mmolosay.datalayercommunication.communication.models.request.Request
+import io.github.mmolosay.datalayercommunication.communication.models.response.DeleteAnimalByIdResponse
+import io.github.mmolosay.datalayercommunication.communication.models.response.GetAllAnimalsResponse
+import io.github.mmolosay.datalayercommunication.communication.models.response.Response
 import io.github.mmolosay.datalayercommunication.communication.server.ResponseServer
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
 

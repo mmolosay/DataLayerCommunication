@@ -1,9 +1,9 @@
 package io.github.mmolosay.datalayercommunication.communication.impl
 
-import io.github.mmolosay.datalayercommunication.communication.model.request.DeleteAnimalByIdRequest
-import io.github.mmolosay.datalayercommunication.communication.model.request.GetAllAnimalsRequest
-import io.github.mmolosay.datalayercommunication.communication.model.response.DeleteAnimalByIdResponse
-import io.github.mmolosay.datalayercommunication.communication.model.response.GetAllAnimalsResponse
+import io.github.mmolosay.datalayercommunication.communication.models.request.DeleteAnimalByIdRequest
+import io.github.mmolosay.datalayercommunication.communication.models.request.GetAllAnimalsRequest
+import io.github.mmolosay.datalayercommunication.communication.models.response.DeleteAnimalByIdResponse
+import io.github.mmolosay.datalayercommunication.communication.models.response.GetAllAnimalsResponse
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
 import io.github.mmolosay.datalayercommunication.domain.models.Animals
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
@@ -26,11 +26,12 @@ class RepositoryResponseServerTests {
         val animalsRepository = mockk<AnimalsRepository>()
         coEvery { animalsRepository.getAllAnimals() } returns Resource.success(animals)
         val server = RepositoryResponseServer(animalsRepository)
-        val request = GetAllAnimalsRequest
+        val request =
+            io.github.mmolosay.datalayercommunication.communication.models.request.GetAllAnimalsRequest
 
         val response = server.reciprocate(request)
 
-        response should beOfType<GetAllAnimalsResponse>()
+        response should beOfType<io.github.mmolosay.datalayercommunication.communication.models.response.GetAllAnimalsResponse>()
     }
 
     @Test
@@ -38,10 +39,13 @@ class RepositoryResponseServerTests {
         val animalsRepository = mockk<AnimalsRepository>()
         coEvery { animalsRepository.deleteAnimalById(any()) } returns Resource.success<Animal?>(null)
         val server = RepositoryResponseServer(animalsRepository)
-        val request = DeleteAnimalByIdRequest(animalId = 0L)
+        val request =
+            io.github.mmolosay.datalayercommunication.communication.models.request.DeleteAnimalByIdRequest(
+                animalId = 0L
+            )
 
         val response = server.reciprocate(request)
 
-        response should beOfType<DeleteAnimalByIdResponse>()
+        response should beOfType<io.github.mmolosay.datalayercommunication.communication.models.response.DeleteAnimalByIdResponse>()
     }
 }

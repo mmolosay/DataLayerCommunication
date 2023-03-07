@@ -4,8 +4,8 @@ import io.github.mmolosay.datalayercommunication.communication.convertion.Reques
 import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseDecoder
 import io.github.mmolosay.datalayercommunication.communication.model.Data
 import io.github.mmolosay.datalayercommunication.communication.model.asString
-import io.github.mmolosay.datalayercommunication.communication.model.request.Request
-import io.github.mmolosay.datalayercommunication.communication.model.response.Response
+import io.github.mmolosay.datalayercommunication.communication.models.request.Request
+import io.github.mmolosay.datalayercommunication.communication.models.response.Response
 import kotlinx.serialization.StringFormat
 import kotlinx.serialization.decodeFromString
 

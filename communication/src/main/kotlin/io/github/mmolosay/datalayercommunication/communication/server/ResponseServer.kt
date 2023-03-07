@@ -1,7 +1,7 @@
 package io.github.mmolosay.datalayercommunication.communication.server
 
-import io.github.mmolosay.datalayercommunication.communication.model.request.Request
-import io.github.mmolosay.datalayercommunication.communication.model.response.Response
+import io.github.mmolosay.datalayercommunication.communication.models.request.Request
+import io.github.mmolosay.datalayercommunication.communication.models.response.Response
 
 /**
  * Serves appropriate [Response] for specified [Request].

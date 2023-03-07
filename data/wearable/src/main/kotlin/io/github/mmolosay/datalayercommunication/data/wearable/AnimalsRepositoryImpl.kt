@@ -4,11 +4,11 @@ import io.github.mmolosay.datalayercommunication.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.communication.client.CommunicationClient
 import io.github.mmolosay.datalayercommunication.communication.failures.ConnectionFailure
 import io.github.mmolosay.datalayercommunication.communication.model.Path
-import io.github.mmolosay.datalayercommunication.communication.model.request.DeleteAnimalByIdRequest
-import io.github.mmolosay.datalayercommunication.communication.model.request.GetAllAnimalsRequest
-import io.github.mmolosay.datalayercommunication.communication.model.response.DeleteAnimalByIdResponse
-import io.github.mmolosay.datalayercommunication.communication.model.response.GetAllAnimalsResponse
 import io.github.mmolosay.datalayercommunication.communication.model.toDestination
+import io.github.mmolosay.datalayercommunication.communication.models.request.DeleteAnimalByIdRequest
+import io.github.mmolosay.datalayercommunication.communication.models.request.GetAllAnimalsRequest
+import io.github.mmolosay.datalayercommunication.communication.models.response.DeleteAnimalByIdResponse
+import io.github.mmolosay.datalayercommunication.communication.models.response.GetAllAnimalsResponse
 import io.github.mmolosay.datalayercommunication.communication.singleConnectedHandheldNode
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
 import io.github.mmolosay.datalayercommunication.domain.models.Animals
