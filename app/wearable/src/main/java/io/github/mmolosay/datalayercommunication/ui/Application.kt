@@ -47,6 +47,7 @@ fun Application(
         when (uiState) {
             is UiState.Loading -> Loading()
             is UiState.HandheldNotConnected -> HandheldNotConnected()
+            is UiState.HandheldConnectionLost -> HandheldConnectionLost()
             is UiState.Content -> AnimalsWithRequests(
                 uiState = uiState,
                 scalingLazyListState = scalingLazyListState,

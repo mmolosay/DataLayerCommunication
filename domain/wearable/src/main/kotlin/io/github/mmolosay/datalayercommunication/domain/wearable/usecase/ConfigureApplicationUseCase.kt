@@ -11,6 +11,11 @@ class ConfigureApplicationUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(): Resource<Unit> {
+        getAndStoreConnectedHandheldNode().getOrElse { return it }
+        return Resource.success()
+    }
+
+    private suspend fun getAndStoreConnectedHandheldNode(): Resource<Unit> {
         val node = nodeRepository
             .getConnectedHandheldNode()
             .getOrElse { return it }

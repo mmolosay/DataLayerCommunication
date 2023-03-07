@@ -14,20 +14,20 @@ import androidx.wear.compose.material.Text
 
 @Preview
 @Composable
-private fun HandheldNotConnectedPreview() =
+private fun HandheldConnectionLostPreview() =
     HandheldConnectionLost()
 
 // endregion
 
 @Composable
-fun HandheldNotConnected() =
+fun HandheldConnectionLost() =
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
         Text(
-            text = "Watch is not connected to handheld device.\nPlease, connect handheld device and restart an app.", // TODO: detect connection automatically
+            text = "Watch is not connected to handheld device.\nReconnection will be detected automatically.",
             textAlign = TextAlign.Center,
         )
     }

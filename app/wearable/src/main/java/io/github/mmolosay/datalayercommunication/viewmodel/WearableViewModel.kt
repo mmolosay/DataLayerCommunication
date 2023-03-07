@@ -11,6 +11,7 @@ import io.github.mmolosay.datalayercommunication.domain.usecase.GetAnimalsUseCas
 import io.github.mmolosay.datalayercommunication.domain.wearable.usecase.ConfigureApplicationUseCase
 import io.github.mmolosay.datalayercommunication.models.UiState
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
+import io.github.mmolosay.datalayercommunication.utils.resource.getOrElse
 import io.github.mmolosay.datalayercommunication.utils.resource.getOrNull
 import io.github.mmolosay.datalayercommunication.utils.resource.isSuccess
 import kotlinx.coroutines.delay
@@ -39,8 +40,7 @@ class WearableViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), fullUiState.value.toUiState())
 
     init {
-        launchConfigureApplication()
-        observeHandheldConnectionState()
+        setUp()
     }
 
     fun executeGetAllAnimals() {
@@ -51,7 +51,7 @@ class WearableViewModel @Inject constructor(
             }.takeIf { resource.isSuccess }
             fullUiState.update {
                 it.copy(
-                    showHandheldNotConnected = resource is ConnectionFailure,
+                    showHandheldConnectionLost = resource is ConnectionFailure,
                     elapsedTime = makeElapsedTimeOrBlank(elapsed),
                     animals = resource.getOrNull() ?: emptyList(),
                 )
@@ -70,7 +70,7 @@ class WearableViewModel @Inject constructor(
             }.takeIf { resource.isSuccess }
             fullUiState.update {
                 it.copy(
-                    showHandheldNotConnected = resource is ConnectionFailure,
+                    showHandheldConnectionLost = resource is ConnectionFailure,
                     elapsedTime = makeElapsedTimeOrBlank(elapsed),
                     animals = resource.getOrNull()?.let { listOf(it) } ?: emptyList(),
                 )
@@ -87,13 +87,30 @@ class WearableViewModel @Inject constructor(
         }
     }
 
-    private fun launchConfigureApplication() {
+    // region Set up
+
+    private fun setUp() {
         viewModelScope.launch {
-            configureApplication()
+            launchConfigureApplication().join()
+            observeHandheldConnectionState()
         }
     }
 
-    private fun observeHandheldConnectionState() {
+    private fun launchConfigureApplication() =
+        viewModelScope.launch {
+            var updated = fullUiState.value.copy(
+                showLoading = false, // dismiss loading, next state is ready
+                showHandheldConnectionLost = false,
+            )
+            configureApplication().getOrElse { failure ->
+                when (failure) {
+                    ConnectionFailure -> updated = updated.copy(showHandheldNotConnected = true)
+                }
+            }
+            fullUiState.value = updated
+        }
+
+    private fun observeHandheldConnectionState() =
         viewModelScope.launch {
             handheldConnectionStateProvider.connectionStateFlow.collect { isConnected ->
                 fullUiState.update {
@@ -107,18 +124,22 @@ class WearableViewModel @Inject constructor(
                     }
                     it.copy(
                         showLoading = false, // dismiss loading, when first connection state arrives
-                        showHandheldNotConnected = !isConnected,
+                        showHandheldConnectionLost = !isConnected,
                     )
                 }
             }
         }
-    }
+
+    // endregion
+
+    // region View models
 
     private fun makeInitialUiState(): FullUiState =
         FullUiState(
             loadingStartedTime = System.currentTimeMillis(),
             showLoading = true,
             showHandheldNotConnected = false,
+            showHandheldConnectionLost = false,
             elapsedTime = makeBlankElapsedTime(),
             animals = emptyList(),
         )
@@ -132,10 +153,12 @@ class WearableViewModel @Inject constructor(
     private fun makeBlankElapsedTime(): String =
         "—"
 
+    // endregion
+
     /**
      * Used to remember values, when type of [UiState] changes.
      *
-     * For example, when we go from [UiState.Content] to [UiState.HandheldNotConnected],
+     * For example, when we go from [UiState.Content] to [UiState.HandheldConnectionLost],
      * and then back to [UiState.Content], we can't use its previous values, because was
      * propagated to flow, and thus not accessible anymore.
      */
@@ -143,6 +166,7 @@ class WearableViewModel @Inject constructor(
         val loadingStartedTime: Long,
         val showLoading: Boolean,
         val showHandheldNotConnected: Boolean,
+        val showHandheldConnectionLost: Boolean,
         val elapsedTime: String,
         val animals: List<Animal>,
     )
@@ -151,6 +175,7 @@ class WearableViewModel @Inject constructor(
         when {
             showLoading -> UiState.Loading
             showHandheldNotConnected -> UiState.HandheldNotConnected
+            showHandheldConnectionLost -> UiState.HandheldConnectionLost
             else -> UiState.Content(
                 elapsedTime = elapsedTime,
                 animals = animals,

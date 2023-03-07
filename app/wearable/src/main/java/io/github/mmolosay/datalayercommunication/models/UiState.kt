@@ -13,6 +13,9 @@ sealed interface UiState {
     @Immutable
     object HandheldNotConnected : UiState
 
+    @Immutable
+    object HandheldConnectionLost : UiState
+
     @Stable
     data class Content(
         val elapsedTime: String,
