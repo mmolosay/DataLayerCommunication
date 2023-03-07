@@ -1,6 +1,7 @@
 package io.github.mmolosay.datalayercommunication.communication.impl
 
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
+import io.github.mmolosay.datalayercommunication.communication.impl.mappers.toDataLayer
 import io.github.mmolosay.datalayercommunication.communication.impl.mappers.toNode
 import io.github.mmolosay.datalayercommunication.communication.model.Capability
 import io.github.mmolosay.datalayercommunication.communication.model.Node
@@ -32,7 +33,7 @@ class DataLayerNodeProvider(
         withContext(dispatcher) {
             val capabilityInfo = withTimeoutOrNull(3.seconds) {
                 gmsCapabilityClient
-                    .getCapability(capability.value, GmsCapabilityClient.FILTER_REACHABLE)
+                    .getCapability(capability.toDataLayer(), GmsCapabilityClient.FILTER_REACHABLE)
                     .await()
             }
             capabilityInfo

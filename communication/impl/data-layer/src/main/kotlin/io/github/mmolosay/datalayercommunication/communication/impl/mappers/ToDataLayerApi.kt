@@ -4,7 +4,7 @@ import com.google.android.gms.wearable.CapabilityClient.OnCapabilityChangedListe
 import io.github.mmolosay.datalayercommunication.communication.CapabilityClient.OnCapabilityChangedCallback
 import io.github.mmolosay.datalayercommunication.communication.model.Capability
 
-internal fun Capability.toDataLayer(): String = // TODO: check module and replace with this
+internal fun Capability.toDataLayer(): String =
     this.value
 
 internal fun OnCapabilityChangedCallback.toDataLayer(): OnCapabilityChangedListener =
