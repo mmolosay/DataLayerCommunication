@@ -35,6 +35,7 @@ include(":di:handheld")
 include(":di:wearable")
 
 include(":domain:common")
+include(":domain:common:models")
 include(":domain:handheld")
 include(":domain:wearable")
 

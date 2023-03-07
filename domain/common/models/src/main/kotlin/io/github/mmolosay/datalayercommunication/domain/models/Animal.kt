@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.domain.model
+package io.github.mmolosay.datalayercommunication.domain.models
 
 import kotlinx.serialization.Serializable
 

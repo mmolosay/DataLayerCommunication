@@ -4,8 +4,8 @@ import io.github.mmolosay.datalayercommunication.communication.model.request.Del
 import io.github.mmolosay.datalayercommunication.communication.model.request.GetAllAnimalsRequest
 import io.github.mmolosay.datalayercommunication.communication.model.response.DeleteAnimalByIdResponse
 import io.github.mmolosay.datalayercommunication.communication.model.response.GetAllAnimalsResponse
-import io.github.mmolosay.datalayercommunication.domain.model.Animal
-import io.github.mmolosay.datalayercommunication.domain.model.Animals
+import io.github.mmolosay.datalayercommunication.domain.models.Animal
+import io.github.mmolosay.datalayercommunication.domain.models.Animals
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.success

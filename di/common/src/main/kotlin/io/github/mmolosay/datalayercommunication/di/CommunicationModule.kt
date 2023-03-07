@@ -34,7 +34,7 @@ import io.github.mmolosay.datalayercommunication.communication.model.Path
 import io.github.mmolosay.datalayercommunication.communication.model.PathSet
 import io.github.mmolosay.datalayercommunication.communication.server.CommunicationServer
 import io.github.mmolosay.datalayercommunication.communication.server.ResponseServer
-import io.github.mmolosay.datalayercommunication.domain.model.ModelSerializersModuleFactory
+import io.github.mmolosay.datalayercommunication.domain.models.ModelSerializersModuleFactory
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
 import io.github.mmolosay.datalayercommunication.utils.resource.ResourceSerialializersModuleFactory
 import kotlinx.serialization.StringFormat
@@ -66,7 +66,7 @@ class CommunicationModule {
     @Provides
     @Singleton
     fun provideStringFormat(): StringFormat {
-        val modelsModule = ModelSerializersModuleFactory.make()
+        val modelsModule = io.github.mmolosay.datalayercommunication.domain.models.ModelSerializersModuleFactory.make()
         val resourceModule = ResourceSerialializersModuleFactory.make()
         return Json { serializersModule = modelsModule + resourceModule }
     }

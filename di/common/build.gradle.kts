@@ -40,6 +40,7 @@ dependencies {
     implementation(project(":communication:impl:data-layer"))
     implementation(project(":data:common"))
     implementation(project(":domain:common"))
+    implementation(project(":domain:common:models"))
     implementation(project(":utils:resource"))
 
     implementation("com.google.android.gms:play-services-wearable:18.0.0")

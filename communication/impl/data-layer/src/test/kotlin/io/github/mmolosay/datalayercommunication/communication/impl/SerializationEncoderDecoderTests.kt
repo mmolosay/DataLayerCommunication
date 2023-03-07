@@ -6,8 +6,8 @@ import io.github.mmolosay.datalayercommunication.communication.impl.convertion.e
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.encode.SerializationResponseEncoder
 import io.github.mmolosay.datalayercommunication.communication.model.request.GetAllAnimalsRequest
 import io.github.mmolosay.datalayercommunication.communication.model.response.DeleteAnimalByIdResponse
-import io.github.mmolosay.datalayercommunication.domain.model.Animal
-import io.github.mmolosay.datalayercommunication.domain.model.ModelSerializersModuleFactory
+import io.github.mmolosay.datalayercommunication.domain.models.Animal
+import io.github.mmolosay.datalayercommunication.domain.models.ModelSerializersModuleFactory
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.success
 import io.kotest.matchers.should

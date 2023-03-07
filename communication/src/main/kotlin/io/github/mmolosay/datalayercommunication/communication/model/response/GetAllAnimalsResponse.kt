@@ -1,6 +1,6 @@
 package io.github.mmolosay.datalayercommunication.communication.model.response
 
-import io.github.mmolosay.datalayercommunication.domain.model.Animals
+import io.github.mmolosay.datalayercommunication.domain.models.Animals
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import kotlinx.serialization.Serializable
 

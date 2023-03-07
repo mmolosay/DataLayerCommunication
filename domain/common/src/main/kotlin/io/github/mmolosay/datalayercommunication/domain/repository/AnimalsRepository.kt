@@ -1,7 +1,7 @@
 package io.github.mmolosay.datalayercommunication.domain.repository
 
-import io.github.mmolosay.datalayercommunication.domain.model.Animal
-import io.github.mmolosay.datalayercommunication.domain.model.Animals
+import io.github.mmolosay.datalayercommunication.domain.models.Animal
+import io.github.mmolosay.datalayercommunication.domain.models.Animals
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 
 interface AnimalsRepository {

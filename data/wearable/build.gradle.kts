@@ -33,6 +33,7 @@ dependencies {
     implementation(project(":communication:connection"))
     implementation(project(":communication:failures"))
     implementation(project(":domain:common"))
+    implementation(project(":domain:common:models"))
     implementation(project(":domain:wearable"))
     implementation(project(":utils:resource"))
 

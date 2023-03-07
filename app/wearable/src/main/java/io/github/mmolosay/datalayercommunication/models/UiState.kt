@@ -2,7 +2,7 @@ package io.github.mmolosay.datalayercommunication.models
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
-import io.github.mmolosay.datalayercommunication.domain.model.Animal
+import io.github.mmolosay.datalayercommunication.domain.models.Animal
 
 @Stable
 sealed interface UiState {

@@ -38,6 +38,7 @@ dependencies {
     implementation(project(":communication"))
     implementation(project(":data:handheld"))
     implementation(project(":domain:common"))
+    implementation(project(":domain:common:models"))
     implementation(project(":domain:handheld"))
 
     implementation("com.google.dagger:hilt-android:2.44")

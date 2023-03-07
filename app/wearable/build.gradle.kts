@@ -48,6 +48,7 @@ dependencies {
     implementation(project(":di:common"))
     implementation(project(":di:wearable"))
     implementation(project(":domain:common"))
+    implementation(project(":domain:common:models"))
     implementation(project(":domain:wearable"))
     implementation(project(":presentation:shared"))
     implementation(project(":utils:resource"))
