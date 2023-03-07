@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.communication.impl.connection
+package io.github.mmolosay.datalayercommunication.communication.connection
 
 /**
  * Executes a one-shot connection check between current device and one, specified by implementation.

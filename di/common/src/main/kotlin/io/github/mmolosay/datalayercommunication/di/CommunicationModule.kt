@@ -7,18 +7,18 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import io.github.mmolosay.datalayercommunication.communication.CapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.communication.client.CommunicationClient
-import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionStateProviderFactory
 import io.github.mmolosay.datalayercommunication.communication.convertion.RequestDecoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.RequestEncoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseDecoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseEncoder
 import io.github.mmolosay.datalayercommunication.communication.impl.ConvertingCommunicationServer
+import io.github.mmolosay.datalayercommunication.communication.impl.DataLayerCapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.impl.DataLayerCommunicationClient
 import io.github.mmolosay.datalayercommunication.communication.impl.DataLayerNodeProvider
 import io.github.mmolosay.datalayercommunication.communication.impl.RepositoryResponseServer
-import io.github.mmolosay.datalayercommunication.communication.impl.connection.ConnectionStateProviderFactoryImpl
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.Converters
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.ConvertersFactory.Feature
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.ConvertersFactory.add
@@ -66,7 +66,7 @@ class CommunicationModule {
     @Provides
     @Singleton
     fun provideStringFormat(): StringFormat {
-        val modelsModule = io.github.mmolosay.datalayercommunication.domain.models.ModelSerializersModuleFactory.make()
+        val modelsModule = ModelSerializersModuleFactory.make()
         val resourceModule = ResourceSerialializersModuleFactory.make()
         return Json { serializersModule = modelsModule + resourceModule }
     }
@@ -174,21 +174,13 @@ class CommunicationModule {
             animalsRepository = animalsRepository,
         )
 
-    // endregion
-
-    // region Factories
-
     @Provides
     @Singleton
-    fun provideConnectionStateProviderFactory(
+    fun provideCapabilityClient(
         gmsCapabilityClient: GmsCapabilityClient,
-        nodeProvider: NodeProvider,
-        capabilities: CapabilitySet,
-    ): ConnectionStateProviderFactory =
-        ConnectionStateProviderFactoryImpl(
+    ): CapabilityClient =
+        DataLayerCapabilityClient(
             gmsCapabilityClient = gmsCapabilityClient,
-            nodeProvider = nodeProvider,
-            handheldCapability = capabilities.handheld,
         )
 
     // endregion

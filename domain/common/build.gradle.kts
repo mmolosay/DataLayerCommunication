@@ -12,5 +12,6 @@ dependencies {
     implementation(project(":domain:common:models"))
     implementation(project(":utils:resource"))
 
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("javax.inject:javax.inject:1")
 }
