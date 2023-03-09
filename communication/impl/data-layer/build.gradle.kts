@@ -32,7 +32,7 @@ android {
 dependencies {
     implementation(project(":communication"))
     implementation(project(":communication:failures"))
-    implementation(project(":communication:models"))
+    implementation(project(":communication:models:rpc"))
     implementation(project(":domain:common"))
     implementation(project(":utils:resource"))
 
