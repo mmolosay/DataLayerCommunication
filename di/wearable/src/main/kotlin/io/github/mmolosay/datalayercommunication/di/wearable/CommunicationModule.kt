@@ -33,7 +33,7 @@ class CommunicationModule {
 
     @Provides
     @Singleton
-    fun provideHandheldConnectionStateProvider(
+    fun provideHandheldConnectionFlowProvider(
         capabilityClient: CapabilityClient,
         capabilities: CapabilitySet,
         nodeStore: NodeStore,
