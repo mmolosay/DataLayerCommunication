@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Communication paths placed in this module, because they are needed in declaration of
+    'CommunicationService' in AndroidManifest.xml.
+-->
+
 <resources>
 
     <string name="communication_path_requests" translatable="false">/requests</string>

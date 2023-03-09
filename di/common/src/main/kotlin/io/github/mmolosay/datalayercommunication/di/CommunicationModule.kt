@@ -44,6 +44,8 @@ import javax.inject.Singleton
 import com.google.android.gms.wearable.CapabilityClient as GmsCapabilityClient
 import com.google.android.gms.wearable.MessageClient as GmsMessageClient
 import com.google.android.gms.wearable.NodeClient as GmsNodeClient
+import io.github.mmolosay.datalayercommunication.communication.impl.datalayer.R as DataLayerR
+import io.github.mmolosay.datalayercommunication.communication.impl.datalayer.service.R as DataLayerServiceR
 
 /**
  * Dagger [Module], that provides communication associated dependencies.
@@ -211,7 +213,7 @@ class CommunicationModule {
         @ApplicationContext context: Context,
     ): PathSet =
         PathSet(
-            requests = Path(context.getString(R.string.communication_path_requests)),
+            requests = Path(context.getString(DataLayerServiceR.string.communication_path_requests)),
         )
 
     @Provides
@@ -220,8 +222,8 @@ class CommunicationModule {
         @ApplicationContext context: Context,
     ): CapabilitySet =
         CapabilitySet(
-            handheld = Capability(context.getString(R.string.communication_capabililty_handheld)),
-            wearable = Capability(context.getString(R.string.communication_capabililty_wearable)),
+            handheld = Capability(context.getString(DataLayerR.string.communication_capabililty_handheld)),
+            wearable = Capability(context.getString(DataLayerR.string.communication_capabililty_wearable)),
         )
 
     // endregion

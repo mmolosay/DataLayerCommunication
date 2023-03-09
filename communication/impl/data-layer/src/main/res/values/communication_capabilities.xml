@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Communication capabilities are placed in this module, because they belong to this exact
+    implementation of communication.
+-->
+
 <resources>
 
     <string name="communication_capabililty_handheld" translatable="false">handheld</string>

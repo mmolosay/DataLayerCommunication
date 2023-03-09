@@ -1,2 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+
+        <service
+            android:name=".CommunicationService"
+            android:exported="true"> <!-- won't work if if service is not exported -->
+
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.REQUEST_RECEIVED" />
+                <data
+                    android:host="*"
+                    android:pathPrefix="@string/communication_path_requests"
+                    android:scheme="wear" />
+            </intent-filter>
+
+        </service>
+
+    </application>
+
+</manifest>
