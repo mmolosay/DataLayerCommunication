@@ -10,9 +10,6 @@ import kotlinx.coroutines.flow.Flow
  * Conceptually, it is not different from any Repository in 'data' layer, since it's an abstraction
  * as well, thus stable.
  */
-// TODO: move in ':domain:common'?
-//       components in ':communication' are designed to be used in data layer.
-//       but this component is used by domain / presentaiton
 interface ConnectionFlowProvider {
 
     /**
