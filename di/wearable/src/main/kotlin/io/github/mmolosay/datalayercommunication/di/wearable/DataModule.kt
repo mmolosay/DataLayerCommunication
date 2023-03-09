@@ -8,9 +8,9 @@ import io.github.mmolosay.datalayercommunication.communication.CommunicationClie
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.communication.model.PathSet
 import io.github.mmolosay.datalayercommunication.data.wearable.AnimalsRepositoryImpl
-import io.github.mmolosay.datalayercommunication.data.wearable.NodeRepositoryImpl
+import io.github.mmolosay.datalayercommunication.data.wearable.InMemoryNodeStore
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
-import io.github.mmolosay.datalayercommunication.domain.wearable.data.NodeRepository
+import io.github.mmolosay.datalayercommunication.domain.wearable.data.NodeStore
 import javax.inject.Singleton
 
 @Module
@@ -33,10 +33,6 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideNodeRepository(
-        nodeProvider: NodeProvider,
-    ): NodeRepository =
-        NodeRepositoryImpl(
-            nodeProvider = nodeProvider,
-        )
+    fun provideConnectedNodeStore(): NodeStore =
+        InMemoryNodeStore()
 }

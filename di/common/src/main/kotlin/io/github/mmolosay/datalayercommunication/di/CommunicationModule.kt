@@ -8,8 +8,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.github.mmolosay.datalayercommunication.communication.CapabilityClient
-import io.github.mmolosay.datalayercommunication.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.communication.CommunicationClient
+import io.github.mmolosay.datalayercommunication.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.communication.convertion.RequestDecoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.RequestEncoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseDecoder
@@ -42,6 +42,8 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.plus
 import javax.inject.Singleton
 import com.google.android.gms.wearable.CapabilityClient as GmsCapabilityClient
+import com.google.android.gms.wearable.MessageClient as GmsMessageClient
+import com.google.android.gms.wearable.NodeClient as GmsNodeClient
 
 /**
  * Dagger [Module], that provides communication associated dependencies.
@@ -58,6 +60,20 @@ class CommunicationModule {
         @ApplicationContext context: Context,
     ): GmsCapabilityClient =
         Wearable.getCapabilityClient(context)
+
+    @Provides
+    @Singleton
+    fun provideGmsMessageClient(
+        @ApplicationContext context: Context,
+    ): GmsMessageClient =
+        Wearable.getMessageClient(context)
+
+    @Provides
+    @Singleton
+    fun provideGmsNodeClient(
+        @ApplicationContext context: Context,
+    ): GmsNodeClient =
+        Wearable.getNodeClient(context)
 
     // endregion
 
@@ -131,10 +147,12 @@ class CommunicationModule {
     @Singleton
     fun provideNodeProvider(
         gmsCapabilityClient: GmsCapabilityClient,
+        gmsNodeClient: GmsNodeClient,
         capabilities: CapabilitySet,
     ): NodeProvider =
         DataLayerNodeProvider(
             gmsCapabilityClient = gmsCapabilityClient,
+            gmsNodeClient = gmsNodeClient,
             handheldCapability = capabilities.handheld,
             wearableCapability = capabilities.wearable,
         )
@@ -142,14 +160,14 @@ class CommunicationModule {
     @Provides
     @Singleton
     fun provideCommunicationClient(
-        @ApplicationContext context: Context,
         encoder: RequestEncoder,
         decoder: ResponseDecoder,
+        gmsMessageClient: GmsMessageClient,
     ): CommunicationClient =
         DataLayerCommunicationClient(
             encoder = encoder,
             decoder = decoder,
-            gmsMessageClient = Wearable.getMessageClient(context),
+            gmsMessageClient = gmsMessageClient,
         )
 
     @Provides

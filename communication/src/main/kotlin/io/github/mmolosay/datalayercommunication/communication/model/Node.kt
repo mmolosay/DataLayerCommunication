@@ -1,13 +1,12 @@
 package io.github.mmolosay.datalayercommunication.communication.model
 
 /**
- * Represents a concrete device in current device network in respect of a node, on which
- * application is currently running.
+ * Represents a concrete device, which is __connected to the
+ * current one__ (on which application is presently runnging).
  */
 data class Node(
     val id: String,
     val name: String,
-    val isConnectedToCurrentDevice: Boolean,
 )
 
 /**

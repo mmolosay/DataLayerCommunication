@@ -9,5 +9,7 @@ java {
 }
 
 dependencies {
+    implementation(project(":communication")) // TODO: extract models and depend on them
+
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
 }

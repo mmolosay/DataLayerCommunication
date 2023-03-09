@@ -9,6 +9,7 @@ java {
 }
 
 dependencies {
+    implementation(project(":communication:failures"))
     implementation(project(":communication:models"))
     implementation(project(":utils:resource"))
 

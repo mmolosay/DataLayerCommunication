@@ -18,6 +18,8 @@ interface CapabilityClient {
 
         /**
          * Called for some [capability] and [nodes], possessing it.
+         *
+         * As definition of [Node] states, [nodes] are only devices, __connected__ to the current one.
          */
         fun onCapabilityChanged(capability: Capability, nodes: Collection<Node>)
     }

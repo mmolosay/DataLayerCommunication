@@ -3,19 +3,31 @@ package io.github.mmolosay.datalayercommunication.communication
 import io.github.mmolosay.datalayercommunication.communication.model.Node
 
 /**
- * Exposes an API for obtaining nodes in current device network.
+ * Exposes an API for obtaining nodes from current device network.
+ * All rentruned nodes are connected to the current device, as definition of [Node] states.
+ *
+ * All `suspend` methods will switch current coroutine dispatcher to an appropriate one.
  */
 interface NodeProvider {
 
     /**
-     * Collects data about all reachable `handheld` nodes in current device network.
-     * This `suspend` function will switch coroutine dispatcher to an appropriate one.
+     * Collects all [Node]s in current device network.
+     *
+     * @return collection of nodes, or `null`, if process of collecting had failed / timed out.
      */
-    suspend fun handheld(): Collection<Node>
+    suspend fun all(): Collection<Node>?
 
     /**
-     * Collects data about all reachable `wearable` nodes in current device network.
-     * This `suspend` function will switch coroutine dispatcher to an appropriate one.
+     * Collects __handheld__ nodes in current device network.
+     *
+     * @return collection of nodes, or `null`, if process of collecting had failed / timed out.
      */
-    suspend fun wearable(): Collection<Node>
+    suspend fun handheld(): Collection<Node>?
+
+    /**
+     * Collects _wearable_ nodes in current device network.
+     *
+     * @return collection of nodes, or `null`, if process of collecting had failed / timed out.
+     */
+    suspend fun wearable(): Collection<Node>?
 }

@@ -10,6 +10,6 @@ internal fun Capability.toDataLayer(): String =
 internal fun OnCapabilityChangedCallback.toDataLayer(): OnCapabilityChangedListener =
     OnCapabilityChangedListener { info ->
         val capability = Capability(info.name)
-        val nodes = info.nodes.map { it.toNode() }
+        val nodes = info.nodes.toNodes()
         onCapabilityChanged(capability, nodes)
     }

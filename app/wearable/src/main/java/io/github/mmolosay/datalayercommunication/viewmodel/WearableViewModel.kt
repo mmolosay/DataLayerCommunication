@@ -2,16 +2,16 @@ package io.github.mmolosay.datalayercommunication.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.Lazy
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionStateProvider
+import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionFlowProvider
 import io.github.mmolosay.datalayercommunication.communication.failures.ConnectionFailure
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
 import io.github.mmolosay.datalayercommunication.domain.usecase.DeleteRandomAnimalUseCase
 import io.github.mmolosay.datalayercommunication.domain.usecase.GetAnimalsUseCase
-import io.github.mmolosay.datalayercommunication.domain.wearable.usecase.ConfigureApplicationUseCase
+import io.github.mmolosay.datalayercommunication.domain.wearable.usecase.CheckIsHandheldDeviceConnectedUseCase
 import io.github.mmolosay.datalayercommunication.models.UiState
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
-import io.github.mmolosay.datalayercommunication.utils.resource.getOrElse
 import io.github.mmolosay.datalayercommunication.utils.resource.getOrNull
 import io.github.mmolosay.datalayercommunication.utils.resource.isSuccess
 import kotlinx.coroutines.delay
@@ -28,10 +28,10 @@ import kotlin.time.Duration.Companion.milliseconds
 
 @HiltViewModel
 class WearableViewModel @Inject constructor(
-    private val configureApplication: ConfigureApplicationUseCase,
+    private val isHandheldDeviceConnected: CheckIsHandheldDeviceConnectedUseCase,
+    private val handheldConnectionFlowProvider: Lazy<ConnectionFlowProvider?>,
     private val getAnimals: GetAnimalsUseCase,
     private val deleteRandomAnimal: DeleteRandomAnimalUseCase,
-    private val handheldConnectionStateProvider: ConnectionStateProvider,
 ) : ViewModel() {
 
     private val fullUiState = MutableStateFlow(makeInitialUiState())
@@ -91,37 +91,22 @@ class WearableViewModel @Inject constructor(
 
     private fun setUp() {
         viewModelScope.launch {
-            launchConfigureApplication().join()
+            executeCheckIsHandheldDeviceConnected()
             observeHandheldConnectionState()
         }
     }
 
-    private fun launchConfigureApplication() =
-        viewModelScope.launch {
-            var updated = fullUiState.value.copy(
-                showLoading = false, // dismiss loading, next state is ready
-                showHandheldConnectionLost = false,
-            )
-            configureApplication().getOrElse { failure ->
-                when (failure) {
-                    ConnectionFailure -> updated = updated.copy(showHandheldNotConnected = true)
-                }
-            }
-            fullUiState.value = updated
+    private suspend fun executeCheckIsHandheldDeviceConnected() {
+        fullUiState.update {
+            it.copy(showHandheldNotConnected = !isHandheldDeviceConnected())
         }
+        dismissLoading()
+    }
 
     private fun observeHandheldConnectionState() =
         viewModelScope.launch {
-            handheldConnectionStateProvider.connectionStateFlow.collect { isConnected ->
+            handheldConnectionFlowProvider.get()?.connectionFlow?.collect { isConnected ->
                 fullUiState.update {
-                    // we want to show loading for minimum some noticable time to prevent it blinking
-                    if (it.showLoading) {
-                        val now = System.currentTimeMillis()
-                        val elapsed = (now - it.loadingStartedTime).milliseconds
-                        val minimumScreenTime = 1_000.milliseconds
-                        val screenTimeLeft = minimumScreenTime - elapsed
-                        delay(screenTimeLeft) // skipped if <= 0
-                    }
                     it.copy(
                         showLoading = false, // dismiss loading, when first connection state arrives
                         showHandheldConnectionLost = !isConnected,
@@ -129,6 +114,20 @@ class WearableViewModel @Inject constructor(
                 }
             }
         }
+
+    private suspend fun dismissLoading() {
+        fullUiState.update {
+            // show loading for minimum some noticable time to prevent it from blinking
+            if (it.showLoading) {
+                val now = System.currentTimeMillis()
+                val elapsed = (now - it.loadingStartedTime).milliseconds
+                val minimumScreenTime = 1_000.milliseconds
+                val screenTimeLeft = minimumScreenTime - elapsed
+                delay(screenTimeLeft) // skipped if <= 0
+            }
+            it.copy(showLoading = false)
+        }
+    }
 
     // endregion
 
@@ -158,9 +157,13 @@ class WearableViewModel @Inject constructor(
     /**
      * Used to remember values, when type of [UiState] changes.
      *
-     * For example, when we go from [UiState.Content] to [UiState.HandheldConnectionLost],
-     * and then back to [UiState.Content], we can't use its previous values, because was
-     * propagated to flow, and thus not accessible anymore.
+     * For example, we emit following states to [uiState] flow:
+     * 1. [UiState.Content],
+     * 2. [UiState.HandheldConnectionLost],
+     * 3. [UiState.Content] again (connection was restored).
+     *
+     * We can't obtain states, previously emitted by flow.
+     * Thus, we can't create state from step #3 with data of state from step #1.
      */
     private data class FullUiState(
         val loadingStartedTime: Long,

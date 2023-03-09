@@ -1,15 +1,14 @@
 package io.github.mmolosay.datalayercommunication.data.wearable
 
-import io.github.mmolosay.datalayercommunication.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.communication.CommunicationClient
-import io.github.mmolosay.datalayercommunication.communication.failures.ConnectionFailure
+import io.github.mmolosay.datalayercommunication.communication.NodeProvider
+import io.github.mmolosay.datalayercommunication.communication.firstHandheldNode
 import io.github.mmolosay.datalayercommunication.communication.model.Path
 import io.github.mmolosay.datalayercommunication.communication.model.toDestination
 import io.github.mmolosay.datalayercommunication.communication.models.request.DeleteAnimalByIdRequest
 import io.github.mmolosay.datalayercommunication.communication.models.request.GetAllAnimalsRequest
 import io.github.mmolosay.datalayercommunication.communication.models.response.DeleteAnimalByIdResponse
 import io.github.mmolosay.datalayercommunication.communication.models.response.GetAllAnimalsResponse
-import io.github.mmolosay.datalayercommunication.communication.connectedHandheldNode
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
 import io.github.mmolosay.datalayercommunication.domain.models.Animals
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
@@ -22,16 +21,16 @@ import kotlinx.coroutines.withContext
 class AnimalsRepositoryImpl(
     private val nodeProvider: NodeProvider,
     private val communicationClient: CommunicationClient,
-    private val getAllAnimalsPath: Path,
-    private val deleteAnimalByIdPath: Path,
+    private val getAllAnimalsPath: Path, // TODO: send all requests to one path
+    private val deleteAnimalByIdPath: Path, // TODO: send all requests to one path
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : AnimalsRepository {
 
     override suspend fun getAllAnimals(): Resource<Animals> =
         withContext(dispatcher) block@{
             val destination = nodeProvider
-                .connectedHandheldNode()
-                .getOrElse { return@block ConnectionFailure }
+                .firstHandheldNode()
+                .getOrElse { return@block it }
                 .toDestination(getAllAnimalsPath)
             val request = GetAllAnimalsRequest
             communicationClient
@@ -43,8 +42,8 @@ class AnimalsRepositoryImpl(
     override suspend fun deleteAnimalById(id: Long): Resource<Animal?> =
         withContext(dispatcher) block@{
             val destination = nodeProvider
-                .connectedHandheldNode()
-                .getOrElse { return@block ConnectionFailure }
+                .firstHandheldNode()
+                .getOrElse { return@block it }
                 .toDestination(deleteAnimalByIdPath)
             val request = DeleteAnimalByIdRequest(animalId = id)
             communicationClient

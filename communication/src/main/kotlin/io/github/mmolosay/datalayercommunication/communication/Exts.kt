@@ -1,20 +1,20 @@
 package io.github.mmolosay.datalayercommunication.communication
 
+import io.github.mmolosay.datalayercommunication.communication.failures.ConnectionFailure
+import io.github.mmolosay.datalayercommunication.communication.failures.NoSuchNodeFailure
 import io.github.mmolosay.datalayercommunication.communication.model.Node
+import io.github.mmolosay.datalayercommunication.utils.resource.Resource
+import io.github.mmolosay.datalayercommunication.utils.resource.success
 
 /**
- * Returns a filtered collection with only nodes connected to current device.
+ * Returns [Resource] with [first] `handheld` node, which is connected to current device.
+ *
+ * @return first `handheld` node, or:
+ *  - [ConnectionFailure], if nodes cannot be obtained
+ *  - [NoSuchNodeFailure], if there is no such.
  */
-fun Collection<Node>.filterConnectedToCurrentDevice(): Collection<Node> =
-    this.filter { it.isConnectedToCurrentDevice }
-
-/**
- * Returns [Result] with [first] `handheld` node, which is connected to current device.
- */
-suspend fun NodeProvider.connectedHandheldNode(): Result<Node> = // TODO: return resource
-    runCatching {
-        this
-            .handheld()
-            .filterConnectedToCurrentDevice()
-            .first()
-    }
+suspend fun NodeProvider.firstHandheldNode(): Resource<Node> {
+    val nodes = this.handheld() ?: return ConnectionFailure // but actually a "timeout failure"
+    val node = nodes.firstOrNull() ?: return NoSuchNodeFailure
+    return Resource.success(node)
+}

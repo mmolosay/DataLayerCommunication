@@ -3,26 +3,28 @@ package io.github.mmolosay.datalayercommunication.data
 import io.github.mmolosay.datalayercommunication.communication.CapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.CapabilityClient.OnCapabilityChangedCallback
 import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionCheckExecutor
-import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionStateProvider
+import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionFlowProvider
 import io.github.mmolosay.datalayercommunication.communication.model.Capability
 import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 /**
- * Implementation of [ConnectionStateProvider], based on listening for
+ * Implementation of [ConnectionFlowProvider], based on listening for
  * capability changes in current device network.
  */
-class CapabilityConnectionStateProvider(
+class CapabilityConnectionFlowProvider(
     private val capabilityClient: CapabilityClient,
     private val nodeCapability: Capability,
+    private val nodeId: String,
     private val connectionCheckExecutor: ConnectionCheckExecutor,
-) : ConnectionStateProvider {
+) : ConnectionFlowProvider {
 
-    override val connectionStateFlow: Flow<Boolean> =
+    override val connectionFlow: Flow<Boolean> =
         callbackFlow {
-            val initialState = connectionCheckExecutor.areDevicesConnected()
+            val initialState = connectionCheckExecutor.areNodesConnected()
             send(initialState)
 
             val callback = makeOnCapabilityChangedCallback()
@@ -31,13 +33,12 @@ class CapabilityConnectionStateProvider(
             awaitClose {
                 with(capabilityClient) { callback.remove() }
             }
-        }
+        }.distinctUntilChanged()
 
     private fun ProducerScope<Boolean>.makeOnCapabilityChangedCallback(): OnCapabilityChangedCallback =
         OnCapabilityChangedCallback callback@{ capability, nodes ->
             if (capability != nodeCapability) return@callback
-            val firstConnectedNode = nodes.find { it.isConnectedToCurrentDevice }
-            val hasCapableNode = (firstConnectedNode != null)
-            trySend(hasCapableNode)
+            val hasNodeWithRequiredId = nodes.any { it.id == nodeId }
+            trySend(hasNodeWithRequiredId)
         }
 }

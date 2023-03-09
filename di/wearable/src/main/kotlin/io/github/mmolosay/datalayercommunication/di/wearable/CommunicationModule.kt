@@ -7,10 +7,11 @@ import dagger.hilt.components.SingletonComponent
 import io.github.mmolosay.datalayercommunication.communication.CapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionCheckExecutor
-import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionStateProvider
+import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionFlowProvider
 import io.github.mmolosay.datalayercommunication.communication.model.CapabilitySet
-import io.github.mmolosay.datalayercommunication.data.CapabilityConnectionStateProvider
-import io.github.mmolosay.datalayercommunication.data.wearable.HandheldConnectionCheckExecutor
+import io.github.mmolosay.datalayercommunication.data.CapabilityConnectionFlowProvider
+import io.github.mmolosay.datalayercommunication.data.wearable.ConnectionCheckByNodeIdExecutor
+import io.github.mmolosay.datalayercommunication.domain.wearable.data.NodeStore
 import javax.inject.Singleton
 
 @Module
@@ -21,21 +22,31 @@ class CommunicationModule {
     @Singleton
     fun provideConnectionCheckExecutor(
         nodeProvider: NodeProvider,
-    ): ConnectionCheckExecutor =
-        HandheldConnectionCheckExecutor(
-            nodeProvider = nodeProvider
-        )
+        nodeStore: NodeStore,
+    ): ConnectionCheckExecutor? =
+        nodeStore.node?.id?.let { nodeId ->
+            ConnectionCheckByNodeIdExecutor(
+                nodeProvider = nodeProvider,
+                nodeId = nodeId,
+            )
+        }
 
     @Provides
     @Singleton
     fun provideHandheldConnectionStateProvider(
         capabilityClient: CapabilityClient,
         capabilities: CapabilitySet,
-        connectionCheckExecutor: ConnectionCheckExecutor,
-    ): ConnectionStateProvider =
-        CapabilityConnectionStateProvider(
-            capabilityClient = capabilityClient,
-            nodeCapability = capabilities.handheld,
-            connectionCheckExecutor = connectionCheckExecutor,
-        )
+        nodeStore: NodeStore,
+        connectionCheckExecutor: ConnectionCheckExecutor?,
+    ): ConnectionFlowProvider? {
+        connectionCheckExecutor ?: return null
+        return nodeStore.node?.id?.let { nodeId ->
+            CapabilityConnectionFlowProvider(
+                capabilityClient = capabilityClient,
+                nodeCapability = capabilities.handheld,
+                nodeId = nodeId,
+                connectionCheckExecutor = connectionCheckExecutor,
+            )
+        }
+    }
 }

@@ -2,16 +2,19 @@ package io.github.mmolosay.datalayercommunication.data.wearable
 
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionCheckExecutor
-import io.github.mmolosay.datalayercommunication.communication.connectedHandheldNode
 
 /**
  * Implementation of [ConnectionCheckExecutor], that checks, whether there's a connection between
- * current device and __any__ handheld one.
+ * current device and one with specified [nodeId].
  */
-class HandheldConnectionCheckExecutor(
+class ConnectionCheckByNodeIdExecutor(
     private val nodeProvider: NodeProvider,
+    private val nodeId: String,
 ) : ConnectionCheckExecutor {
 
-    override suspend fun areDevicesConnected(): Boolean =
-        nodeProvider.connectedHandheldNode().isSuccess
+    override suspend fun areNodesConnected(): Boolean =
+        nodeProvider
+            .all()
+            ?.any { it.id == nodeId }
+            ?: false
 }

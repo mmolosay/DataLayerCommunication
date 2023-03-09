@@ -1,12 +1,12 @@
 package io.github.mmolosay.datalayercommunication.communication.connection
 
 /**
- * Executes a one-shot connection check between current device and one, specified by implementation.
+ * Executes a one-shot connection check between current node and one, specified by implementation.
  */
 fun interface ConnectionCheckExecutor {
 
     /**
-     * @return whether devices are connected or not.
+     * @return whether nodese are connected or not.
      */
-    suspend fun areDevicesConnected(): Boolean
+    suspend fun areNodesConnected(): Boolean
 }
