@@ -25,8 +25,7 @@ class CommunicationService : WearableListenerService() {
     @Inject
     lateinit var server: CommunicationServer
 
-    private val scopeJob = SupervisorJob()
-    private val coroutineScope = CoroutineScope(Dispatchers.Default + scopeJob)
+    private val coroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
     override fun onDestroy() {
         super.onDestroy()

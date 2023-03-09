@@ -21,14 +21,7 @@
                 <action android:name="com.google.android.gms.wearable.REQUEST_RECEIVED" />
                 <data
                     android:host="*"
-                    android:pathPrefix="/get-all-animals"
-                    android:scheme="wear" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.google.android.gms.wearable.REQUEST_RECEIVED" />
-                <data
-                    android:host="*"
-                    android:pathPrefix="/delete-random-animal-by-id"
+                    android:pathPrefix="@string/communication_path_requests"
                     android:scheme="wear" />
             </intent-filter>
 

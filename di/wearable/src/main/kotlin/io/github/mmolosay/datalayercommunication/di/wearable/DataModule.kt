@@ -27,8 +27,7 @@ class DataModule {
         AnimalsRepositoryImpl(
             nodeProvider = nodeProvider,
             communicationClient = communicationClient,
-            getAllAnimalsPath = paths.getAllAnimals,
-            deleteAnimalByIdPath = paths.deleteRandomAnimalById,
+            requestsPath = paths.requests,
         )
 
     @Provides

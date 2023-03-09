@@ -21,8 +21,7 @@ import kotlinx.coroutines.withContext
 class AnimalsRepositoryImpl(
     private val nodeProvider: NodeProvider,
     private val communicationClient: CommunicationClient,
-    private val getAllAnimalsPath: Path, // TODO: send all requests to one path
-    private val deleteAnimalByIdPath: Path, // TODO: send all requests to one path
+    private val requestsPath: Path,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : AnimalsRepository {
 
@@ -31,7 +30,7 @@ class AnimalsRepositoryImpl(
             val destination = nodeProvider
                 .firstHandheldNode()
                 .getOrElse { return@block it }
-                .toDestination(getAllAnimalsPath)
+                .toDestination(requestsPath)
             val request = GetAllAnimalsRequest
             communicationClient
                 .request<GetAllAnimalsResponse>(destination, request)
@@ -44,7 +43,7 @@ class AnimalsRepositoryImpl(
             val destination = nodeProvider
                 .firstHandheldNode()
                 .getOrElse { return@block it }
-                .toDestination(deleteAnimalByIdPath)
+                .toDestination(requestsPath)
             val request = DeleteAnimalByIdRequest(animalId = id)
             communicationClient
                 .request<DeleteAnimalByIdResponse>(destination, request)

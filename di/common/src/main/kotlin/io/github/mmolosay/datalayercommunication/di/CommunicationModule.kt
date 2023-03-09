@@ -211,8 +211,7 @@ class CommunicationModule {
         @ApplicationContext context: Context,
     ): PathSet =
         PathSet(
-            getAllAnimals = Path(context.getString(R.string.communication_path_get_all_animals)),
-            deleteRandomAnimalById = Path(context.getString(R.string.communication_path_delete_random_animal_by_id)),
+            requests = Path(context.getString(R.string.communication_path_requests)),
         )
 
     @Provides
