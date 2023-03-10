@@ -2,9 +2,8 @@ package io.github.mmolosay.datalayercommunication.data
 
 import io.github.mmolosay.datalayercommunication.communication.CapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.CapabilityClient.OnCapabilityChangedCallback
-import io.github.mmolosay.datalayercommunication.domain.data.ConnectionCheckExecutor
-import io.github.mmolosay.datalayercommunication.domain.data.ConnectionFlowProvider
 import io.github.mmolosay.datalayercommunication.communication.models.Capability
+import io.github.mmolosay.datalayercommunication.domain.data.ConnectionFlowProvider
 import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -41,4 +40,15 @@ class CapabilityConnectionFlowProvider(
             val hasNodeWithRequiredId = nodes.any { it.id == nodeId }
             trySend(hasNodeWithRequiredId)
         }
+
+    /**
+     * Executes a one-shot connection check between current node and one, specified by implementation.
+     */
+    interface ConnectionCheckExecutor {
+
+        /**
+         * @return whether nodese are connected or not.
+         */
+        suspend fun areNodesConnected(): Boolean
+    }
 }
