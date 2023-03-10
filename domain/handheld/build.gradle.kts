@@ -11,6 +11,7 @@ java {
 
 dependencies {
     implementation(project(":communication"))
+    implementation(project(":communication:models"))
     implementation(project(":domain:common"))
     implementation(project(":utils:resource"))
 
