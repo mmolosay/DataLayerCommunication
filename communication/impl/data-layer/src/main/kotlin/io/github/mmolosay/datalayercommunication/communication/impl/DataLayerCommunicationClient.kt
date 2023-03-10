@@ -6,8 +6,8 @@ import io.github.mmolosay.datalayercommunication.communication.convertion.Respon
 import io.github.mmolosay.datalayercommunication.communication.failures.CommunicationFailure
 import io.github.mmolosay.datalayercommunication.communication.models.Data
 import io.github.mmolosay.datalayercommunication.communication.models.Destination
-import io.github.mmolosay.datalayercommunication.communication.models.rpc.request.Request
-import io.github.mmolosay.datalayercommunication.communication.models.rpc.response.Response
+import io.github.mmolosay.datalayercommunication.communication.rpc.request.Request
+import io.github.mmolosay.datalayercommunication.communication.rpc.response.Response
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.success
 import kotlinx.coroutines.tasks.await

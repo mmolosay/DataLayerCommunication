@@ -32,7 +32,6 @@ dependencies {
     implementation(project(":communication"))
     implementation(project(":communication:connection"))
     implementation(project(":communication:models"))
-    implementation(project(":communication:models:rpc"))
     implementation(project(":domain:common"))
     implementation(project(":domain:common:models"))
     implementation(project(":domain:wearable"))

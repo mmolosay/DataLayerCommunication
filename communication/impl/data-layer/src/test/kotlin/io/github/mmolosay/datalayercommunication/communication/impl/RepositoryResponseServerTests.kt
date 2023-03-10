@@ -1,9 +1,9 @@
 package io.github.mmolosay.datalayercommunication.communication.impl
 
-import io.github.mmolosay.datalayercommunication.communication.models.rpc.request.DeleteAnimalByIdRequest
-import io.github.mmolosay.datalayercommunication.communication.models.rpc.request.GetAllAnimalsRequest
-import io.github.mmolosay.datalayercommunication.communication.models.rpc.response.DeleteAnimalByIdResponse
-import io.github.mmolosay.datalayercommunication.communication.models.rpc.response.GetAllAnimalsResponse
+import io.github.mmolosay.datalayercommunication.communication.rpc.request.DeleteAnimalByIdRequest
+import io.github.mmolosay.datalayercommunication.communication.rpc.request.GetAllAnimalsRequest
+import io.github.mmolosay.datalayercommunication.communication.rpc.response.DeleteAnimalByIdResponse
+import io.github.mmolosay.datalayercommunication.communication.rpc.response.GetAllAnimalsResponse
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
 import io.github.mmolosay.datalayercommunication.domain.models.Animals
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
@@ -25,7 +25,9 @@ class RepositoryResponseServerTests {
         val animals = Animals(emptyList())
         val animalsRepository = mockk<AnimalsRepository>()
         coEvery { animalsRepository.getAllAnimals() } returns Resource.success(animals)
-        val server = RepositoryResponseServer(animalsRepository)
+        val server = io.github.mmolosay.datalayercommunication.data.RepositoryResponseServer(
+            animalsRepository
+        )
         val request =
             GetAllAnimalsRequest
 
@@ -38,7 +40,9 @@ class RepositoryResponseServerTests {
     fun `when DeleteAnimalByIdRequest returns DeleteAnimalByIdResponse`() = runTest {
         val animalsRepository = mockk<AnimalsRepository>()
         coEvery { animalsRepository.deleteAnimalById(any()) } returns Resource.success<Animal?>(null)
-        val server = RepositoryResponseServer(animalsRepository)
+        val server = io.github.mmolosay.datalayercommunication.data.RepositoryResponseServer(
+            animalsRepository
+        )
         val request =
             DeleteAnimalByIdRequest(
                 animalId = 0L

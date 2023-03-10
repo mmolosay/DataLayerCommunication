@@ -18,7 +18,7 @@ import io.github.mmolosay.datalayercommunication.communication.impl.ConvertingCo
 import io.github.mmolosay.datalayercommunication.communication.impl.DataLayerCapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.impl.DataLayerCommunicationClient
 import io.github.mmolosay.datalayercommunication.communication.impl.DataLayerNodeProvider
-import io.github.mmolosay.datalayercommunication.communication.impl.RepositoryResponseServer
+import io.github.mmolosay.datalayercommunication.data.RepositoryResponseServer
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.Converters
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.ConvertersFactory.Feature
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.ConvertersFactory.add

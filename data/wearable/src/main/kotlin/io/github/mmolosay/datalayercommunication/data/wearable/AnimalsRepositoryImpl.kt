@@ -5,10 +5,10 @@ import io.github.mmolosay.datalayercommunication.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.communication.firstHandheldNode
 import io.github.mmolosay.datalayercommunication.communication.models.Path
 import io.github.mmolosay.datalayercommunication.communication.models.toDestination
-import io.github.mmolosay.datalayercommunication.communication.models.rpc.request.DeleteAnimalByIdRequest
-import io.github.mmolosay.datalayercommunication.communication.models.rpc.request.GetAllAnimalsRequest
-import io.github.mmolosay.datalayercommunication.communication.models.rpc.response.DeleteAnimalByIdResponse
-import io.github.mmolosay.datalayercommunication.communication.models.rpc.response.GetAllAnimalsResponse
+import io.github.mmolosay.datalayercommunication.communication.rpc.request.DeleteAnimalByIdRequest
+import io.github.mmolosay.datalayercommunication.communication.rpc.request.GetAllAnimalsRequest
+import io.github.mmolosay.datalayercommunication.communication.rpc.response.DeleteAnimalByIdResponse
+import io.github.mmolosay.datalayercommunication.communication.rpc.response.GetAllAnimalsResponse
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
 import io.github.mmolosay.datalayercommunication.domain.models.Animals
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository

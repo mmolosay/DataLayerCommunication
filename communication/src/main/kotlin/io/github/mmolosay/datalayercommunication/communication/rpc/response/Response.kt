@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.communication.models.rpc.response
+package io.github.mmolosay.datalayercommunication.communication.rpc.response
 
 import kotlinx.serialization.Serializable
 

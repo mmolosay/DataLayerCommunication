@@ -1,8 +1,8 @@
 package io.github.mmolosay.datalayercommunication.communication
 
 import io.github.mmolosay.datalayercommunication.communication.models.Destination
-import io.github.mmolosay.datalayercommunication.communication.models.rpc.request.Request
-import io.github.mmolosay.datalayercommunication.communication.models.rpc.response.Response
+import io.github.mmolosay.datalayercommunication.communication.rpc.request.Request
+import io.github.mmolosay.datalayercommunication.communication.rpc.response.Response
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 
 /**

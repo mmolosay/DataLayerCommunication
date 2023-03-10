@@ -1,8 +1,8 @@
 package io.github.mmolosay.datalayercommunication.communication.convertion
 
 import io.github.mmolosay.datalayercommunication.communication.models.Data
-import io.github.mmolosay.datalayercommunication.communication.models.rpc.request.Request
-import io.github.mmolosay.datalayercommunication.communication.models.rpc.response.Response
+import io.github.mmolosay.datalayercommunication.communication.rpc.request.Request
+import io.github.mmolosay.datalayercommunication.communication.rpc.response.Response
 
 /**
  * Decodes [Data] into JVM object.

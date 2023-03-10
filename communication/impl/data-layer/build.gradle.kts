@@ -33,7 +33,6 @@ dependencies {
     implementation(project(":communication"))
     implementation(project(":communication:failures"))
     implementation(project(":communication:models"))
-    implementation(project(":communication:models:rpc"))
     implementation(project(":utils:resource"))
 
     implementation("com.google.android.gms:play-services-wearable:18.0.0")
