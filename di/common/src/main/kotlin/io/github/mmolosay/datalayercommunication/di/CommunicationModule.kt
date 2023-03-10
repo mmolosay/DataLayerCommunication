@@ -28,10 +28,10 @@ import io.github.mmolosay.datalayercommunication.communication.impl.convertion.d
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.decode.SerializationResponseDecoder
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.encode.SerializationRequestEncoder
 import io.github.mmolosay.datalayercommunication.communication.impl.convertion.encode.SerializationResponseEncoder
-import io.github.mmolosay.datalayercommunication.communication.model.Capability
-import io.github.mmolosay.datalayercommunication.communication.model.CapabilitySet
-import io.github.mmolosay.datalayercommunication.communication.model.Path
-import io.github.mmolosay.datalayercommunication.communication.model.PathSet
+import io.github.mmolosay.datalayercommunication.communication.models.Capability
+import io.github.mmolosay.datalayercommunication.communication.models.CapabilitySet
+import io.github.mmolosay.datalayercommunication.communication.models.Path
+import io.github.mmolosay.datalayercommunication.communication.models.PathSet
 import io.github.mmolosay.datalayercommunication.communication.server.CommunicationServer
 import io.github.mmolosay.datalayercommunication.communication.server.ResponseServer
 import io.github.mmolosay.datalayercommunication.domain.models.ModelSerializersModuleFactory

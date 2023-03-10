@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.communication.model
+package io.github.mmolosay.datalayercommunication.communication.models
 
 /**
  * Data being transfered between devices during communication process.

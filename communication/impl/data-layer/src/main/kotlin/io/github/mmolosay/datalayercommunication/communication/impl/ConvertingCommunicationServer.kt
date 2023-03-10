@@ -2,7 +2,7 @@ package io.github.mmolosay.datalayercommunication.communication.impl
 
 import io.github.mmolosay.datalayercommunication.communication.convertion.RequestDecoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseEncoder
-import io.github.mmolosay.datalayercommunication.communication.model.Data
+import io.github.mmolosay.datalayercommunication.communication.models.Data
 import io.github.mmolosay.datalayercommunication.communication.server.CommunicationServer
 import io.github.mmolosay.datalayercommunication.communication.server.ResponseServer
 

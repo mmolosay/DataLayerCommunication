@@ -4,7 +4,7 @@ import io.github.mmolosay.datalayercommunication.communication.CapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.CapabilityClient.OnCapabilityChangedCallback
 import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionCheckExecutor
 import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionFlowProvider
-import io.github.mmolosay.datalayercommunication.communication.model.Capability
+import io.github.mmolosay.datalayercommunication.communication.models.Capability
 import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow

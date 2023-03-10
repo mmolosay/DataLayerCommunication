@@ -1,6 +1,6 @@
 package io.github.mmolosay.datalayercommunication.communication
 
-import io.github.mmolosay.datalayercommunication.communication.model.Node
+import io.github.mmolosay.datalayercommunication.communication.models.Node
 
 /**
  * Exposes an API for obtaining nodes from current device network.

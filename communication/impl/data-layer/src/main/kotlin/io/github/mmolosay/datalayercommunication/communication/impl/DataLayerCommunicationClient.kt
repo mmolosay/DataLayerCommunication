@@ -4,8 +4,10 @@ import io.github.mmolosay.datalayercommunication.communication.CommunicationClie
 import io.github.mmolosay.datalayercommunication.communication.convertion.RequestEncoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseDecoder
 import io.github.mmolosay.datalayercommunication.communication.failures.CommunicationFailure
-import io.github.mmolosay.datalayercommunication.communication.model.Data
-import io.github.mmolosay.datalayercommunication.communication.model.Destination
+import io.github.mmolosay.datalayercommunication.communication.models.Data
+import io.github.mmolosay.datalayercommunication.communication.models.Destination
+import io.github.mmolosay.datalayercommunication.communication.models.rpc.request.Request
+import io.github.mmolosay.datalayercommunication.communication.models.rpc.response.Response
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.success
 import kotlinx.coroutines.tasks.await
@@ -20,9 +22,9 @@ class DataLayerCommunicationClient(
     private val gmsMessageClient: GmsMessageClient,
 ) : CommunicationClient {
 
-    override suspend fun <R : io.github.mmolosay.datalayercommunication.communication.models.response.Response> request(
+    override suspend fun <R : Response> request(
         destination: Destination,
-        request: io.github.mmolosay.datalayercommunication.communication.models.request.Request,
+        request: Request,
     ): Resource<R> =
         runCatching {
             val requestData = encoder.encode(request)
@@ -33,7 +35,7 @@ class DataLayerCommunicationClient(
             decoder.decode(responseData) as R // caller's responsibility to provide correct type
         }.toResource()
 
-    private fun <R : io.github.mmolosay.datalayercommunication.communication.models.response.Response> Result<R>.toResource(): Resource<R> =
+    private fun <R : Response> Result<R>.toResource(): Resource<R> =
         fold(
             onSuccess = {
                 Resource.success(it)

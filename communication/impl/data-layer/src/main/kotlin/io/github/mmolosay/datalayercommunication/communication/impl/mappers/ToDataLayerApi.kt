@@ -2,7 +2,7 @@ package io.github.mmolosay.datalayercommunication.communication.impl.mappers
 
 import com.google.android.gms.wearable.CapabilityClient.OnCapabilityChangedListener
 import io.github.mmolosay.datalayercommunication.communication.CapabilityClient.OnCapabilityChangedCallback
-import io.github.mmolosay.datalayercommunication.communication.model.Capability
+import io.github.mmolosay.datalayercommunication.communication.models.Capability
 
 internal fun Capability.toDataLayer(): String =
     this.value

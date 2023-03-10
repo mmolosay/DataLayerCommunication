@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.communication.model
+package io.github.mmolosay.datalayercommunication.communication.models
 
 /**
  * Identifier used to specify a particular endpoint at the receiving node.

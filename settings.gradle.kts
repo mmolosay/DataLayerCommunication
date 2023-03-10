@@ -25,6 +25,7 @@ include(":communication:connection")
 include(":communication:failures")
 include(":communication:impl:data-layer")
 include(":communication:impl:data-layer:service")
+include(":communication:models")
 include(":communication:models:rpc")
 
 include(":data:common")

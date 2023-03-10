@@ -1,7 +1,7 @@
 package io.github.mmolosay.datalayercommunication.communication
 
-import io.github.mmolosay.datalayercommunication.communication.model.Capability
-import io.github.mmolosay.datalayercommunication.communication.model.Node
+import io.github.mmolosay.datalayercommunication.communication.models.Capability
+import io.github.mmolosay.datalayercommunication.communication.models.Node
 
 /**
  * Exposes an API for learning [Capability]s of nodes in current device network.

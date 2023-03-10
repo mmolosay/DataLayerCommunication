@@ -1,8 +1,8 @@
 package io.github.mmolosay.datalayercommunication.communication.impl.convertion.encode
 
 import io.github.mmolosay.datalayercommunication.communication.convertion.Encoder
-import io.github.mmolosay.datalayercommunication.communication.model.Data
-import io.github.mmolosay.datalayercommunication.communication.model.asString
+import io.github.mmolosay.datalayercommunication.communication.models.Data
+import io.github.mmolosay.datalayercommunication.communication.models.asString
 import java.io.ByteArrayOutputStream
 import java.nio.charset.StandardCharsets
 import java.util.zip.GZIPOutputStream

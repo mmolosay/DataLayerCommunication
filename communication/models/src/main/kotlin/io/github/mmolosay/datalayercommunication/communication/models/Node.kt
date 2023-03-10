@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.communication.model
+package io.github.mmolosay.datalayercommunication.communication.models
 
 /**
  * Represents a concrete device, which is __connected to the

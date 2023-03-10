@@ -4,7 +4,7 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.android.gms.wearable.WearableListenerService
 import dagger.hilt.android.AndroidEntryPoint
-import io.github.mmolosay.datalayercommunication.communication.model.Data
+import io.github.mmolosay.datalayercommunication.communication.models.Data
 import io.github.mmolosay.datalayercommunication.communication.server.CommunicationServer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

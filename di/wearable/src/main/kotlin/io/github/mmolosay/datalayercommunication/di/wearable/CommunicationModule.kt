@@ -8,7 +8,7 @@ import io.github.mmolosay.datalayercommunication.communication.CapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionCheckExecutor
 import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionFlowProvider
-import io.github.mmolosay.datalayercommunication.communication.model.CapabilitySet
+import io.github.mmolosay.datalayercommunication.communication.models.CapabilitySet
 import io.github.mmolosay.datalayercommunication.data.CapabilityConnectionFlowProvider
 import io.github.mmolosay.datalayercommunication.data.wearable.ConnectionCheckByNodeIdExecutor
 import io.github.mmolosay.datalayercommunication.domain.wearable.data.NodeStore

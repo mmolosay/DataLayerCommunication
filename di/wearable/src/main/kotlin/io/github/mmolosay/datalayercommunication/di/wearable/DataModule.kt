@@ -6,7 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.github.mmolosay.datalayercommunication.communication.CommunicationClient
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
-import io.github.mmolosay.datalayercommunication.communication.model.PathSet
+import io.github.mmolosay.datalayercommunication.communication.models.PathSet
 import io.github.mmolosay.datalayercommunication.data.wearable.AnimalsRepositoryImpl
 import io.github.mmolosay.datalayercommunication.data.wearable.InMemoryNodeStore
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
@@ -22,7 +22,7 @@ class DataModule {
     fun provideAnimalsRepository(
         nodeProvider: NodeProvider,
         communicationClient: CommunicationClient,
-        paths: PathSet,
+        paths: io.github.mmolosay.datalayercommunication.communication.models.PathSet,
     ): AnimalsRepository =
         AnimalsRepositoryImpl(
             nodeProvider = nodeProvider,

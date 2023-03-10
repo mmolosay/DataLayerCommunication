@@ -3,8 +3,8 @@ package io.github.mmolosay.datalayercommunication.communication.impl
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.communication.impl.mappers.toDataLayer
 import io.github.mmolosay.datalayercommunication.communication.impl.mappers.toNodes
-import io.github.mmolosay.datalayercommunication.communication.model.Capability
-import io.github.mmolosay.datalayercommunication.communication.model.Node
+import io.github.mmolosay.datalayercommunication.communication.models.Capability
+import io.github.mmolosay.datalayercommunication.communication.models.Node
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await

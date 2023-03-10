@@ -1,5 +1,9 @@
 package io.github.mmolosay.datalayercommunication.communication.impl
 
+import io.github.mmolosay.datalayercommunication.communication.models.rpc.request.DeleteAnimalByIdRequest
+import io.github.mmolosay.datalayercommunication.communication.models.rpc.request.GetAllAnimalsRequest
+import io.github.mmolosay.datalayercommunication.communication.models.rpc.response.DeleteAnimalByIdResponse
+import io.github.mmolosay.datalayercommunication.communication.models.rpc.response.GetAllAnimalsResponse
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
 import io.github.mmolosay.datalayercommunication.domain.models.Animals
 import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
@@ -23,11 +27,11 @@ class RepositoryResponseServerTests {
         coEvery { animalsRepository.getAllAnimals() } returns Resource.success(animals)
         val server = RepositoryResponseServer(animalsRepository)
         val request =
-            io.github.mmolosay.datalayercommunication.communication.models.request.GetAllAnimalsRequest
+            GetAllAnimalsRequest
 
         val response = server.reciprocate(request)
 
-        response should beOfType<io.github.mmolosay.datalayercommunication.communication.models.response.GetAllAnimalsResponse>()
+        response should beOfType<GetAllAnimalsResponse>()
     }
 
     @Test
@@ -36,12 +40,12 @@ class RepositoryResponseServerTests {
         coEvery { animalsRepository.deleteAnimalById(any()) } returns Resource.success<Animal?>(null)
         val server = RepositoryResponseServer(animalsRepository)
         val request =
-            io.github.mmolosay.datalayercommunication.communication.models.request.DeleteAnimalByIdRequest(
+            DeleteAnimalByIdRequest(
                 animalId = 0L
             )
 
         val response = server.reciprocate(request)
 
-        response should beOfType<io.github.mmolosay.datalayercommunication.communication.models.response.DeleteAnimalByIdResponse>()
+        response should beOfType<DeleteAnimalByIdResponse>()
     }
 }

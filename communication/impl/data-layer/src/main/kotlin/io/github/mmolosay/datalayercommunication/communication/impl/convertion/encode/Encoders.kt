@@ -2,9 +2,9 @@ package io.github.mmolosay.datalayercommunication.communication.impl.convertion.
 
 import io.github.mmolosay.datalayercommunication.communication.convertion.RequestEncoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseEncoder
-import io.github.mmolosay.datalayercommunication.communication.model.Data
-import io.github.mmolosay.datalayercommunication.communication.models.request.Request
-import io.github.mmolosay.datalayercommunication.communication.models.response.Response
+import io.github.mmolosay.datalayercommunication.communication.models.Data
+import io.github.mmolosay.datalayercommunication.communication.models.rpc.request.Request
+import io.github.mmolosay.datalayercommunication.communication.models.rpc.response.Response
 import kotlinx.serialization.StringFormat
 import kotlinx.serialization.encodeToString
 

@@ -1,6 +1,6 @@
 package io.github.mmolosay.datalayercommunication.communication.impl.mappers
 
-import io.github.mmolosay.datalayercommunication.communication.model.Node
+import io.github.mmolosay.datalayercommunication.communication.models.Node
 import com.google.android.gms.wearable.Node as DataLayerNode
 
 internal fun Iterable<DataLayerNode>.toNodes(): List<Node> =

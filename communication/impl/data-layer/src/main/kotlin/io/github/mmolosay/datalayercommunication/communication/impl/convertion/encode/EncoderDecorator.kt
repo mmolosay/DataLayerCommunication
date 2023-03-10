@@ -1,7 +1,7 @@
 package io.github.mmolosay.datalayercommunication.communication.impl.convertion.encode
 
 import io.github.mmolosay.datalayercommunication.communication.convertion.Encoder
-import io.github.mmolosay.datalayercommunication.communication.model.Data
+import io.github.mmolosay.datalayercommunication.communication.models.Data
 
 /**
  * [Encoder] wrapper for any other [encoder].

@@ -4,7 +4,7 @@ import com.google.android.gms.wearable.CapabilityClient.OnCapabilityChangedListe
 import io.github.mmolosay.datalayercommunication.communication.CapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.CapabilityClient.OnCapabilityChangedCallback
 import io.github.mmolosay.datalayercommunication.communication.impl.mappers.toDataLayer
-import io.github.mmolosay.datalayercommunication.communication.model.Capability
+import io.github.mmolosay.datalayercommunication.communication.models.Capability
 import com.google.android.gms.wearable.CapabilityClient as GmsCapabilityClient
 
 class DataLayerCapabilityClient(

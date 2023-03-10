@@ -32,6 +32,7 @@ android {
 
 dependencies {
     implementation(project(":communication"))
+    implementation(project(":communication:models"))
 
     implementation("com.google.android.gms:play-services-wearable:18.0.0")
 

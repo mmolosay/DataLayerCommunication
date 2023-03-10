@@ -2,10 +2,10 @@ package io.github.mmolosay.datalayercommunication.communication.impl.convertion.
 
 import io.github.mmolosay.datalayercommunication.communication.convertion.RequestDecoder
 import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseDecoder
-import io.github.mmolosay.datalayercommunication.communication.model.Data
-import io.github.mmolosay.datalayercommunication.communication.model.asString
-import io.github.mmolosay.datalayercommunication.communication.models.request.Request
-import io.github.mmolosay.datalayercommunication.communication.models.response.Response
+import io.github.mmolosay.datalayercommunication.communication.models.Data
+import io.github.mmolosay.datalayercommunication.communication.models.asString
+import io.github.mmolosay.datalayercommunication.communication.models.rpc.request.Request
+import io.github.mmolosay.datalayercommunication.communication.models.rpc.response.Response
 import kotlinx.serialization.StringFormat
 import kotlinx.serialization.decodeFromString
 

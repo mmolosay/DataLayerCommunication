@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.communication.model
+package io.github.mmolosay.datalayercommunication.communication.models
 
 /**
  * Identifier used to specify a capability of a specific node.

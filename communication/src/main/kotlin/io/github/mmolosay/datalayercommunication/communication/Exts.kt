@@ -2,7 +2,7 @@ package io.github.mmolosay.datalayercommunication.communication
 
 import io.github.mmolosay.datalayercommunication.communication.failures.ConnectionFailure
 import io.github.mmolosay.datalayercommunication.communication.failures.NoSuchNodeFailure
-import io.github.mmolosay.datalayercommunication.communication.model.Node
+import io.github.mmolosay.datalayercommunication.communication.models.Node
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.success
 
