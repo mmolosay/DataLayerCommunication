@@ -23,8 +23,7 @@ class SerializationEncoderDecoderTests {
         val format = Json { serializersModule = ModelSerializersModuleFactory.make() }
         val encoder = SerializationRequestEncoder(format)
         val decoder = SerializationRequestDecoder(format)
-        val request =
-            GetAllAnimalsRequest
+        val request = GetAllAnimalsRequest
 
         val encoded = encoder.encode(request)
         val decoded = decoder.decode(encoded)
@@ -40,10 +39,7 @@ class SerializationEncoderDecoderTests {
         val decoder = SerializationResponseDecoder(format)
         val animal = Animal(id = 1536L, species = Animal.Species.Owl, name = "Phoebe", age = 2)
         val resource = Resource.success(animal)
-        val response =
-            DeleteAnimalByIdResponse(
-                resource
-            )
+        val response = DeleteAnimalByIdResponse(resource)
 
         val encoded = encoder.encode(response)
         val decoded = decoder.decode(encoded)
