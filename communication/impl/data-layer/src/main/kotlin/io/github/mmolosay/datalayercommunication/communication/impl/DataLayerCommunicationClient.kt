@@ -1,11 +1,11 @@
 package io.github.mmolosay.datalayercommunication.communication.impl
 
 import io.github.mmolosay.datalayercommunication.communication.CommunicationClient
-import io.github.mmolosay.datalayercommunication.communication.convertion.RequestEncoder
-import io.github.mmolosay.datalayercommunication.communication.convertion.ResponseDecoder
 import io.github.mmolosay.datalayercommunication.communication.failures.CommunicationFailure
 import io.github.mmolosay.datalayercommunication.communication.models.Data
 import io.github.mmolosay.datalayercommunication.communication.models.Destination
+import io.github.mmolosay.datalayercommunication.communication.rpc.RequestEncoder
+import io.github.mmolosay.datalayercommunication.communication.rpc.ResponseDecoder
 import io.github.mmolosay.datalayercommunication.communication.rpc.request.Request
 import io.github.mmolosay.datalayercommunication.communication.rpc.response.Response
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource

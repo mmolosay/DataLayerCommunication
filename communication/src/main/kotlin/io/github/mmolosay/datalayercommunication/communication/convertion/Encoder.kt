@@ -1,8 +1,6 @@
 package io.github.mmolosay.datalayercommunication.communication.convertion
 
 import io.github.mmolosay.datalayercommunication.communication.models.Data
-import io.github.mmolosay.datalayercommunication.communication.rpc.request.Request
-import io.github.mmolosay.datalayercommunication.communication.rpc.response.Response
 
 /**
  * Encodes JVM object into [Data].
@@ -12,7 +10,3 @@ import io.github.mmolosay.datalayercommunication.communication.rpc.response.Resp
 interface Encoder<T> {
     fun encode(value: T): Data
 }
-
-typealias RequestEncoder = Encoder<Request>
-
-typealias ResponseEncoder = Encoder<Response>
