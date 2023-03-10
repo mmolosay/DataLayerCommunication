@@ -6,8 +6,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.github.mmolosay.datalayercommunication.communication.CapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
-import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionCheckExecutor
-import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionFlowProvider
+import io.github.mmolosay.datalayercommunication.domain.data.ConnectionCheckExecutor
+import io.github.mmolosay.datalayercommunication.domain.data.ConnectionFlowProvider
 import io.github.mmolosay.datalayercommunication.communication.models.CapabilitySet
 import io.github.mmolosay.datalayercommunication.data.CapabilityConnectionFlowProvider
 import io.github.mmolosay.datalayercommunication.data.wearable.ConnectionCheckByNodeIdExecutor

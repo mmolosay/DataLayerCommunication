@@ -2,8 +2,8 @@ package io.github.mmolosay.datalayercommunication.data
 
 import io.github.mmolosay.datalayercommunication.communication.CapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.CapabilityClient.OnCapabilityChangedCallback
-import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionCheckExecutor
-import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionFlowProvider
+import io.github.mmolosay.datalayercommunication.domain.data.ConnectionCheckExecutor
+import io.github.mmolosay.datalayercommunication.domain.data.ConnectionFlowProvider
 import io.github.mmolosay.datalayercommunication.communication.models.Capability
 import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.channels.awaitClose

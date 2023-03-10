@@ -1,7 +1,7 @@
 package io.github.mmolosay.datalayercommunication.data.wearable
 
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
-import io.github.mmolosay.datalayercommunication.communication.connection.ConnectionCheckExecutor
+import io.github.mmolosay.datalayercommunication.domain.data.ConnectionCheckExecutor
 
 /**
  * Implementation of [ConnectionCheckExecutor], that checks, whether there's a connection between

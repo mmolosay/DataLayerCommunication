@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.communication.connection
+package io.github.mmolosay.datalayercommunication.domain.data
 
 /**
  * Executes a one-shot connection check between current node and one, specified by implementation.

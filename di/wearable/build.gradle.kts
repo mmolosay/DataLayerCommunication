@@ -36,7 +36,6 @@ kapt {
 
 dependencies {
     implementation(project(":communication"))
-    implementation(project(":communication:connection"))
     implementation(project(":communication:models"))
     implementation(project(":data:common"))
     implementation(project(":data:wearable"))
