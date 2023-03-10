@@ -1,4 +1,4 @@
-## `:communication`
+## `:communication:impl:data-layer`
 
 * Architectural layer: **Data**
 * Abstractness: **Concrete**

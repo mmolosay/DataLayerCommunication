@@ -1,4 +1,4 @@
-## `:communication`
+## `:communication:failures`
 
 * Architectural layer: **Domain**
 * Abstractness: **Concrete**
