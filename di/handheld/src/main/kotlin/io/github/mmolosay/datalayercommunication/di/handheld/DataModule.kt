@@ -6,7 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.github.mmolosay.datalayercommunication.data.handheld.AnimalsRepositoryImpl
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
-import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
+import io.github.mmolosay.datalayercommunication.domain.data.AnimalsRepository
 import javax.inject.Singleton
 
 @Module

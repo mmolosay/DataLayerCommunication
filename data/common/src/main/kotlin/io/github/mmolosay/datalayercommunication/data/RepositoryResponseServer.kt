@@ -7,7 +7,7 @@ import io.github.mmolosay.datalayercommunication.communication.rpc.response.Dele
 import io.github.mmolosay.datalayercommunication.communication.rpc.response.GetAllAnimalsResponse
 import io.github.mmolosay.datalayercommunication.communication.rpc.response.Response
 import io.github.mmolosay.datalayercommunication.communication.server.ResponseServer
-import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
+import io.github.mmolosay.datalayercommunication.domain.data.AnimalsRepository
 
 /**
  * Implementation of [ResponseServer], that employs repositories to obtain requested data.

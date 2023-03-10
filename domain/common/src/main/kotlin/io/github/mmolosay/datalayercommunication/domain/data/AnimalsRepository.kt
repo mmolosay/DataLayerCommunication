@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.domain.repository
+package io.github.mmolosay.datalayercommunication.domain.data
 
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
 import io.github.mmolosay.datalayercommunication.domain.models.Animals

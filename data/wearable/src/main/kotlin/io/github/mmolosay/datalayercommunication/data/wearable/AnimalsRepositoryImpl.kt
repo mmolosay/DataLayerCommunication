@@ -11,7 +11,7 @@ import io.github.mmolosay.datalayercommunication.communication.rpc.response.Dele
 import io.github.mmolosay.datalayercommunication.communication.rpc.response.GetAllAnimalsResponse
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
 import io.github.mmolosay.datalayercommunication.domain.models.Animals
-import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
+import io.github.mmolosay.datalayercommunication.domain.data.AnimalsRepository
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.getOrElse
 import kotlinx.coroutines.CoroutineDispatcher

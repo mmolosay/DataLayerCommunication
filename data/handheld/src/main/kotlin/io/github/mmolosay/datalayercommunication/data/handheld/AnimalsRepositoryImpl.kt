@@ -2,7 +2,7 @@ package io.github.mmolosay.datalayercommunication.data.handheld
 
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
 import io.github.mmolosay.datalayercommunication.domain.models.Animals
-import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
+import io.github.mmolosay.datalayercommunication.domain.data.AnimalsRepository
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.success
 import kotlinx.coroutines.CoroutineDispatcher

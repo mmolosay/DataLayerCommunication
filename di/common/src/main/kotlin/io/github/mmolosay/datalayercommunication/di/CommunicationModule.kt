@@ -35,7 +35,7 @@ import io.github.mmolosay.datalayercommunication.communication.models.PathSet
 import io.github.mmolosay.datalayercommunication.communication.server.CommunicationServer
 import io.github.mmolosay.datalayercommunication.communication.server.ResponseServer
 import io.github.mmolosay.datalayercommunication.domain.models.ModelSerializersModuleFactory
-import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
+import io.github.mmolosay.datalayercommunication.domain.data.AnimalsRepository
 import io.github.mmolosay.datalayercommunication.utils.resource.ResourceSerialializersModuleFactory
 import kotlinx.serialization.StringFormat
 import kotlinx.serialization.json.Json

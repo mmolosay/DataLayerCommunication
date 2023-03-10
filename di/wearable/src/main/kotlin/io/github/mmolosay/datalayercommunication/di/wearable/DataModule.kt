@@ -6,10 +6,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.github.mmolosay.datalayercommunication.communication.CommunicationClient
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
-import io.github.mmolosay.datalayercommunication.communication.models.PathSet
 import io.github.mmolosay.datalayercommunication.data.wearable.AnimalsRepositoryImpl
 import io.github.mmolosay.datalayercommunication.data.wearable.InMemoryNodeStore
-import io.github.mmolosay.datalayercommunication.domain.repository.AnimalsRepository
+import io.github.mmolosay.datalayercommunication.domain.data.AnimalsRepository
 import io.github.mmolosay.datalayercommunication.domain.wearable.data.NodeStore
 import javax.inject.Singleton
 
