@@ -3,4 +3,4 @@
 * Architectural layer: **Data**
 * Abstractness: **Concrete**
 
-> Data components, specific for wearable application.
+> Data components, specific to a wearable application.

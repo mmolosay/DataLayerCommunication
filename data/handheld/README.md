@@ -3,4 +3,4 @@
 * Architectural layer: **Data**
 * Abstractness: **Concrete**
 
-> Data components, specific for handheld application.
+> Data components, specific to a handheld application.
