@@ -22,47 +22,7 @@ As you can see, with correctly designed components and their responsibilities, c
 
 ## Modules
 
-### `:app:handheld`
-Android application for handheld devices, like mobile phones and tablets. Can retrieve data both for itself and on request from wearable app.
-
-### `:app:wearable`
-Android application for wearable devices, like watches. Requests data from handheld app.
-
-### `:presentation:shared`
-UI-related components, common for both apps, like some string resources and launcher icon.
-
-### `:di`
-Dependency Injection to be used by application modules.
-
- - `common` DI of components, common for both applications. Communication components, in our case.
- - `handheld` DI for handheld-specific app, like components from `:data:handheld`.
- - `wearable` DI for wearable-specific app, like components from `:data:wearable`.
- 
-### `:data`
-Data sources.
-
-- `common` application-independent, common for both apps data. Presently's empty, but can be populated with e.g. Repositories, that use `SharedPreferences`.
-- `handheld` handheld-specific implementations of Repositories, that store data in memory.
-- `wearable` wearable-specific implementations of Repositories, that issues requests to app on paired handheld device.
-
-### `:domain`
-Business models and application use cases.
-
-- `common` models and use cases, common for both apps.
-- `handheld` handheld-specific models and use cases. Presently's empty, but can be populated with e.g. `CheckIsPairedToWearableUseCase`.
-- `wearable` wearable-specific models and use cases. Presently's empty, but can be populated with e.g. `CheckIsMobileAppInstalledOnPairedDeviceUseCase`.
-
-### `:communication`
-High-level, platform-independent abstractions of communication-related components.
-
-- `impl:data-layer` implementation of `:communication`, powered by Google's [Data Layer API](https://developer.android.com/training/wearables/data/data-layer#send-and-sync-with-API).
-    * `service` contains a `CommunicationService`, which should be used by app and registered in its manifest.
-- `failures` *Resource.Failure*s, related to communication process, that should be hoisted to presentation.
-
-### `utils`
-Utility components, like mappers, extensions and structures.
-
-- `resource` a [@Serialiazable](https://github.com/Kotlin/kotlinx.serialization) [monad](https://en.wikipedia.org/wiki/Monad_(functional_programming)), used to encapsulate values and propagate business-important failures to presentation layer.
+Each module, its architectural layer and contained components is described in its own _README.md_.
 
 ## Issues
 Looks like there's an issue inside `com.google.android.gms:play-services-wearable`.'
