@@ -10,7 +10,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.wear.compose.material.Text
 import com.ramcosta.composedestinations.annotation.Destination
-import io.github.mmolosay.datalayercommunication.ui.navigation.StartedNavGraph
+import io.github.mmolosay.datalayercommunication.ui.navigation.MainAppNavGraph
 
 // region Previews
 
@@ -21,7 +21,7 @@ private fun HandheldConnectionLostPreview() =
 
 // endregion
 
-@StartedNavGraph
+@MainAppNavGraph
 @Destination
 @Composable
 fun HandheldConnectionLost() =

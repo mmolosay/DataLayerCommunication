@@ -8,6 +8,6 @@ import com.ramcosta.composedestinations.annotation.RootNavGraph
  */
 @RootNavGraph
 @NavGraph
-annotation class StartedNavGraph(
+annotation class MainAppNavGraph(
     val start: Boolean = false,
 )

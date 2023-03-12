@@ -32,7 +32,7 @@ import io.github.mmolosay.datalayercommunication.connection.ConnectionViewModel
 import io.github.mmolosay.datalayercommunication.destinations.HandheldConnectionLostDestination
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
 import io.github.mmolosay.datalayercommunication.models.UiState
-import io.github.mmolosay.datalayercommunication.ui.navigation.StartedNavGraph
+import io.github.mmolosay.datalayercommunication.ui.navigation.MainAppNavGraph
 
 // region Previews
 
@@ -55,7 +55,7 @@ private fun previewUiState(): UiState =
 
 // endregion
 
-@StartedNavGraph(start = true)
+@MainAppNavGraph(start = true)
 @Destination
 @Composable
 fun AnimalsWithRequests(

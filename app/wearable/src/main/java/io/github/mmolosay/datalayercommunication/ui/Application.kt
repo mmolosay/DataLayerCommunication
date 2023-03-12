@@ -20,7 +20,7 @@ import io.github.mmolosay.datalayercommunication.NavGraphs
 import io.github.mmolosay.datalayercommunication.connection.ConnectionViewModel
 import io.github.mmolosay.datalayercommunication.destinations.StartupDestination
 
-// region Preivews
+// region Previews
 
 @Preview
 @Composable
@@ -64,9 +64,9 @@ private fun DependenciesContainerBuilder<*>.buildDependenciesContainer(
     dependency(scalingLazyListState)
 
     // provide same instance of ConnectionViewModel to all destinations of StartedNavGraph
-    dependency(NavGraphs.started) {
+    dependency(NavGraphs.mainApp) {
         val parentEntry = remember(navBackStackEntry) {
-            navController.getBackStackEntry(NavGraphs.started.route)
+            navController.getBackStackEntry(NavGraphs.mainApp.route)
         }
         hiltViewModel<ConnectionViewModel>(parentEntry)
     }

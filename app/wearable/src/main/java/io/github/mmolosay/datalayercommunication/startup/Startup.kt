@@ -8,8 +8,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.navigate
+import com.ramcosta.composedestinations.navigation.popUpTo
 import io.github.mmolosay.datalayercommunication.NavGraphs
+import io.github.mmolosay.datalayercommunication.destinations.StartupDestination
 import io.github.mmolosay.datalayercommunication.startup.StartupViewModel.UiState
 
 @RootNavGraph(start = true)
@@ -17,19 +20,24 @@ import io.github.mmolosay.datalayercommunication.startup.StartupViewModel.UiStat
 @Composable
 fun Startup(
     startupVM: StartupViewModel = hiltViewModel(),
-    navController: NavController,
+    navigator: DestinationsNavigator,
 ) {
     val uiState by startupVM.uiState.collectAsStateWithLifecycle()
     val onLoadingShown = remember {
         { startupVM.loadingShown() }
     }
-    val onLoadingFinished = remember {
-        { navController.navigate(NavGraphs.started) }
+    val onFinished = remember {
+        {
+            navigator.navigate(NavGraphs.mainApp) {
+                // clear back stack to prevent user from navigating back to startup stage
+                popUpTo(StartupDestination) { inclusive = true }
+            }
+        }
     }
     Startup(
         uiState = uiState,
         onLoadingShown = onLoadingShown,
-        onLoadingFinished = onLoadingFinished,
+        onFinished = onFinished,
     )
 }
 
@@ -37,7 +45,7 @@ fun Startup(
 fun Startup(
     uiState: UiState,
     onLoadingShown: () -> Unit,
-    onLoadingFinished: () -> Unit,
+    onFinished: () -> Unit,
 ) =
     when (uiState) {
         is UiState.Loading -> {
@@ -45,5 +53,5 @@ fun Startup(
             onLoadingShown()
         }
         is UiState.HandheldNotConnected -> StartupHandheldNotConnected()
-        is UiState.Finished -> onLoadingFinished()
+        is UiState.Finished -> onFinished()
     }
