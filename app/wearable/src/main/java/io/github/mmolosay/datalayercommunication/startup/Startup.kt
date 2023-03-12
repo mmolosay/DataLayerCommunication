@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.ui.startup
+package io.github.mmolosay.datalayercommunication.startup
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -8,8 +8,8 @@ import androidx.navigation.NavController
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.navigate
-import io.github.mmolosay.datalayercommunication.ui.destinations.AnimalsWithRequestsDestination
-import io.github.mmolosay.datalayercommunication.ui.startup.StartupViewModel.UiState
+import io.github.mmolosay.datalayercommunication.destinations.AnimalsWithRequestsDestination
+import io.github.mmolosay.datalayercommunication.startup.StartupViewModel.UiState
 
 @RootNavGraph(start = true)
 @Destination

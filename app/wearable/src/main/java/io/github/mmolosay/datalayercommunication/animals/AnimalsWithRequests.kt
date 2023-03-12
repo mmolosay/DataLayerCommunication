@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.ui
+package io.github.mmolosay.datalayercommunication.animals
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -14,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.ButtonDefaults
 import androidx.wear.compose.material.Card
@@ -25,9 +27,12 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.items
 import androidx.wear.compose.material.rememberScalingLazyListState
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.navigate
+import io.github.mmolosay.datalayercommunication.connection.ConnectionViewModel
+import io.github.mmolosay.datalayercommunication.destinations.HandheldConnectionLostDestination
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
 import io.github.mmolosay.datalayercommunication.models.UiState
-import io.github.mmolosay.datalayercommunication.viewmodel.AnimalsViewModel
+import io.github.mmolosay.datalayercommunication.ui.navigation.StartedNavGraph
 
 // region Previews
 
@@ -42,54 +47,40 @@ private fun AnimalsWithRequestsPreview() =
         onClearOutputClick = {},
     )
 
-private fun previewUiState(): UiState.Content =
-    UiState.Content(
+private fun previewUiState(): UiState =
+    UiState(
         elapsedTime = "3569 ms",
         animals = emptyList(),
     )
 
 // endregion
 
+@StartedNavGraph(start = true)
 @Destination
 @Composable
 fun AnimalsWithRequests(
-    vm: AnimalsViewModel = hiltViewModel(),
+    animalsVM: AnimalsViewModel = hiltViewModel(),
+    connectionVM: ConnectionViewModel = hiltViewModel(), // TODO: extract in @StartedNavGraph scope
+    navController: NavController,
     scalingLazyListState: ScalingLazyListState,
 ) {
-    val uiState by vm.uiState.collectAsStateWithLifecycle()
+    val uiState by animalsVM.uiState.collectAsStateWithLifecycle()
+    val onConnectionFailure =
+        remember { { navController.navigate(HandheldConnectionLostDestination) } }
+    // TODO: use connectionVM
     // TODO: remember lambdas
     AnimalsWithRequests(
         uiState = uiState,
         scalingLazyListState = scalingLazyListState,
-        onGetAllAnimalsClick = { vm.executeGetAllAnimals() },
-        onDeleteRandomCatClick = { vm.executeDeleteRandomAnimal(ofSpecies = Animal.Species.Cat) },
-        onClearOutputClick = { vm.clearOutput() },
+        onGetAllAnimalsClick = { animalsVM.executeGetAllAnimals(onConnectionFailure) },
+        onDeleteRandomCatClick = { animalsVM.executeDeleteRandomAnimal(ofSpecies = Animal.Species.Cat, onConnectionFailure = onConnectionFailure) },
+        onClearOutputClick = { animalsVM.clearOutput() },
     )
 }
 
 @Composable
 fun AnimalsWithRequests(
     uiState: UiState,
-    scalingLazyListState: ScalingLazyListState,
-    onGetAllAnimalsClick: () -> Unit,
-    onDeleteRandomCatClick: () -> Unit,
-    onClearOutputClick: () -> Unit,
-) =
-    when (uiState) {
-        is UiState.HandheldConnectionLost -> HandheldConnectionLost()
-        is UiState.Content ->
-            AnimalsWithRequests(
-                uiState = uiState,
-                scalingLazyListState = scalingLazyListState,
-                onGetAllAnimalsClick = onGetAllAnimalsClick,
-                onDeleteRandomCatClick = onDeleteRandomCatClick,
-                onClearOutputClick = onClearOutputClick,
-            )
-    }
-
-@Composable
-fun AnimalsWithRequests(
-    uiState: UiState.Content,
     scalingLazyListState: ScalingLazyListState,
     onGetAllAnimalsClick: () -> Unit,
     onDeleteRandomCatClick: () -> Unit,

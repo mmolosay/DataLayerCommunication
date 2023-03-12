@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.ui
+package io.github.mmolosay.datalayercommunication.startup
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,20 +14,20 @@ import androidx.wear.compose.material.Text
 
 @Preview
 @Composable
-private fun HandheldConnectionLostPreview() =
-    HandheldConnectionLost()
+private fun StartupHandheldNotConnectedPreview() =
+    StartupHandheldNotConnected()
 
 // endregion
 
 @Composable
-fun HandheldConnectionLost() =
+fun StartupHandheldNotConnected() =
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
         Text(
-            text = "Watch is not connected to handheld device.\nReconnection will be detected automatically.",
+            text = "Watch is not connected to handheld device.\nPlease, connect handheld device and restart an app.", // TODO: detect connection automatically
             textAlign = TextAlign.Center,
         )
     }

@@ -11,8 +11,10 @@ import androidx.wear.compose.material.rememberScalingLazyListState
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.manualcomposablecalls.composable
 import com.ramcosta.composedestinations.wear.rememberWearNavHostEngine
-import io.github.mmolosay.datalayercommunication.ui.destinations.AnimalsWithRequestsDestination
-import io.github.mmolosay.datalayercommunication.ui.destinations.StartupDestination
+import io.github.mmolosay.datalayercommunication.NavGraphs
+import io.github.mmolosay.datalayercommunication.animals.AnimalsWithRequests
+import io.github.mmolosay.datalayercommunication.destinations.AnimalsWithRequestsDestination
+import io.github.mmolosay.datalayercommunication.destinations.StartupDestination
 
 // region Preivews
 
@@ -44,6 +46,7 @@ fun Application() {
         ) {
             composable(AnimalsWithRequestsDestination) {
                 AnimalsWithRequests(
+                    navController = navController,
                     scalingLazyListState = scalingLazyListState,
                 )
             }
