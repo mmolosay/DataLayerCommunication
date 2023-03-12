@@ -2,6 +2,7 @@ package io.github.mmolosay.datalayercommunication.startup
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -15,14 +16,20 @@ import io.github.mmolosay.datalayercommunication.startup.StartupViewModel.UiStat
 @Destination
 @Composable
 fun Startup(
-    vm: StartupViewModel = hiltViewModel(),
+    startupVM: StartupViewModel = hiltViewModel(),
     navController: NavController,
 ) {
-    val uiState by vm.uiState.collectAsStateWithLifecycle()
+    val uiState by startupVM.uiState.collectAsStateWithLifecycle()
+    val onLoadingShown = remember {
+        { startupVM.loadingShown() }
+    }
+    val onLoadingFinished = remember {
+        { navController.navigate(AnimalsWithRequestsDestination) }
+    }
     Startup(
         uiState = uiState,
-        onLoadingShown = { vm.loadingShown() },
-        onLoadingFinished = { navController.navigate(AnimalsWithRequestsDestination) }, // TODO: check recomposition after remembering this lambda
+        onLoadingShown = onLoadingShown,
+        onLoadingFinished = onLoadingFinished,
     )
 }
 

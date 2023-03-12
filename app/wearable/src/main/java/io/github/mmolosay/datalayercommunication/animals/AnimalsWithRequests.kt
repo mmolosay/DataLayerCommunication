@@ -65,16 +65,30 @@ fun AnimalsWithRequests(
     scalingLazyListState: ScalingLazyListState,
 ) {
     val uiState by animalsVM.uiState.collectAsStateWithLifecycle()
-    val onConnectionFailure =
-        remember { { navController.navigate(HandheldConnectionLostDestination) } }
+    val onConnectionFailure = remember {
+        { navController.navigate(HandheldConnectionLostDestination) }
+    }
+    val onGetAllAnimalsClick = remember {
+        { animalsVM.executeGetAllAnimals(onConnectionFailure) }
+    }
+    val onDeleteRandomCatClick = remember {
+        {
+            animalsVM.executeDeleteRandomAnimal(
+                ofSpecies = Animal.Species.Cat,
+                onConnectionFailure = onConnectionFailure
+            )
+        }
+    }
+    val onClearOutputClick = remember {
+        { animalsVM.clearOutput() }
+    }
     // TODO: use connectionVM
-    // TODO: remember lambdas
     AnimalsWithRequests(
         uiState = uiState,
         scalingLazyListState = scalingLazyListState,
-        onGetAllAnimalsClick = { animalsVM.executeGetAllAnimals(onConnectionFailure) },
-        onDeleteRandomCatClick = { animalsVM.executeDeleteRandomAnimal(ofSpecies = Animal.Species.Cat, onConnectionFailure = onConnectionFailure) },
-        onClearOutputClick = { animalsVM.clearOutput() },
+        onGetAllAnimalsClick = onGetAllAnimalsClick,
+        onDeleteRandomCatClick = onDeleteRandomCatClick,
+        onClearOutputClick = onClearOutputClick,
     )
 }
 
