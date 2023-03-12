@@ -1,19 +1,23 @@
 package io.github.mmolosay.datalayercommunication.ui
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Scaffold
+import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.Vignette
 import androidx.wear.compose.material.VignettePosition
 import androidx.wear.compose.material.rememberScalingLazyListState
 import com.ramcosta.composedestinations.DestinationsNavHost
-import com.ramcosta.composedestinations.manualcomposablecalls.composable
+import com.ramcosta.composedestinations.navigation.DependenciesContainerBuilder
+import com.ramcosta.composedestinations.navigation.dependency
 import com.ramcosta.composedestinations.wear.rememberWearNavHostEngine
 import io.github.mmolosay.datalayercommunication.NavGraphs
-import io.github.mmolosay.datalayercommunication.animals.AnimalsWithRequests
-import io.github.mmolosay.datalayercommunication.destinations.AnimalsWithRequestsDestination
+import io.github.mmolosay.datalayercommunication.connection.ConnectionViewModel
 import io.github.mmolosay.datalayercommunication.destinations.StartupDestination
 
 // region Preivews
@@ -39,17 +43,31 @@ fun Application() {
         timeText = { TimeText() },
     ) {
         DestinationsNavHost(
-            engine = navHostEngine,
-            navController = navController,
             navGraph = NavGraphs.root,
             startRoute = StartupDestination,
-        ) {
-            composable(AnimalsWithRequestsDestination) {
-                AnimalsWithRequests(
-                    navController = navController,
+            engine = navHostEngine,
+            navController = navController,
+            dependenciesContainerBuilder = {
+                buildDependenciesContainer(
                     scalingLazyListState = scalingLazyListState,
                 )
-            }
+            },
+        )
+    }
+}
+
+@Composable
+@SuppressLint("ComposableNaming")
+private fun DependenciesContainerBuilder<*>.buildDependenciesContainer(
+    scalingLazyListState: ScalingLazyListState,
+) {
+    dependency(scalingLazyListState)
+
+    // provide same instance of ConnectionViewModel to all destinations of StartedNavGraph
+    dependency(NavGraphs.started) {
+        val parentEntry = remember(navBackStackEntry) {
+            navController.getBackStackEntry(NavGraphs.started.route)
         }
+        hiltViewModel<ConnectionViewModel>(parentEntry)
     }
 }

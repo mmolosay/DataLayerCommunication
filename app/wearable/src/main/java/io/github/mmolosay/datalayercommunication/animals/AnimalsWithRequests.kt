@@ -60,7 +60,7 @@ private fun previewUiState(): UiState =
 @Composable
 fun AnimalsWithRequests(
     animalsVM: AnimalsViewModel = hiltViewModel(),
-    connectionVM: ConnectionViewModel = hiltViewModel(), // TODO: extract in @StartedNavGraph scope
+    connectionVM: ConnectionViewModel,
     navController: NavController,
     scalingLazyListState: ScalingLazyListState,
 ) {
