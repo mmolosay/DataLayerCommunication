@@ -9,7 +9,7 @@ import androidx.navigation.NavController
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.navigate
-import io.github.mmolosay.datalayercommunication.destinations.AnimalsWithRequestsDestination
+import io.github.mmolosay.datalayercommunication.NavGraphs
 import io.github.mmolosay.datalayercommunication.startup.StartupViewModel.UiState
 
 @RootNavGraph(start = true)
@@ -24,7 +24,7 @@ fun Startup(
         { startupVM.loadingShown() }
     }
     val onLoadingFinished = remember {
-        { navController.navigate(AnimalsWithRequestsDestination) }
+        { navController.navigate(NavGraphs.started) }
     }
     Startup(
         uiState = uiState,
