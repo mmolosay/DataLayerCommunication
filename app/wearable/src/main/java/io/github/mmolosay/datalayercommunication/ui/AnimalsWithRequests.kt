@@ -6,11 +6,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.ButtonDefaults
 import androidx.wear.compose.material.Card
@@ -21,8 +24,10 @@ import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.items
 import androidx.wear.compose.material.rememberScalingLazyListState
+import com.ramcosta.composedestinations.annotation.Destination
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
 import io.github.mmolosay.datalayercommunication.models.UiState
+import io.github.mmolosay.datalayercommunication.viewmodel.AnimalsViewModel
 
 // region Previews
 
@@ -44,6 +49,43 @@ private fun previewUiState(): UiState.Content =
     )
 
 // endregion
+
+@Destination
+@Composable
+fun AnimalsWithRequests(
+    vm: AnimalsViewModel = hiltViewModel(),
+    scalingLazyListState: ScalingLazyListState,
+) {
+    val uiState by vm.uiState.collectAsStateWithLifecycle()
+    // TODO: remember lambdas
+    AnimalsWithRequests(
+        uiState = uiState,
+        scalingLazyListState = scalingLazyListState,
+        onGetAllAnimalsClick = { vm.executeGetAllAnimals() },
+        onDeleteRandomCatClick = { vm.executeDeleteRandomAnimal(ofSpecies = Animal.Species.Cat) },
+        onClearOutputClick = { vm.clearOutput() },
+    )
+}
+
+@Composable
+fun AnimalsWithRequests(
+    uiState: UiState,
+    scalingLazyListState: ScalingLazyListState,
+    onGetAllAnimalsClick: () -> Unit,
+    onDeleteRandomCatClick: () -> Unit,
+    onClearOutputClick: () -> Unit,
+) =
+    when (uiState) {
+        is UiState.HandheldConnectionLost -> HandheldConnectionLost()
+        is UiState.Content ->
+            AnimalsWithRequests(
+                uiState = uiState,
+                scalingLazyListState = scalingLazyListState,
+                onGetAllAnimalsClick = onGetAllAnimalsClick,
+                onDeleteRandomCatClick = onDeleteRandomCatClick,
+                onClearOutputClick = onClearOutputClick,
+            )
+    }
 
 @Composable
 fun AnimalsWithRequests(

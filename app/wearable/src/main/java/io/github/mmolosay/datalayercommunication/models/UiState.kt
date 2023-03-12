@@ -1,22 +1,12 @@
 package io.github.mmolosay.datalayercommunication.models
 
-import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.Stable
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
 
-@Stable
+// TODO: move inside AnimalsViewModel
 sealed interface UiState {
 
-    @Immutable
-    object Loading : UiState
+    object HandheldConnectionLost : UiState // TODO: make an individual (thus reusable) destination
 
-    @Immutable
-    object HandheldNotConnected : UiState
-
-    @Immutable
-    object HandheldConnectionLost : UiState
-
-    @Stable
     data class Content(
         val elapsedTime: String,
         val animals: List<Animal>,

@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.ui
+package io.github.mmolosay.datalayercommunication.ui.startup
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,13 +12,13 @@ import androidx.wear.compose.material.CircularProgressIndicator
 
 @Preview
 @Composable
-private fun LoadingPreview() =
-    Loading()
+private fun StartupLoadingPreview() =
+    StartupLoading()
 
 // endregion
 
 @Composable
-fun Loading() =
+fun StartupLoading() =
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,

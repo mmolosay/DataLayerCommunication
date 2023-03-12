@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.ui
+package io.github.mmolosay.datalayercommunication.ui.startup
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,13 +14,13 @@ import androidx.wear.compose.material.Text
 
 @Preview
 @Composable
-private fun HandheldNotConnectedPreview() =
-    HandheldConnectionLost()
+private fun StartupHandheldNotConnectedPreview() =
+    StartupHandheldNotConnected()
 
 // endregion
 
 @Composable
-fun HandheldNotConnected() =
+fun StartupHandheldNotConnected() =
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
