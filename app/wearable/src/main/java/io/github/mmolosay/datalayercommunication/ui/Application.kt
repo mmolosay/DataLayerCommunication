@@ -16,9 +16,9 @@ import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.navigation.DependenciesContainerBuilder
 import com.ramcosta.composedestinations.navigation.dependency
 import com.ramcosta.composedestinations.wear.rememberWearNavHostEngine
-import io.github.mmolosay.datalayercommunication.NavGraphs
-import io.github.mmolosay.datalayercommunication.connection.ConnectionViewModel
-import io.github.mmolosay.datalayercommunication.destinations.StartupDestination
+import io.github.mmolosay.datalayercommunication.feature.NavGraphs
+import io.github.mmolosay.datalayercommunication.feature.connection.ConnectionViewModel
+import io.github.mmolosay.datalayercommunication.feature.destinations.StartupDestination
 
 // region Previews
 
@@ -44,7 +44,6 @@ fun Application() {
     ) {
         DestinationsNavHost(
             navGraph = NavGraphs.root,
-            startRoute = StartupDestination,
             engine = navHostEngine,
             navController = navController,
             dependenciesContainerBuilder = {

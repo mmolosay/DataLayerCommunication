@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.animals
+package io.github.mmolosay.datalayercommunication.feature.animals
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -28,9 +28,9 @@ import androidx.wear.compose.material.items
 import androidx.wear.compose.material.rememberScalingLazyListState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.navigate
-import io.github.mmolosay.datalayercommunication.connection.ConnectionViewModel
-import io.github.mmolosay.datalayercommunication.destinations.HandheldConnectionLostDestination
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
+import io.github.mmolosay.datalayercommunication.feature.connection.ConnectionViewModel
+import io.github.mmolosay.datalayercommunication.feature.destinations.HandheldConnectionLostDestination
 import io.github.mmolosay.datalayercommunication.models.UiState
 import io.github.mmolosay.datalayercommunication.ui.navigation.MainAppNavGraph
 

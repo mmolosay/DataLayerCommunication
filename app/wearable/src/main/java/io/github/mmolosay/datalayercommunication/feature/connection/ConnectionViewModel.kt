@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.connection
+package io.github.mmolosay.datalayercommunication.feature.connection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

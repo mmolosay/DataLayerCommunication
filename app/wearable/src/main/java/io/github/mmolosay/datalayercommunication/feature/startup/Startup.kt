@@ -1,19 +1,17 @@
-package io.github.mmolosay.datalayercommunication.startup
+package io.github.mmolosay.datalayercommunication.feature.startup
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.ramcosta.composedestinations.navigation.navigate
 import com.ramcosta.composedestinations.navigation.popUpTo
-import io.github.mmolosay.datalayercommunication.NavGraphs
-import io.github.mmolosay.datalayercommunication.destinations.StartupDestination
-import io.github.mmolosay.datalayercommunication.startup.StartupViewModel.UiState
+import io.github.mmolosay.datalayercommunication.feature.NavGraphs
+import io.github.mmolosay.datalayercommunication.feature.destinations.StartupDestination
+import io.github.mmolosay.datalayercommunication.feature.startup.StartupViewModel.UiState
 
 @RootNavGraph(start = true)
 @Destination

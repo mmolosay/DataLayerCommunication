@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.startup
+package io.github.mmolosay.datalayercommunication.feature.startup
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

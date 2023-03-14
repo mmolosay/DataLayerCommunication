@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.animals
+package io.github.mmolosay.datalayercommunication.feature.animals
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
