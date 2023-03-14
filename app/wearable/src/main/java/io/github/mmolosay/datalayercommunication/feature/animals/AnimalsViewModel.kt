@@ -7,7 +7,6 @@ import io.github.mmolosay.datalayercommunication.communication.failures.Connecti
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
 import io.github.mmolosay.datalayercommunication.domain.usecase.DeleteRandomAnimalUseCase
 import io.github.mmolosay.datalayercommunication.domain.usecase.GetAnimalsUseCase
-import io.github.mmolosay.datalayercommunication.models.UiState
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.getOrNull
 import io.github.mmolosay.datalayercommunication.utils.resource.isSuccess
@@ -94,4 +93,9 @@ class AnimalsViewModel @Inject constructor(
         "—"
 
     // endregion
+
+    data class UiState(
+        val elapsedTime: String,
+        val animals: List<Animal>,
+    )
 }

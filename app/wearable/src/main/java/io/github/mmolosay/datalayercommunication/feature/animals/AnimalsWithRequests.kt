@@ -29,9 +29,9 @@ import androidx.wear.compose.material.rememberScalingLazyListState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.navigate
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
+import io.github.mmolosay.datalayercommunication.feature.animals.AnimalsViewModel.UiState
 import io.github.mmolosay.datalayercommunication.feature.connection.ConnectionViewModel
 import io.github.mmolosay.datalayercommunication.feature.destinations.HandheldConnectionLostDestination
-import io.github.mmolosay.datalayercommunication.models.UiState
 import io.github.mmolosay.datalayercommunication.ui.navigation.MainAppNavGraph
 
 // region Previews
