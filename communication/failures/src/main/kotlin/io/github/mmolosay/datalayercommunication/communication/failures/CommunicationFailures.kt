@@ -12,14 +12,14 @@ import kotlinx.serialization.Serializable
  * It may happen, when requested node(s) disconnect from the current device.
  */
 @Serializable
-object ConnectionFailure : CommunicationFailure()
+object ConnectionFailure : GenericCommunicationFailure()
 
 
 /**
  * Describes situation, when there is no node, meeting specified requirements.
  */
 @Serializable
-object NoSuchNodeFailure : CommunicationFailure()
+object NoSuchNodeFailure : GenericCommunicationFailure()
 
 /**
  * Describes situation, when communication between devices had failed.
@@ -28,4 +28,4 @@ object NoSuchNodeFailure : CommunicationFailure()
  * One should always prefer a derived, specific type of failure instead of this one.
  */
 @Serializable
-open class CommunicationFailure : Resource.Failure
+open class GenericCommunicationFailure : Resource.Failure

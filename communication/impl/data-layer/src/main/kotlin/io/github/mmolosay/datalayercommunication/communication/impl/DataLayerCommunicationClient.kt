@@ -1,7 +1,7 @@
 package io.github.mmolosay.datalayercommunication.communication.impl
 
 import io.github.mmolosay.datalayercommunication.communication.CommunicationClient
-import io.github.mmolosay.datalayercommunication.communication.failures.CommunicationFailure
+import io.github.mmolosay.datalayercommunication.communication.failures.GenericCommunicationFailure
 import io.github.mmolosay.datalayercommunication.communication.models.Data
 import io.github.mmolosay.datalayercommunication.communication.models.Destination
 import io.github.mmolosay.datalayercommunication.communication.rpc.RequestEncoder
@@ -41,7 +41,7 @@ class DataLayerCommunicationClient(
                 Resource.success(it)
             },
             onFailure = { // you can check type of exception here and return different failures
-                CommunicationFailure()
+                GenericCommunicationFailure()
             },
         )
 }
