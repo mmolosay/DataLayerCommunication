@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.mmolosay.datalayercommunication.domain.data.ConnectionFlowProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,18 +30,21 @@ class ConnectionViewModel @Inject constructor(
     private fun observeHandheldConnectionState() {
         viewModelScope.launch {
             handheldConnectionFlowProvider.get()?.connectionFlow?.collect { isConnected ->
-                mutableUiState.value =
-                    if (isConnected) UiState.OK
-                    else UiState.HandheldConnectionLost
+                mutableUiState.update {
+                    it.copy(
+                        isHandheldConnectionLost = !isConnected,
+                    )
+                }
             }
         }
     }
 
     private fun makeInitialUiState(): UiState =
-        UiState.OK
+        UiState(
+            isHandheldConnectionLost = false,
+        )
 
-    sealed interface UiState {
-        object HandheldConnectionLost : UiState
-        object OK : UiState
-    }
+    data class UiState(
+        val isHandheldConnectionLost: Boolean,
+    )
 }

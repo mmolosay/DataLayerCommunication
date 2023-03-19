@@ -1,6 +1,7 @@
 package io.github.mmolosay.datalayercommunication.data
 
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
+import io.github.mmolosay.datalayercommunication.data.CapabilityConnectionFlowProvider.ConnectionCheckExecutor
 
 /**
  * Implementation of [CapabilityConnectionFlowProvider.ConnectionCheckExecutor], that checks,
@@ -9,7 +10,7 @@ import io.github.mmolosay.datalayercommunication.communication.NodeProvider
 class ConnectionCheckByNodeIdExecutor(
     private val nodeProvider: NodeProvider,
     private val nodeId: String,
-) : CapabilityConnectionFlowProvider.ConnectionCheckExecutor {
+) : ConnectionCheckExecutor {
 
     override suspend fun areNodesConnected(): Boolean =
         nodeProvider

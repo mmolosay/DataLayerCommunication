@@ -1,4 +1,4 @@
-package io.github.mmolosay.datalayercommunication.di
+package io.github.mmolosay.datalayercommunication.di.modules
 
 import android.content.Context
 import com.google.android.gms.wearable.Wearable

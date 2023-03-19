@@ -3,7 +3,6 @@ package io.github.mmolosay.datalayercommunication.ui
 import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Scaffold
@@ -18,17 +17,6 @@ import com.ramcosta.composedestinations.navigation.dependency
 import com.ramcosta.composedestinations.wear.rememberWearNavHostEngine
 import io.github.mmolosay.datalayercommunication.feature.NavGraphs
 import io.github.mmolosay.datalayercommunication.feature.connection.ConnectionViewModel
-import io.github.mmolosay.datalayercommunication.feature.destinations.StartupDestination
-
-// region Previews
-
-@Preview
-@Composable
-fun ApplicationPreview() {
-    Application()
-}
-
-// endregion
 
 @Composable
 fun Application() {
@@ -64,6 +52,7 @@ private fun DependenciesContainerBuilder<*>.buildDependenciesContainer(
 
     // provide same instance of ConnectionViewModel to all destinations of StartedNavGraph
     dependency(NavGraphs.mainApp) {
+        // we are not using a navBackStackEntry here
         val parentEntry = remember(navBackStackEntry) {
             navController.getBackStackEntry(NavGraphs.mainApp.route)
         }

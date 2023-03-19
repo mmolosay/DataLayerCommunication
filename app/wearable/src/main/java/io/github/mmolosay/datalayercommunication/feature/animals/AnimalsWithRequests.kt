@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -15,7 +17,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.ButtonDefaults
 import androidx.wear.compose.material.Card
@@ -27,11 +28,11 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.items
 import androidx.wear.compose.material.rememberScalingLazyListState
 import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.navigate
 import io.github.mmolosay.datalayercommunication.domain.models.Animal
 import io.github.mmolosay.datalayercommunication.feature.animals.AnimalsViewModel.UiState
 import io.github.mmolosay.datalayercommunication.feature.connection.ConnectionViewModel
-import io.github.mmolosay.datalayercommunication.feature.destinations.HandheldConnectionLostDestination
+import io.github.mmolosay.datalayercommunication.feature.connection.HandheldConnectionLostOverlay
+import io.github.mmolosay.datalayercommunication.feature.connection.observeHandheldConnectionState
 import io.github.mmolosay.datalayercommunication.ui.navigation.MainAppNavGraph
 
 // region Previews
@@ -61,28 +62,33 @@ private fun previewUiState(): UiState =
 fun AnimalsWithRequests(
     animalsVM: AnimalsViewModel = hiltViewModel(),
     connectionVM: ConnectionViewModel,
-    navController: NavController,
     scalingLazyListState: ScalingLazyListState,
 ) {
     val uiState by animalsVM.uiState.collectAsStateWithLifecycle()
-    val onConnectionFailure = remember {
-        { navController.navigate(HandheldConnectionLostDestination) }
+    var shouldShowHandheldConnectionLost by remember { mutableStateOf(false) }
+
+    val showHandheldConnectionLost = remember {
+        { shouldShowHandheldConnectionLost = true }
     }
     val onGetAllAnimalsClick = remember {
-        { animalsVM.executeGetAllAnimals(onConnectionFailure) }
+        {
+            animalsVM.executeGetAllAnimals(
+                onConnectionFailure = showHandheldConnectionLost,
+            )
+        }
     }
     val onDeleteRandomCatClick = remember {
         {
             animalsVM.executeDeleteRandomAnimal(
                 ofSpecies = Animal.Species.Cat,
-                onConnectionFailure = onConnectionFailure
+                onConnectionFailure = showHandheldConnectionLost,
             )
         }
     }
     val onClearOutputClick = remember {
         { animalsVM.clearOutput() }
     }
-    // TODO: use connectionVM
+
     AnimalsWithRequests(
         uiState = uiState,
         scalingLazyListState = scalingLazyListState,
@@ -90,6 +96,12 @@ fun AnimalsWithRequests(
         onDeleteRandomCatClick = onDeleteRandomCatClick,
         onClearOutputClick = onClearOutputClick,
     )
+
+    observeHandheldConnectionState(
+        connectionVM = connectionVM,
+        onChanged = { isConnectionLost -> shouldShowHandheldConnectionLost = isConnectionLost },
+    )
+    if (shouldShowHandheldConnectionLost) HandheldConnectionLostOverlay()
 }
 
 @Composable

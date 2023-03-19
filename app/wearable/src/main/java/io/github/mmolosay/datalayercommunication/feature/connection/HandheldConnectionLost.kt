@@ -1,32 +1,54 @@
 package io.github.mmolosay.datalayercommunication.feature.connection
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
-import com.ramcosta.composedestinations.annotation.Destination
-import io.github.mmolosay.datalayercommunication.ui.navigation.MainAppNavGraph
 
 // region Previews
 
 @Preview
 @Composable
-private fun HandheldConnectionLostPreview() =
+private fun OverlayPreview() =
+    HandheldConnectionLostOverlay()
+
+@Preview
+@Composable
+private fun Preview() =
     HandheldConnectionLost()
 
 // endregion
 
-@MainAppNavGraph
-@Destination
 @Composable
-fun HandheldConnectionLost() =
+fun HandheldConnectionLostOverlay(
+    modifier: Modifier = Modifier,
+) =
+    HandheldConnectionLost(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background),
+    )
+
+
+/*
+ * It is not a destination, because we don't want user to be able to navigate back from here.
+ */
+@Composable
+fun HandheldConnectionLost(
+    modifier: Modifier = Modifier,
+) =
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
@@ -35,3 +57,14 @@ fun HandheldConnectionLost() =
             textAlign = TextAlign.Center,
         )
     }
+
+@Composable
+@SuppressLint("ComposableNaming")
+fun observeHandheldConnectionState(
+    connectionVM: ConnectionViewModel,
+    onChanged: (isConnectionLost: Boolean) -> Unit,
+) {
+    val uiState by connectionVM.uiState.collectAsStateWithLifecycle()
+    val isConnectionLost = uiState.isHandheldConnectionLost
+    onChanged(isConnectionLost)
+}
