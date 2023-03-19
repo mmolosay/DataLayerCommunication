@@ -89,19 +89,20 @@ fun AnimalsWithRequests(
         { animalsVM.clearOutput() }
     }
 
-    AnimalsWithRequests(
-        uiState = uiState,
-        scalingLazyListState = scalingLazyListState,
-        onGetAllAnimalsClick = onGetAllAnimalsClick,
-        onDeleteRandomCatClick = onDeleteRandomCatClick,
-        onClearOutputClick = onClearOutputClick,
-    )
-
     observeHandheldConnectionState(
         connectionVM = connectionVM,
         onChanged = { isConnectionLost -> shouldShowHandheldConnectionLost = isConnectionLost },
     )
-    if (shouldShowHandheldConnectionLost) HandheldConnectionLostOverlay()
+    if (shouldShowHandheldConnectionLost)
+        HandheldConnectionLostOverlay()
+    else
+        AnimalsWithRequests(
+            uiState = uiState,
+            scalingLazyListState = scalingLazyListState,
+            onGetAllAnimalsClick = onGetAllAnimalsClick,
+            onDeleteRandomCatClick = onDeleteRandomCatClick,
+            onClearOutputClick = onClearOutputClick,
+        )
 }
 
 @Composable
