@@ -1,6 +1,7 @@
 package io.github.mmolosay.datalayercommunication.feature.connection
 
 import android.annotation.SuppressLint
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,12 +33,14 @@ private fun Preview() =
 @Composable
 fun HandheldConnectionLostOverlay(
     modifier: Modifier = Modifier,
-) =
+) {
+    BackHandler { /* ignore back press */ }
     HandheldConnectionLost(
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.background),
     )
+}
 
 
 /*
