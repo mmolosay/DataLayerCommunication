@@ -44,9 +44,10 @@ class StartupViewModel @Inject constructor(
 
     private fun executeCheckIsHandheldDeviceConnected() {
         viewModelScope.launch {
+            val isHandheldDeviceConnected = isHandheldDeviceConnected()
             fullUiState.update {
                 it.copy(
-                    showHandheldNotConnected = !isHandheldDeviceConnected(),
+                    showHandheldNotConnected = !isHandheldDeviceConnected,
                 )
             }
             dismissLoading()

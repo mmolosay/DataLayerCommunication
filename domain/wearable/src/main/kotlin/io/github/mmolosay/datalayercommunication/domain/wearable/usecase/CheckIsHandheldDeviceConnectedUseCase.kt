@@ -2,23 +2,24 @@ package io.github.mmolosay.datalayercommunication.domain.wearable.usecase
 
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.communication.firstHandheldNode
-import io.github.mmolosay.datalayercommunication.domain.wearable.data.NodeStore
+import io.github.mmolosay.datalayercommunication.communication.models.Node
 import io.github.mmolosay.datalayercommunication.utils.resource.getOrNull
-import javax.inject.Inject
 
 /**
  * Checks, whether there's __any__ `handheld` device connected to the current one.
- * If there is such, saves it in [nodeStore].
+ * If there is such, executes specific [onHandheldDeviceConnected] callback.
  */
-class CheckIsHandheldDeviceConnectedUseCase @Inject constructor(
+class CheckIsHandheldDeviceConnectedUseCase(
     private val nodeProvider: NodeProvider,
-    private val nodeStore: NodeStore,
+    private val onHandheldDeviceConnected: OnHandheldDeviceConnected,
 ) {
 
     suspend operator fun invoke(): Boolean {
         val node = nodeProvider.firstHandheldNode()
             .getOrNull()
-            ?.also { nodeStore.node = it }
+            ?.also { onHandheldDeviceConnected(it) }
         return (node != null)
     }
+
+    interface OnHandheldDeviceConnected : (Node) -> Unit
 }

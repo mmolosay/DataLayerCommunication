@@ -8,8 +8,10 @@ import io.github.mmolosay.datalayercommunication.communication.CommunicationClie
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.data.wearable.AnimalsRepositoryImpl
 import io.github.mmolosay.datalayercommunication.data.wearable.InMemoryNodeStore
+import io.github.mmolosay.datalayercommunication.data.wearable.StoreNodeOnHandheldDeviceConnected
 import io.github.mmolosay.datalayercommunication.domain.data.AnimalsRepository
 import io.github.mmolosay.datalayercommunication.domain.wearable.data.NodeStore
+import io.github.mmolosay.datalayercommunication.domain.wearable.usecase.CheckIsHandheldDeviceConnectedUseCase.OnHandheldDeviceConnected
 import javax.inject.Singleton
 
 @Module
@@ -33,4 +35,13 @@ class DataModule {
     @Singleton
     fun provideConnectedNodeStore(): NodeStore =
         InMemoryNodeStore()
+
+    @Provides
+    @Singleton
+    fun provideOnHandheldDeviceConnected(
+        nodeStore: NodeStore,
+    ): OnHandheldDeviceConnected =
+        StoreNodeOnHandheldDeviceConnected(
+            nodeStore = nodeStore,
+        )
 }
