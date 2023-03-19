@@ -7,9 +7,9 @@ import dagger.hilt.components.SingletonComponent
 import io.github.mmolosay.datalayercommunication.communication.CapabilityClient
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
 import io.github.mmolosay.datalayercommunication.communication.models.CapabilitySet
-import io.github.mmolosay.datalayercommunication.data.CapabilityConnectionFlowProvider
+import io.github.mmolosay.datalayercommunication.data.CapabilityConnectionSource
 import io.github.mmolosay.datalayercommunication.data.ConnectionCheckByNodeIdExecutor
-import io.github.mmolosay.datalayercommunication.domain.data.ConnectionFlowProvider
+import io.github.mmolosay.datalayercommunication.domain.data.ConnectionSource
 import io.github.mmolosay.datalayercommunication.domain.wearable.data.NodeStore
 import javax.inject.Singleton
 
@@ -22,7 +22,7 @@ class CommunicationModule {
     fun provideConnectionCheckExecutor(
         nodeProvider: NodeProvider,
         nodeStore: NodeStore,
-    ): CapabilityConnectionFlowProvider.ConnectionCheckExecutor? =
+    ): CapabilityConnectionSource.ConnectionCheckExecutor? =
         nodeStore.node?.id?.let { nodeId ->
             ConnectionCheckByNodeIdExecutor(
                 nodeProvider = nodeProvider,
@@ -32,15 +32,15 @@ class CommunicationModule {
 
     @Provides
     @Singleton
-    fun provideHandheldConnectionFlowProvider(
+    fun provideHandheldConnectionSource(
         capabilityClient: CapabilityClient,
         capabilities: CapabilitySet,
         nodeStore: NodeStore,
-        connectionCheckExecutor: CapabilityConnectionFlowProvider.ConnectionCheckExecutor?,
-    ): ConnectionFlowProvider? {
+        connectionCheckExecutor: CapabilityConnectionSource.ConnectionCheckExecutor?,
+    ): ConnectionSource? {
         connectionCheckExecutor ?: return null
         return nodeStore.node?.id?.let { nodeId ->
-            CapabilityConnectionFlowProvider(
+            CapabilityConnectionSource(
                 capabilityClient = capabilityClient,
                 nodeCapability = capabilities.handheld,
                 nodeId = nodeId,

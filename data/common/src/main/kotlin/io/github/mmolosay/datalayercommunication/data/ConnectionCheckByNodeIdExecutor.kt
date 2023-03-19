@@ -1,10 +1,10 @@
 package io.github.mmolosay.datalayercommunication.data
 
 import io.github.mmolosay.datalayercommunication.communication.NodeProvider
-import io.github.mmolosay.datalayercommunication.data.CapabilityConnectionFlowProvider.ConnectionCheckExecutor
+import io.github.mmolosay.datalayercommunication.data.CapabilityConnectionSource.ConnectionCheckExecutor
 
 /**
- * Implementation of [CapabilityConnectionFlowProvider.ConnectionCheckExecutor], that checks,
+ * Implementation of [CapabilityConnectionSource.ConnectionCheckExecutor], that checks,
  * whether there's a connection between current device and one with specified [nodeId].
  */
 class ConnectionCheckByNodeIdExecutor(

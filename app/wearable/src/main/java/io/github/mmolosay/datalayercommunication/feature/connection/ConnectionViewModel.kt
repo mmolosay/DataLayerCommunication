@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.Lazy
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.mmolosay.datalayercommunication.domain.data.ConnectionFlowProvider
+import io.github.mmolosay.datalayercommunication.domain.data.ConnectionSource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ConnectionViewModel @Inject constructor(
-    private val handheldConnectionFlowProvider: Lazy<ConnectionFlowProvider?>,
+    private val handheldConnectionSource: Lazy<ConnectionSource?>,
 ) : ViewModel() {
 
     private val mutableUiState = MutableStateFlow(makeInitialUiState())
@@ -29,7 +29,7 @@ class ConnectionViewModel @Inject constructor(
 
     private fun observeHandheldConnectionState() {
         viewModelScope.launch {
-            handheldConnectionFlowProvider.get()?.connectionFlow?.collect { isConnected ->
+            handheldConnectionSource.get()?.connectionFlow?.collect { isConnected ->
                 mutableUiState.update {
                     it.copy(
                         isHandheldConnectionLost = !isConnected,

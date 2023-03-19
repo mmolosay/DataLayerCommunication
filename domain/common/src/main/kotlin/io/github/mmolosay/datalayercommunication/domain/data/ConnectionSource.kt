@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 /**
  * Provides [Flow] of connection state between current device and other one, specified by implementation.
  */
-interface ConnectionFlowProvider {
+interface ConnectionSource {
 
     /**
      * [Flow] of connection state, with `true` emitted when device connects
