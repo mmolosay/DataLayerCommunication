@@ -1,15 +1,16 @@
 package io.github.mmolosay.datalayercommunication.feature.animals
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -20,6 +21,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.ButtonDefaults
 import androidx.wear.compose.material.Card
+import androidx.wear.compose.material.CircularProgressIndicator
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.ScalingLazyListScope
@@ -49,9 +51,11 @@ private fun AnimalsWithRequestsPreview() =
     )
 
 private fun previewUiState(): UiState =
-    UiState(
+    UiState.AnimalsState.FetchedAnimals(
         elapsedTime = "3569 ms",
-        animals = emptyList(),
+        animals = listOf(
+            Animal(id = 1, species = Animal.Species.Cat, name = "Cat #1", age = 1),
+        ),
     )
 
 // endregion
@@ -115,29 +119,121 @@ fun AnimalsWithRequests(
     onGetAllAnimalsClick: () -> Unit,
     onDeleteRandomCatClick: () -> Unit,
     onClearOutputClick: () -> Unit,
-) {
+) =
     ScalingLazyColumn(
+        modifier = Modifier.fillMaxSize(),
         state = scalingLazyListState,
         contentPadding = PaddingValues(
             horizontal = 8.dp,
-            vertical = 24.dp,
+            vertical = 36.dp,
         ),
+        verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        autoCentering = null, // alters behaviour of verticalArrangement; using contentPadding.vertical instead
     ) {
-        RequestButtonsItems(
+        Items(
+            uiState = uiState,
             onGetAllAnimalsClick = onGetAllAnimalsClick,
             onDeleteRandomCatClick = onDeleteRandomCatClick,
-        )
-        ElapsedTimeItem(
-            elapsedTime = uiState.elapsedTime,
-        )
-        AnimalsItem(
-            animals = uiState.animals,
-        )
-        ClearOutputItem(
-            onClick = onClearOutputClick,
+            onClearOutputClick = onClearOutputClick,
         )
     }
+
+// region State Items
+
+private fun ScalingLazyListScope.Items(
+    uiState: UiState,
+    onGetAllAnimalsClick: () -> Unit,
+    onDeleteRandomCatClick: () -> Unit,
+    onClearOutputClick: () -> Unit,
+) =
+    when (uiState) {
+        is UiState.Blank ->
+            BlankStateItems(
+                uiState = uiState,
+                onGetAllAnimalsClick = onGetAllAnimalsClick,
+                onDeleteRandomCatClick = onDeleteRandomCatClick,
+            )
+        is UiState.Loading ->
+            LoadingStateItems(
+                uiState = uiState,
+            )
+        is UiState.AnimalsState.FetchedAnimals ->
+            FetchedAnimalsStateItems(
+                uiState = uiState,
+                onGetAllAnimalsClick = onGetAllAnimalsClick,
+                onDeleteRandomCatClick = onDeleteRandomCatClick,
+                onClearOutputClick = onClearOutputClick,
+            )
+        is UiState.AnimalsState.DeletedAnimal ->
+            DeletedAnimalStateItem(
+                uiState = uiState,
+                onGetAllAnimalsClick = onGetAllAnimalsClick,
+                onDeleteRandomCatClick = onDeleteRandomCatClick,
+                onClearOutputClick = onClearOutputClick,
+            )
+    }
+
+private fun ScalingLazyListScope.BlankStateItems(
+    uiState: UiState.Blank,
+    onGetAllAnimalsClick: () -> Unit,
+    onDeleteRandomCatClick: () -> Unit,
+) {
+    RequestButtonsItems(
+        onGetAllAnimalsClick = onGetAllAnimalsClick,
+        onDeleteRandomCatClick = onDeleteRandomCatClick,
+    )
 }
+
+private fun ScalingLazyListScope.LoadingStateItems(
+    uiState: UiState.Loading,
+) {
+    LoadingItem()
+}
+
+private fun ScalingLazyListScope.FetchedAnimalsStateItems(
+    uiState: UiState.AnimalsState.FetchedAnimals,
+    onGetAllAnimalsClick: () -> Unit,
+    onDeleteRandomCatClick: () -> Unit,
+    onClearOutputClick: () -> Unit,
+) {
+    RequestButtonsItems(
+        onGetAllAnimalsClick = onGetAllAnimalsClick,
+        onDeleteRandomCatClick = onDeleteRandomCatClick,
+    )
+    ElapsedTimeItem(
+        elapsedTime = uiState.elapsedTime,
+    )
+    FetchedAnimals(
+        uiState = uiState,
+    )
+    ClearOutputItem(
+        onClick = onClearOutputClick,
+    )
+}
+
+private fun ScalingLazyListScope.DeletedAnimalStateItem(
+    uiState: UiState.AnimalsState.DeletedAnimal,
+    onGetAllAnimalsClick: () -> Unit,
+    onDeleteRandomCatClick: () -> Unit,
+    onClearOutputClick: () -> Unit,
+) {
+    RequestButtonsItems(
+        onGetAllAnimalsClick = onGetAllAnimalsClick,
+        onDeleteRandomCatClick = onDeleteRandomCatClick,
+    )
+    ElapsedTimeItem(
+        elapsedTime = uiState.elapsedTime,
+    )
+    DeletedAnimal(
+        uiState = uiState,
+    )
+    ClearOutputItem(
+        onClick = onClearOutputClick,
+    )
+}
+
+// endregion
 
 // region Items
 
@@ -149,15 +245,18 @@ private fun ScalingLazyListScope.RequestButtonsItems(
         GetAllAnimalsButton(
             onClick = onGetAllAnimalsClick,
         )
-        Spacer(modifier = Modifier.height(8.dp))
     }
     item {
         DeleteRandomCatButton(
             onClick = onDeleteRandomCatClick,
         )
-        Spacer(modifier = Modifier.height(8.dp))
     }
 }
+
+private fun ScalingLazyListScope.LoadingItem() =
+    item {
+        CircularProgressIndicator()
+    }
 
 private fun ScalingLazyListScope.ElapsedTimeItem(
     elapsedTime: String,
@@ -169,13 +268,32 @@ private fun ScalingLazyListScope.ElapsedTimeItem(
             fontWeight = FontWeight.Light,
             style = MaterialTheme.typography.caption3,
         )
-        Spacer(modifier = Modifier.height(16.dp))
     }
 
-private fun ScalingLazyListScope.AnimalsItem(animals: List<Animal>) =
-    items(animals) {
+private fun ScalingLazyListScope.FetchedAnimals(
+    uiState: UiState.AnimalsState.FetchedAnimals,
+) =
+    // TODO: add text "fetched animals"
+    items(
+        items = uiState.animals,
+        key = { it.id },
+    ) {
         Animal(it)
     }
+
+private fun ScalingLazyListScope.DeletedAnimal(
+    uiState: UiState.AnimalsState.DeletedAnimal,
+) {
+    // TODO: add text "deleted animal"
+    val animal = uiState.animal
+    if (animal != null) {
+        item(animal.id) {
+            Animal(animal)
+        }
+    } else {
+        // TODO: add text
+    }
+}
 
 private fun ScalingLazyListScope.ClearOutputItem(
     onClick: () -> Unit,

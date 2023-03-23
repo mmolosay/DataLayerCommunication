@@ -12,7 +12,6 @@ import io.github.mmolosay.datalayercommunication.utils.resource.getOrNull
 import io.github.mmolosay.datalayercommunication.utils.resource.isSuccess
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.system.measureTimeMillis
@@ -29,19 +28,20 @@ class AnimalsViewModel @Inject constructor(
     fun executeGetAllAnimals(
         onConnectionFailure: () -> Unit,
     ) {
+        // TODO: cancel previous job
         viewModelScope.launch {
+            setUiStateLoading()
             val resource: Resource<List<Animal>>
             val elapsed = measureTimeMillis {
                 resource = getAnimals()
             }.takeIf { resource.isSuccess }
             // TODO: refactor?
             if (resource is ConnectionFailure) onConnectionFailure()
-            mutableUiState.update {
-                it.copy(
+            mutableUiState.value =
+                UiState.AnimalsState.FetchedAnimals(
                     elapsedTime = makeElapsedTimeOrBlank(elapsed),
                     animals = resource.getOrNull() ?: emptyList(),
                 )
-            }
         }
     }
 
@@ -50,38 +50,35 @@ class AnimalsViewModel @Inject constructor(
         olderThan: Int? = null,
         onConnectionFailure: () -> Unit,
     ) {
+        // TODO: cancel previous job
         viewModelScope.launch {
+            setUiStateLoading()
             val resource: Resource<Animal?>
             val elapsed = measureTimeMillis {
                 resource = deleteRandomAnimal(ofSpecies, olderThan)
             }.takeIf { resource.isSuccess }
             // TODO: refactor?
             if (resource is ConnectionFailure) onConnectionFailure()
-            mutableUiState.update {
-                it.copy(
+            mutableUiState.value =
+                UiState.AnimalsState.DeletedAnimal(
                     elapsedTime = makeElapsedTimeOrBlank(elapsed),
-                    animals = resource.getOrNull()?.let { listOf(it) } ?: emptyList(),
+                    animal = resource.getOrNull(),
                 )
-            }
         }
     }
 
     fun clearOutput() {
-        mutableUiState.update {
-            it.copy(
-                elapsedTime = makeBlankElapsedTime(),
-                animals = emptyList(),
-            )
-        }
+        mutableUiState.value = UiState.Blank
     }
 
     // region View models
 
     private fun makeInitialUiState(): UiState =
-        UiState(
-            elapsedTime = makeBlankElapsedTime(),
-            animals = emptyList(),
-        )
+        UiState.Blank
+
+    private fun setUiStateLoading() {
+        mutableUiState.value = UiState.Loading
+    }
 
     private fun makeElapsedTimeOrBlank(
         elapsedMillis: Long?,
@@ -94,8 +91,24 @@ class AnimalsViewModel @Inject constructor(
 
     // endregion
 
-    data class UiState(
-        val elapsedTime: String,
-        val animals: List<Animal>,
-    )
+    sealed interface UiState {
+        object Blank : UiState
+        object Loading : UiState
+
+        sealed interface AnimalsState : UiState {
+            val elapsedTime: String
+
+            data class FetchedAnimals(
+                override val elapsedTime: String,
+                val animals: List<Animal>,
+            ) : AnimalsState
+
+            data class DeletedAnimal(
+                override val elapsedTime: String,
+                val animal: Animal?
+            ) : AnimalsState
+        }
+
+        // TODO: add failure?
+    }
 }
