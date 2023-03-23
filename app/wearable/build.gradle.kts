@@ -57,7 +57,7 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.5.1")
     debugImplementation("androidx.compose.ui:ui-tooling")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.wear.compose:compose-material:1.1.1")
+    implementation("androidx.wear.compose:compose-material:1.1.2")
 
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
