@@ -32,7 +32,6 @@ class AnimalsViewModel @Inject constructor(
     fun executeGetAllAnimals(
         onConnectionFailure: () -> Unit,
     ) {
-        executingJob?.cancel()
         viewModelScope.launch {
             setUiStateLoading()
             val resource: Resource<List<Animal>>
@@ -46,7 +45,10 @@ class AnimalsViewModel @Inject constructor(
                     elapsedTime = makeElapsedTimeOrBlank(elapsed),
                     animals = resource.getOrNull() ?: emptyList(),
                 )
-        }.also { executingJob = it }
+        }.also {
+            executingJob?.cancel()
+            executingJob = it
+        }
     }
 
     fun executeDeleteRandomAnimal(
@@ -54,7 +56,6 @@ class AnimalsViewModel @Inject constructor(
         olderThan: Int? = null,
         onConnectionFailure: () -> Unit,
     ) {
-        executingJob?.cancel()
         viewModelScope.launch {
             setUiStateLoading()
             val resource: Resource<Animal?>
@@ -68,7 +69,10 @@ class AnimalsViewModel @Inject constructor(
                     elapsedTime = makeElapsedTimeOrBlank(elapsed),
                     animal = resource.getOrNull(),
                 )
-        }.also { executingJob = it }
+        }.also {
+            executingJob?.cancel()
+            executingJob = it
+        }
     }
 
     fun clearOutput() {
