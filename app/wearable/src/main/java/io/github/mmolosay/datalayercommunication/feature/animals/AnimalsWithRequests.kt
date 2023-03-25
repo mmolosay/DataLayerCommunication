@@ -131,50 +131,37 @@ fun AnimalsWithRequests(
         horizontalAlignment = Alignment.CenterHorizontally,
         autoCentering = null, // alters behaviour of verticalArrangement; using contentPadding.vertical instead
     ) {
-        Items(
-            uiState = uiState,
-            onGetAllAnimalsClick = onGetAllAnimalsClick,
-            onDeleteRandomCatClick = onDeleteRandomCatClick,
-            onClearOutputClick = onClearOutputClick,
-        )
+        when (uiState) {
+            is UiState.Blank ->
+                BlankStateItems(
+                    uiState = uiState,
+                    onGetAllAnimalsClick = onGetAllAnimalsClick,
+                    onDeleteRandomCatClick = onDeleteRandomCatClick,
+                )
+            is UiState.Loading ->
+                LoadingStateItems(
+                    uiState = uiState,
+                    onGetAllAnimalsClick = onGetAllAnimalsClick,
+                    onDeleteRandomCatClick = onDeleteRandomCatClick,
+                )
+            is UiState.AnimalsState.FetchedAnimals ->
+                FetchedAnimalsStateItems(
+                    uiState = uiState,
+                    onGetAllAnimalsClick = onGetAllAnimalsClick,
+                    onDeleteRandomCatClick = onDeleteRandomCatClick,
+                    onClearOutputClick = onClearOutputClick,
+                )
+            is UiState.AnimalsState.DeletedAnimal ->
+                DeletedAnimalStateItem(
+                    uiState = uiState,
+                    onGetAllAnimalsClick = onGetAllAnimalsClick,
+                    onDeleteRandomCatClick = onDeleteRandomCatClick,
+                    onClearOutputClick = onClearOutputClick,
+                )
+        }
     }
 
 // region State Items
-
-private fun ScalingLazyListScope.Items(
-    uiState: UiState,
-    onGetAllAnimalsClick: () -> Unit,
-    onDeleteRandomCatClick: () -> Unit,
-    onClearOutputClick: () -> Unit,
-) =
-    when (uiState) {
-        is UiState.Blank ->
-            BlankStateItems(
-                uiState = uiState,
-                onGetAllAnimalsClick = onGetAllAnimalsClick,
-                onDeleteRandomCatClick = onDeleteRandomCatClick,
-            )
-        is UiState.Loading ->
-            LoadingStateItems(
-                uiState = uiState,
-                onGetAllAnimalsClick = onGetAllAnimalsClick,
-                onDeleteRandomCatClick = onDeleteRandomCatClick,
-            )
-        is UiState.AnimalsState.FetchedAnimals ->
-            FetchedAnimalsStateItems(
-                uiState = uiState,
-                onGetAllAnimalsClick = onGetAllAnimalsClick,
-                onDeleteRandomCatClick = onDeleteRandomCatClick,
-                onClearOutputClick = onClearOutputClick,
-            )
-        is UiState.AnimalsState.DeletedAnimal ->
-            DeletedAnimalStateItem(
-                uiState = uiState,
-                onGetAllAnimalsClick = onGetAllAnimalsClick,
-                onDeleteRandomCatClick = onDeleteRandomCatClick,
-                onClearOutputClick = onClearOutputClick,
-            )
-    }
 
 private fun ScalingLazyListScope.BlankStateItems(
     uiState: UiState.Blank,
