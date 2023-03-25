@@ -134,13 +134,11 @@ fun AnimalsWithRequests(
         when (uiState) {
             is UiState.Blank ->
                 itemsBlank(
-                    uiState = uiState,
                     onGetAllAnimalsClick = onGetAllAnimalsClick,
                     onDeleteRandomCatClick = onDeleteRandomCatClick,
                 )
             is UiState.Loading ->
                 itemsLoading(
-                    uiState = uiState,
                     onGetAllAnimalsClick = onGetAllAnimalsClick,
                     onDeleteRandomCatClick = onDeleteRandomCatClick,
                 )
@@ -164,7 +162,6 @@ fun AnimalsWithRequests(
 // region State items
 
 private fun ScalingLazyListScope.itemsBlank(
-    uiState: UiState.Blank,
     onGetAllAnimalsClick: () -> Unit,
     onDeleteRandomCatClick: () -> Unit,
 ) {
@@ -175,7 +172,6 @@ private fun ScalingLazyListScope.itemsBlank(
 }
 
 private fun ScalingLazyListScope.itemsLoading(
-    uiState: UiState.Loading,
     onGetAllAnimalsClick: () -> Unit,
     onDeleteRandomCatClick: () -> Unit,
 ) {
