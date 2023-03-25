@@ -165,7 +165,7 @@ private fun ScalingLazyListScope.itemsBlank(
     onGetAllAnimalsClick: () -> Unit,
     onDeleteRandomCatClick: () -> Unit,
 ) {
-    RequestButtonsItems(
+    RequestButtons(
         onGetAllAnimalsClick = onGetAllAnimalsClick,
         onDeleteRandomCatClick = onDeleteRandomCatClick,
     )
@@ -175,11 +175,11 @@ private fun ScalingLazyListScope.itemsLoading(
     onGetAllAnimalsClick: () -> Unit,
     onDeleteRandomCatClick: () -> Unit,
 ) {
-    RequestButtonsItems(
+    RequestButtons(
         onGetAllAnimalsClick = onGetAllAnimalsClick,
         onDeleteRandomCatClick = onDeleteRandomCatClick,
     )
-    LoadingItem()
+    Loading()
 }
 
 private fun ScalingLazyListScope.itemsFetchedAnimals(
@@ -188,17 +188,17 @@ private fun ScalingLazyListScope.itemsFetchedAnimals(
     onDeleteRandomCatClick: () -> Unit,
     onClearOutputClick: () -> Unit,
 ) {
-    RequestButtonsItems(
+    RequestButtons(
         onGetAllAnimalsClick = onGetAllAnimalsClick,
         onDeleteRandomCatClick = onDeleteRandomCatClick,
     )
-    ElapsedTimeItem(
+    ElapsedTime(
         elapsedTime = uiState.elapsedTime,
     )
     FetchedAnimals(
         uiState = uiState,
     )
-    ClearOutputItem(
+    ClearOutputButton(
         onClick = onClearOutputClick,
     )
 }
@@ -209,17 +209,17 @@ private fun ScalingLazyListScope.itemsDeletedAnimal(
     onDeleteRandomCatClick: () -> Unit,
     onClearOutputClick: () -> Unit,
 ) {
-    RequestButtonsItems(
+    RequestButtons(
         onGetAllAnimalsClick = onGetAllAnimalsClick,
         onDeleteRandomCatClick = onDeleteRandomCatClick,
     )
-    ElapsedTimeItem(
+    ElapsedTime(
         elapsedTime = uiState.elapsedTime,
     )
     DeletedAnimal(
         uiState = uiState,
     )
-    ClearOutputItem(
+    ClearOutputButton(
         onClick = onClearOutputClick,
     )
 }
@@ -228,7 +228,7 @@ private fun ScalingLazyListScope.itemsDeletedAnimal(
 
 // region Items
 
-private fun ScalingLazyListScope.RequestButtonsItems(
+private fun ScalingLazyListScope.RequestButtons(
     onGetAllAnimalsClick: () -> Unit,
     onDeleteRandomCatClick: () -> Unit,
 ) {
@@ -244,12 +244,12 @@ private fun ScalingLazyListScope.RequestButtonsItems(
     }
 }
 
-private fun ScalingLazyListScope.LoadingItem() =
+private fun ScalingLazyListScope.Loading() =
     item {
         CircularProgressIndicator()
     }
 
-private fun ScalingLazyListScope.ElapsedTimeItem(
+private fun ScalingLazyListScope.ElapsedTime(
     elapsedTime: String,
 ) =
     item {
@@ -286,7 +286,7 @@ private fun ScalingLazyListScope.DeletedAnimal(
     }
 }
 
-private fun ScalingLazyListScope.ClearOutputItem(
+private fun ScalingLazyListScope.ClearOutputButton(
     onClick: () -> Unit,
 ) =
     item {
