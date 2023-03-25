@@ -2,8 +2,9 @@ package io.github.mmolosay.datalayercommunication.feature.animals
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -18,12 +19,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.wear.compose.material.AutoCenteringParams
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.ButtonDefaults
 import androidx.wear.compose.material.Card
 import androidx.wear.compose.material.CircularProgressIndicator
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.ScalingLazyColumn
+import androidx.wear.compose.material.ScalingLazyListAnchorType
 import androidx.wear.compose.material.ScalingLazyListScope
 import androidx.wear.compose.material.ScalingLazyListState
 import androidx.wear.compose.material.Text
@@ -121,15 +124,14 @@ fun AnimalsWithRequests(
     onClearOutputClick: () -> Unit,
 ) =
     ScalingLazyColumn(
-        modifier = Modifier.fillMaxSize(),
         state = scalingLazyListState,
         contentPadding = PaddingValues(
             horizontal = 8.dp,
-            vertical = 36.dp,
         ),
         verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
-        autoCentering = null, // alters behaviour of verticalArrangement; using contentPadding.vertical instead
+        anchorType = ScalingLazyListAnchorType.ItemCenter,
+        autoCentering = AutoCenteringParams(itemIndex = 0, itemOffset = 0),
     ) {
         when (uiState) {
             is UiState.Blank ->
@@ -179,6 +181,10 @@ private fun ScalingLazyListScope.itemsLoading(
         onGetAllAnimalsClick = onGetAllAnimalsClick,
         onDeleteRandomCatClick = onDeleteRandomCatClick,
     )
+    item {
+        // note, that due to ScalingLazyColumn's contentPadding actual space will be greater
+        Spacer(modifier = Modifier.height(4.dp))
+    }
     Loading()
 }
 
