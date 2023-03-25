@@ -10,6 +10,8 @@ import io.github.mmolosay.datalayercommunication.domain.usecase.GetAnimalsUseCas
 import io.github.mmolosay.datalayercommunication.utils.resource.Resource
 import io.github.mmolosay.datalayercommunication.utils.resource.getOrNull
 import io.github.mmolosay.datalayercommunication.utils.resource.isSuccess
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -25,10 +27,12 @@ class AnimalsViewModel @Inject constructor(
     private val mutableUiState = MutableStateFlow(makeInitialUiState())
     val uiState = mutableUiState.asStateFlow()
 
+    private var executingJob: Job? = null
+
     fun executeGetAllAnimals(
         onConnectionFailure: () -> Unit,
     ) {
-        // TODO: cancel previous job
+        executingJob?.cancel()
         viewModelScope.launch {
             setUiStateLoading()
             val resource: Resource<List<Animal>>
@@ -42,7 +46,7 @@ class AnimalsViewModel @Inject constructor(
                     elapsedTime = makeElapsedTimeOrBlank(elapsed),
                     animals = resource.getOrNull() ?: emptyList(),
                 )
-        }
+        }.also { executingJob = it }
     }
 
     fun executeDeleteRandomAnimal(
@@ -50,7 +54,7 @@ class AnimalsViewModel @Inject constructor(
         olderThan: Int? = null,
         onConnectionFailure: () -> Unit,
     ) {
-        // TODO: cancel previous job
+        executingJob?.cancel()
         viewModelScope.launch {
             setUiStateLoading()
             val resource: Resource<Animal?>
@@ -64,7 +68,7 @@ class AnimalsViewModel @Inject constructor(
                     elapsedTime = makeElapsedTimeOrBlank(elapsed),
                     animal = resource.getOrNull(),
                 )
-        }
+        }.also { executingJob = it }
     }
 
     fun clearOutput() {
@@ -110,5 +114,9 @@ class AnimalsViewModel @Inject constructor(
         }
 
         // TODO: add failure?
+    }
+
+    override fun onCleared() {
+        executingJob?.cancel()
     }
 }
