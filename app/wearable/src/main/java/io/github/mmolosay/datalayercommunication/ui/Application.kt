@@ -52,7 +52,6 @@ private fun DependenciesContainerBuilder<*>.buildDependenciesContainer(
 
     /** provide same instance of [ConnectionViewModel] to all destinations of [NavGraphs.mainApp] **/
     dependency(NavGraphs.mainApp) {
-        // we are not using a navBackStackEntry here
         val parentEntry = remember(navBackStackEntry) {
             navController.getBackStackEntry(NavGraphs.mainApp.route)
         }
