@@ -157,6 +157,8 @@ private fun ScalingLazyListScope.Items(
         is UiState.Loading ->
             LoadingStateItems(
                 uiState = uiState,
+                onGetAllAnimalsClick = onGetAllAnimalsClick,
+                onDeleteRandomCatClick = onDeleteRandomCatClick,
             )
         is UiState.AnimalsState.FetchedAnimals ->
             FetchedAnimalsStateItems(
@@ -187,7 +189,13 @@ private fun ScalingLazyListScope.BlankStateItems(
 
 private fun ScalingLazyListScope.LoadingStateItems(
     uiState: UiState.Loading,
+    onGetAllAnimalsClick: () -> Unit,
+    onDeleteRandomCatClick: () -> Unit,
 ) {
+    RequestButtonsItems(
+        onGetAllAnimalsClick = onGetAllAnimalsClick,
+        onDeleteRandomCatClick = onDeleteRandomCatClick,
+    )
     LoadingItem()
 }
 
