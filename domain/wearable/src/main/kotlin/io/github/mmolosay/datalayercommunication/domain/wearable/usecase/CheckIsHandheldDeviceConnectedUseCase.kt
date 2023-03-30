@@ -21,5 +21,5 @@ class CheckIsHandheldDeviceConnectedUseCase(
         return (node != null)
     }
 
-    interface OnHandheldDeviceConnected : (Node) -> Unit
+    interface OnHandheldDeviceConnected : suspend (Node) -> Unit
 }

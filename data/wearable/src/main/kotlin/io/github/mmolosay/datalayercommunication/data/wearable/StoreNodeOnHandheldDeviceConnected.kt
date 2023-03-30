@@ -13,8 +13,8 @@ class StoreNodeOnHandheldDeviceConnected(
 
     private var hadBeenUsed = false
 
-    override fun invoke(handheldNode: Node) {
-        if (hadBeenUsed) error("This StoreIdOnHandheldDeviceConnected had been already used") // fool proof
+    override suspend fun invoke(handheldNode: Node) {
+        if (hadBeenUsed) error("This StoreNodeOnHandheldDeviceConnected had been already used") // fool proof
         nodeStore.node = handheldNode
         hadBeenUsed = true
     }
